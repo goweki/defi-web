@@ -69,12 +69,11 @@ module.exports = {
       animation: {
         "spinner-1": "spin 3s linear infinite",
         "spinner-2": "spin 6s linear infinite",
-        // pegIt 3s infinite ease-in-out
         "meter-needle": "pegIt 3s ease-in-out infinite",
       },
       backgroundImage: {
-        gradientBtn: `linear-gradient(to right bottom, var(--tw-gradient-stops))`,
-        gradientBtnHover: `linear-gradient(to left top, var(--tw-gradient-stops))`,
+        gradientBtn: `linear-gradient(to right bottom, ${customColours.primary.dark},${customColours.primary})`,
+        gradientBtnHover: `linear-gradient(to left top, ${customColours.primary.dark},${customColours.primary})`,
       },
     },
   },

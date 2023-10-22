@@ -17,6 +17,9 @@
   h2 {
     @apply text-font-focus dark:text-font-dark-focus font-bold;
   }
+  a {
+    @apply hover:text-primary;
+  }
 }
 
 @layer components {
