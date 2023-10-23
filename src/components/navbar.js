@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SVGlogo } from "./atoms/svgs";
+import ThemeToggle from "./atoms/themeToggle";
 export default function Navbar() {
   return (
     <nav className="bg-backg-surface dark:bg-backg-dark-surface">
@@ -23,13 +24,13 @@ export default function Navbar() {
               className="block h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               aria-hidden="true"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
               />
             </svg>
@@ -42,43 +43,59 @@ export default function Navbar() {
               className="hidden h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               aria-hidden="true"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M6 18L18 6M6 6l12 12"
               />
             </svg>
           </button>
         </div>
         <div className="flex flex-1 items-center justify-center">
-          <div className="hidden sm:mx-6 sm:block">
-            <div className="flex space-x-4">
+          <div className="flex flex-row">
+            <div className="hidden space-x-4 sm:flex sm:mx-6">
               {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
+              {[
+                { link: "home" },
+                { link: "about" },
+                {
+                  logo: (
+                    <SVGlogo className="h-8 w-auto mx-8 py-2 text-backg-dark dark:text-backg hover:scale-110 hover:text-primary dark:hover:text-primary" />
+                  ),
+                },
+                { link: "motors" },
+                { link: "auto-works" },
+              ].map((v, i) => (
+                <Link
+                  key={i}
+                  // href="HI"
+                  href={`/${v.link ? v.link : "home"}`}
+                  className="flex mx-4 justify-center items-center font-medium"
+                >
+                  {v.link ? capitalizeInit(v.link) : v.logo}
+                </Link>
+              ))}
+              {/* <Link href="#">
+                <SVGlogo className="h-8 w-auto mx-8 py-2 text-backg-dark dark:text-backg hover:scale-110 hover:text-primary dark:hover:text-primary" />
+              </Link> */}
+              {/*
               <Link
                 href="#"
                 className="flex mx-4 justify-center items-center font-medium"
               >
                 Home
               </Link>
-              {/* <a
-                href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-              >
-                Team
-              </a> */}
               <Link
                 href="#"
                 className="flex mx-4 justify-center items-center font-medium"
               >
                 About
               </Link>
-              <Link href="#">
-                <SVGlogo className="h-8 w-auto mx-8 py-2 text-backg-dark dark:text-backg hover:scale-110 hover:text-primary dark:hover:text-primary" />
-              </Link>
+              
               <Link
                 href="#"
                 className="flex mx-4 justify-center items-center font-medium"
@@ -90,7 +107,10 @@ export default function Navbar() {
                 className="flex mx-4 justify-center items-center font-medium"
               >
                 Auto-works
-              </Link>
+              </Link> */}
+            </div>
+            <div className="hover:text-primary m-2 p-2 absolute top-0 right-0">
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -129,4 +149,8 @@ export default function Navbar() {
       </div>
     </nav>
   );
+  function capitalizeInit(str) {
+    const initChar = str.charAt(0).toUpperCase();
+    return initChar + str.slice(1);
+  }
 }
