@@ -26,6 +26,7 @@ module.exports = {
   ],
   theme: {
     colors: {
+      transparent: "transparent",
       primary: customColours.primary,
       gray: customColours.gray,
       backg: {
@@ -72,8 +73,8 @@ module.exports = {
         "meter-needle": "pegIt 3s ease-in-out infinite",
       },
       backgroundImage: {
-        gradientBtn: `linear-gradient(to right bottom, ${customColours.primary.dark},${customColours.primary})`,
-        gradientBtnHover: `linear-gradient(to left top, ${customColours.primary.dark},${customColours.primary})`,
+        gradientBtn: `linear-gradient(to right bottom, ${customColours.primary.light},${customColours.primary.DEFAULT})`,
+        gradientBtnHover: `linear-gradient(to left top, ${customColours.primary.light},${customColours.primary.DEFAULT})`,
       },
     },
   },
