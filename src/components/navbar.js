@@ -1,132 +1,50 @@
 import Link from "next/link";
-import { SVGlogo } from "./atoms/svgs";
+import { SVGhambuger, SVGlogo } from "./atoms/svgs";
+import ThemeToggle from "./atoms/themeToggle";
 export default function Navbar() {
   return (
     <nav className="bg-backg-surface dark:bg-backg-dark-surface">
       <div className="mx-auto items-center justify-center flex h-16 px-2 sm:px-6 lg:px-8 lg:max-w-screen-lg">
-        <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-          {/*  Mobile menu button */}
-          <button
-            type="button"
-            className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-            aria-controls="mobile-menu"
-            aria-expanded="false"
-          >
-            <span className="absolute -inset-0.5"></span>
-            <span className="sr-only">Open main menu</span>
-            {/* <!--
-            Icon when menu is closed.
-
-            Menu open: "hidden", Menu closed: "block"
-          --> */}
-            <svg
-              className="block h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
-            {/* <!--
-            Icon when menu is open.
-
-            Menu open: "block", Menu closed: "hidden"
-          --> */}
-            <svg
-              className="hidden h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
         <div className="flex flex-1 items-center justify-center">
-          <div className="hidden sm:mx-6 sm:block">
-            <div className="flex space-x-4">
-              {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-              <Link
-                href="#"
-                className="flex mx-4 justify-center items-center font-medium"
-              >
-                Home
-              </Link>
-              {/* <a
-                href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-              >
-                Team
-              </a> */}
-              <Link
-                href="#"
-                className="flex mx-4 justify-center items-center font-medium"
-              >
-                About
-              </Link>
-              <Link href="#">
-                <SVGlogo className="h-8 w-auto mx-8 py-2 text-backg-dark dark:text-backg hover:scale-110 hover:text-primary dark:hover:text-primary" />
-              </Link>
-              <Link
-                href="#"
-                className="flex mx-4 justify-center items-center font-medium"
-              >
-                Motors
-              </Link>
-              <Link
-                href="#"
-                className="flex mx-4 justify-center items-center font-medium"
-              >
-                Auto-works
-              </Link>
+          {/* minimized menu items */}
+          <div className="sm:hidden flex flex-row flex-1 justify-between items-center">
+            <SVGlogo className="h-8 w-auto mx-8 py-2 text-backg-dark dark:text-backg hover:scale-110 hover:text-primary dark:hover:text-primary" />
+            <SVGhambuger className="w-6 h-6 mx-8" />
+          </div>
+          {/* sm-plus menu items */}
+          <div className="hidden sm:flex sm:flex-row">
+            <div className="space-x-4 flex mx-6">
+              {[
+                { link: "home" },
+                { link: "about" },
+                {
+                  logo: (
+                    <SVGlogo className="h-8 w-auto mx-8 py-2 text-backg-dark dark:text-backg hover:scale-110 hover:text-primary dark:hover:text-primary" />
+                  ),
+                },
+                { link: "motors" },
+                { link: "auto-works" },
+              ].map((v, i) => (
+                <Link
+                  key={i}
+                  // href="HI"
+                  href={`/${v.link ? v.link : "home"}`}
+                  className="flex mx-4 justify-center items-center font-medium"
+                >
+                  {v.link ? capitalizeInit(v.link) : v.logo}
+                </Link>
+              ))}
+            </div>
+            <div className="hover:text-primary m-2 p-2 absolute top-0 right-0">
+              <ThemeToggle />
             </div>
           </div>
         </div>
       </div>
-
-      {/* Mobile menu, show/hide based on menu state. */}
-      <div className="sm:hidden" id="mobile-menu">
-        <div className="space-y-1 px-2 pb-3 pt-2">
-          {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-          <a
-            href="#"
-            className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-            aria-current="page"
-          >
-            Dashboard
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Team
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Projects
-          </a>
-          <a
-            href="#"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-          >
-            Calendar
-          </a>
-        </div>
-      </div>
     </nav>
   );
+  function capitalizeInit(str) {
+    const initChar = str.charAt(0).toUpperCase();
+    return initChar + str.slice(1);
+  }
 }
