@@ -5,9 +5,9 @@ export default function PartsPage() {
     <>
       <Navbar />
       <main className="flex flex-col flex-1 w-full mb-12">
-        {/* HERO */}
+        {/* Section 1 */}
         <>Parts</>
-        {/* PICK of the Month */}
+        {/* Section 2 */}
       </main>
     </>
   );

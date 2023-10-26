@@ -5,9 +5,9 @@ export default function ServicePage() {
     <>
       <Navbar />
       <main className="flex flex-col flex-1 w-full mb-12">
-        {/* HERO */}
+        {/* Section 1 */}
         <>Service</>
-        {/* PICK of the Month */}
+        {/* Section 1 */}
       </main>
     </>
   );

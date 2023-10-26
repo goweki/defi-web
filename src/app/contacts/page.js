@@ -5,9 +5,9 @@ export default function ContactsPage() {
     <>
       <Navbar />
       <main className="flex flex-col flex-1 w-full mb-12">
-        {/* HERO */}
+        {/* Section 1 */}
         <>Contacts</>
-        {/* PICK of the Month */}
+        {/* Section 2*/}
       </main>
     </>
   );
