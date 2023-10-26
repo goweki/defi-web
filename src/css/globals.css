@@ -226,9 +226,9 @@
   /* 
   --- CARD---
   */
-  .card {
+  /* .card {
     @apply bg-backg-surface dark:bg-backg-dark-surface m-6 p-3 rounded;
-  }
+  } */
 }
 
 /* :root {
