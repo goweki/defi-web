@@ -32,7 +32,7 @@ export default function Navbar() {
                   key={i}
                   href={`/${v.link ? v.link : "/"}`}
                   className={`${
-                    pathname === v.link
+                    pathname === "/" + v.link
                       ? "text-primary"
                       : v.logo && pathname === "/"
                       ? "text-primary-dark"

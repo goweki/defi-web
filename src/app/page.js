@@ -4,7 +4,7 @@ import heroImage from "@/assets/images/hero_image.png";
 import { CardLarge } from "@/components/cards";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 
-export default function Home() {
+export default function LandingPage() {
   return (
     <>
       <Navbar />
