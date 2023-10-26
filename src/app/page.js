@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="flex flex-col flex-1 w-full">
+      <main className="flex flex-col flex-1 w-full mb-12">
         {/* HERO */}
         <div className=" bg-backg-dark-surface dark:bg-backg-dark-raised p-6 sm:p-12 md:p-20">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:max-w-screen-lg m-auto">
