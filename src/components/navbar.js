@@ -1,7 +1,10 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { SVGhambuger, SVGlogo } from "./atoms/svgs";
 import ThemeToggle from "./atoms/themeToggle";
 export default function Navbar() {
+  const pathname = usePathname();
   return (
     <nav className="bg-backg-surface dark:bg-backg-dark-surface">
       <div className="mx-auto items-center justify-center flex h-16 px-2 sm:px-6 lg:px-8 lg:max-w-screen-lg">
@@ -13,23 +16,30 @@ export default function Navbar() {
           </div>
           {/* expanded menu items */}
           <div className="hidden sm:flex sm:flex-row">
-            <div className="space-x-4 flex mx-6">
+            <div className="space-x-4 md:space-x-8 flex mx-6">
               {[
-                { link: "home" },
-                { link: "about" },
+                { link: "cars" },
+                { link: "parts" },
                 {
                   logo: (
-                    <SVGlogo className="transition h-8 w-auto mx-8 py-2 text-backg-dark dark:text-backg hover:scale-110 hover:text-primary dark:hover:text-primary" />
+                    <SVGlogo className="transition h-8 w-auto mx-4 py-2 hover:scale-110 hover:text-primary dark:hover:text-primary" />
                   ),
                 },
-                { link: "cars" },
-                { link: "services" },
+                { link: "service" },
+                { link: "contacts" },
               ].map((v, i) => (
                 <Link
                   key={i}
-                  // href="HI"
                   href={`/${v.link ? v.link : "/"}`}
-                  className="flex mx-4 justify-center items-center font-medium transition"
+                  className={`${
+                    pathname === v.link
+                      ? "text-primary"
+                      : v.logo && pathname === "/"
+                      ? "text-primary-dark"
+                      : v.logo
+                      ? "text-backg-dark dark:text-backg"
+                      : ""
+                  } flex justify-center items-center font-medium transition`}
                 >
                   {v.link ? capitalizeInit(v.link) : v.logo}
                 </Link>
