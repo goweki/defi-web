@@ -1,3 +1,14 @@
+import Navbar from "@/components/navbar";
+
 export default function PartsPage() {
-  return <>Parts</>;
+  return (
+    <>
+      <Navbar />
+      <main className="flex flex-col flex-1 w-full mb-12">
+        {/* HERO */}
+        <>Parts</>
+        {/* PICK of the Month */}
+      </main>
+    </>
+  );
 }
