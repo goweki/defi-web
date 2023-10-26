@@ -1,6 +1,6 @@
 export function ButtonPrimary({ label = "Button" }) {
   return (
-    <button className="bg-gradientBtn hover:bg-gradientBtnHover hover:scale-105 font-semibold text-font py-2 px-4 border border-transparent rounded-lg hover:shadow hover:shadow-primary-light/90 dark:hover:shadow-primary-light/40">
+    <button className="min-w-lg bg-gradientBtn hover:bg-gradientBtnHover hover:scale-105 font-semibold text-font py-2 px-6 border border-transparent rounded-lg hover:shadow hover:shadow-primary-light/90 dark:hover:shadow-primary-light/40">
       {label}
     </button>
   );
