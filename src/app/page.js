@@ -23,7 +23,7 @@ export default function LandingPage() {
                 <br />
                 <div className="space-x-6 my-2 inline-block">
                   <ButtonPrimary label="Cars" />
-                  <ButtonSecondary label="Services" />
+                  <ButtonSecondary label="Service" />
                 </div>
               </div>
             </div>

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
-import { useTheme } from "next-themes";
 import Loader from "@/components/loader";
 
 export default function Context({ children }) {
