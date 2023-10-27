@@ -26,14 +26,11 @@ export function CardLarge({ className }) {
 
 export function CardInFooter({ title, desc, btnText }) {
   return (
-    <div className="max-w-md flex flex-col items-start justify-start bg-gradientCard rounded-lg p-6 m-3">
+    <div className="max-w-md flex flex-col items-start justify-start bg-gradientCard dark:bg-gradientCardDark rounded-lg p-6 m-3">
       <h4 className="mb-2 font-bold uppercase">{title}</h4>
       <div className="flex flex-wrap sm:flex-nowrap">
         <div className="max-h-20 mr-4 overflow-hidden">{desc}</div>
-        <ButtonSecondary
-          label={btnText}
-          className="ml-auto h-16 w-28 text-font-focus"
-        />
+        <ButtonSecondary label={btnText} className="ml-auto h-16 w-28" />
       </div>
     </div>
   );

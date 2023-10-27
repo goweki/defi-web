@@ -24,7 +24,10 @@ export default function LandingPage() {
                 <br />
                 <div className="space-x-6 my-2 inline-block">
                   <ButtonPrimary label="Cars" />
-                  <ButtonSecondary label="Service" />
+                  <ButtonSecondary
+                    label="Service"
+                    className="text-font-dark hover:text-font"
+                  />
                 </div>
               </div>
             </div>
