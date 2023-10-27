@@ -73,6 +73,8 @@ module.exports = {
         "meter-needle": "pegIt 3s ease-in-out infinite",
       },
       backgroundImage: {
+        gradientCard: `linear-gradient(to right bottom, ${customColours.gray.w1},${customColours.primary.light})`,
+        gradientCardDark: `linear-gradient(to right bottom, ${customColours.gray.b3},${customColours.gray.b2})`,
         gradientBtn: `linear-gradient(to right bottom, ${customColours.primary.light},${customColours.primary.DEFAULT})`,
         gradientBtnHover: `linear-gradient(to left top, ${customColours.primary.light},${customColours.primary.DEFAULT})`,
       },

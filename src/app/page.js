@@ -3,6 +3,7 @@ import Image from "next/image";
 import heroImage from "@/assets/images/hero_image.png";
 import { CardLarge } from "@/components/cards";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
+import Footer from "@/components/footer";
 
 export default function LandingPage() {
   return (
@@ -68,6 +69,7 @@ export default function LandingPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

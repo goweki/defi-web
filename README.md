@@ -5,6 +5,7 @@ Source code for DEFI Motors and Autoworks website.
 ## Modules
 
 Home - Cars, Parts and Service buckets.
+
 Admin dashboard - to manage website content
 
 ## Toolchain

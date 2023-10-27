@@ -71,3 +71,37 @@ export function SVGhambuger({ className }) {
     </svg>
   );
 }
+
+export function SVGfblogo({ className }) {
+  return (
+    <svg
+      className={className}
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 8 19"
+    >
+      <path
+        fillRule="evenodd"
+        d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
+export function SVGxlogo({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 1200 1227"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
