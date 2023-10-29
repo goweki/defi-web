@@ -36,6 +36,8 @@ if (process.env.NODE_ENV === "local") {
 
 // OR resolve clientPromise and connect to database. then export
 // the module-scoped db object
-const connectedClient = await clientPromise;
-const db = connectedClient.db("defi");
-export default db;
+
+const dbName = process.env.ATLAS_DB; // name of the database: If the database does not exist, the driver and Atlas will create it automatically when you first write data.
+const connectedClient = await clientPromise; //resolve clientPromise
+const db = connectedClient.db(dbName); // connect to database
+export default db; //export the module-scoped db object
