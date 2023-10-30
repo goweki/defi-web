@@ -56,7 +56,7 @@ export default function CarsPageAdmin() {
               </tr>
             </thead>
             <tbody className="divide-y divide-font-inactive dark:divide-font-dark-inactive border-none">
-              <tr className="border-b border-font-inactive dark:border-font-dark-inactive hover:bg-backg dark:hover:bg-backg-dark">
+              <tr className="border-b border-font-inactive dark:border-font-dark-inactive hover:bg-backg dark:hover:bg-backg-dark-raised cursor-pointer">
                 <td className="px-5 py-5 text-sm">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 w-10 h-10">
