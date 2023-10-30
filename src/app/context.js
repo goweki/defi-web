@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
+import { SessionProvider } from "next-auth/react";
 import Loader from "@/components/loader";
 
 export default function Context({ children }) {
@@ -19,14 +20,16 @@ export default function Context({ children }) {
       enableSystem
       disableTransitionOnChange
     >
-      {loading ? (
-        <Loader />
-      ) : (
-        <React.StrictMode>
-          {children}
-          <Toaster />
-        </React.StrictMode>
-      )}
+      <SessionProvider>
+        {loading ? (
+          <Loader />
+        ) : (
+          <React.StrictMode>
+            {children}
+            <Toaster />
+          </React.StrictMode>
+        )}
+      </SessionProvider>
     </ThemeProvider>
   );
 }

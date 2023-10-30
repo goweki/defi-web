@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { SVGhambuger, SVGlogo } from "./atoms/svgs";
 import ThemeToggle from "./atoms/themeToggle";
 export default function Navbar() {
@@ -15,40 +16,78 @@ export default function Navbar() {
             <SVGhambuger className="w-6 h-6 mx-8" />
           </div>
           {/* expanded menu items */}
-          <div className="hidden sm:flex sm:flex-row">
-            <div className="space-x-4 md:space-x-8 flex mx-6">
-              {[
-                { link: "cars" },
-                { link: "parts" },
-                {
-                  logo: (
-                    <SVGlogo className="transition h-8 w-auto mx-4 py-2 hover:scale-110 hover:text-primary dark:hover:text-primary" />
-                  ),
-                },
-                { link: "service" },
-                { link: "contacts" },
-              ].map((v, i) => (
+          {!pathname.includes("/admin") && (
+            <div className="hidden sm:flex sm:flex-row">
+              <div className="space-x-4 md:space-x-8 flex mx-6">
+                {[
+                  { link: "cars" },
+                  { link: "parts" },
+                  {
+                    logo: (
+                      <SVGlogo className="transition h-8 w-auto mx-4 py-2 hover:scale-110 hover:text-primary dark:hover:text-primary" />
+                    ),
+                  },
+                  { link: "service" },
+                  { link: "contacts" },
+                ].map((v, i) => (
+                  <Link
+                    key={i}
+                    href={`/${v.link ? v.link : "/"}`}
+                    className={`${
+                      pathname === "/" + v.link
+                        ? "text-primary"
+                        : v.logo && pathname === "/"
+                        ? "text-primary-dark"
+                        : v.logo
+                        ? "text-backg-dark dark:text-backg"
+                        : ""
+                    } flex justify-center items-center font-medium transition`}
+                  >
+                    {v.link ? capitalizeInit(v.link) : v.logo}
+                  </Link>
+                ))}
+              </div>
+              <div className="hover:text-primary m-2 p-2 absolute top-0 right-0 transition">
+                <ThemeToggle />
+              </div>
+            </div>
+          )}
+          {/* admin menu items */}
+          {pathname.includes("/admin") && (
+            <div className="hidden sm:flex sm:flex-row">
+              <div className="space-x-4 md:space-x-8 flex mx-6">
                 <Link
-                  key={i}
-                  href={`/${v.link ? v.link : "/"}`}
+                  href={"/admin/inventory"}
                   className={`${
-                    pathname === "/" + v.link
-                      ? "text-primary"
-                      : v.logo && pathname === "/"
-                      ? "text-primary-dark"
-                      : v.logo
-                      ? "text-backg-dark dark:text-backg"
-                      : ""
+                    pathname === "/admin/inventory" ? "text-primary" : ""
                   } flex justify-center items-center font-medium transition`}
                 >
-                  {v.link ? capitalizeInit(v.link) : v.logo}
+                  Inventory
                 </Link>
-              ))}
+                <Link
+                  href={"/"}
+                  className={`${
+                    pathname === "/" ? "text-primary" : ""
+                  } flex justify-center items-center font-medium transition`}
+                >
+                  <SVGlogo className="transition h-8 w-auto mx-4 py-2 hover:scale-110 hover:text-primary dark:hover:text-primary" />
+                </Link>
+                <Link
+                  href={"/admin/inventory"}
+                  className={`flex justify-center items-center font-medium transition`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    signOut();
+                  }}
+                >
+                  Logout
+                </Link>
+              </div>
+              <div className="hover:text-primary m-2 p-2 absolute top-0 right-0 transition">
+                <ThemeToggle />
+              </div>
             </div>
-            <div className="hover:text-primary m-2 p-2 absolute top-0 right-0 transition">
-              <ThemeToggle />
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </nav>

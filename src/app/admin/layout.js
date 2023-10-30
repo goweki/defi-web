@@ -5,8 +5,9 @@ export default function AdminLayout({ children }) {
   return (
     <>
       <Navbar />
-      <main className="flex flex-col flex-1 w-full mb-12">{children}</main>
-      <Footer />
+      <main className="flex flex-col flex-1 w-full mb-12 items-center">
+        {children}
+      </main>
     </>
   );
 }
