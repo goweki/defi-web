@@ -172,16 +172,15 @@ export function popUpAuto(
             </button>
           </div>
           {/* <!-- Modal body --> */}
-          <section className="bg-white dark:bg-gray-900">
-            <div className="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
+          <section>
+            <div className="p-4 mx-auto max-w-screen-lg lg:py-8 lg:px-6">
               <div className="mx-auto max-w-screen-md sm:text-center">
-                <h2 className="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl dark:text-white">
-                  We are here to help...
+                <h2 className="mb-4 text-3xl tracking-tight font-extrabold sm:text-4xl ">
+                  Need help?
                 </h2>
-                <p className="mx-auto mb-8 max-w-2xl font-light text-gray-500 md:mb-12 sm:text-xl dark:text-gray-400">
-                  We would love to assist; Please tell us what you are looking
-                  for and we will follow up in the coming days to ensure you got
-                  the assistance you need.
+                <p className="mx-auto mb-4 font-light md:mb-8 sm:text-lg ">
+                  Please tell us what you are looking for and we will follow up
+                  in the coming days to ensure you got the assistance you need.
                 </p>
                 <form>
                   <div className="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-x-2 sm:space-y-0">
@@ -272,7 +271,7 @@ export function popUpAuto(
                       /> */}
                       <textarea
                         id="message"
-                        rows="4"
+                        rows="2"
                         class="block p-3 w-full text-sm bg-backg-raised dark:bg-backg-dark-raised rounded-lg border border-font-inactive "
                         placeholder="Message (Optional)"
                       ></textarea>
@@ -283,7 +282,7 @@ export function popUpAuto(
             </div>
           </section>
           {/* <!-- Modal footer --> */}
-          <div className="flex items-center justify-end p-6 space-x-2 border-t border-font-inactive rounded-b">
+          <div className="flex items-center justify-end p-6 space-x-2 border-none  rounded-b">
             <ButtonSecondary label="Cancel" onClick={handleClose} />
             <ButtonPrimary label="Show Interest" onClick={handleClose} />
           </div>
