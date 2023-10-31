@@ -1,38 +1,58 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 import heroImage from "@/assets/images/hero_image.png";
+import { ButtonSecondary } from "@/components/atoms/buttons";
+import { InventoryModal } from "./editModal";
 export default function CarsPageAdmin() {
+  const [products, setProducts] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="py-8">
       {/* <div>
       <h3 className="text-center">Products</h3>
       </div> */}
-      <div className="my-2 flex sm:flex-row flex-col sm:justify-center">
-        <div className="flex flex-row mb-1 sm:mb-0">
-          <div className="relative">
-            <select className="h-full rounded border block w-full border-font-inactive py-2 px-4 pr-8 leading-tight focus:outline-none">
-              <option>5</option>
-              <option>10</option>
-              <option>20</option>
-            </select>
-          </div>
-          <div className="relative">
-            <select className="h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block w-full py-2 px-4 pr-8 leading-tight ">
-              <option>All</option>
-              <option>Cars</option>
-              <option>Parts</option>
-              <option>Services</option>
-            </select>
-          </div>
-        </div>
-        <div className="block relative">
-          <span className="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-            <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current ">
-              <path d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z"></path>
+      <div className="flex items-center justify-between pb-2">
+        <select className="h-full rounded border-t border-none max-w-40 p-2 bg-backg-raised dark:bg-backg-dark-raised">
+          <option>All</option>
+          <option>Cars</option>
+          <option>Parts</option>
+          <option>Services</option>
+        </select>
+        <label htmlFor="table-search" className="sr-only">
+          Search
+        </label>
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg
+              className="w-5 h-5 "
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clipRule="evenodd"
+              ></path>
             </svg>
-          </span>
+          </div>
           <input
-            placeholder="Search"
-            className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-font-inactive border-b block pl-8 pr-6 py-2 w-full text-sm focus:outline-none "
+            type="text"
+            id="table-search"
+            className="block p-2 pl-10 text-sm border-none rounded-lg w-max-60 bg-backg-raised dark:bg-backg-dark-raised"
+            placeholder="Search for items"
+          />
+        </div>
+        <div>
+          <ButtonSecondary
+            className="text-sm"
+            label="New Product"
+            onClick={() => {
+              console.log("Button clicked to show inventory modal");
+              setShowModal(true);
+            }}
           />
         </div>
       </div>
@@ -48,7 +68,7 @@ export default function CarsPageAdmin() {
                   Category
                 </th>
                 <th className="px-5 py-3 text-left text-xs font-semibold  uppercase tracking-wider">
-                  Description
+                  Properties
                 </th>
                 <th className="px-5 py-3 text-left text-xs font-semibold  uppercase tracking-wider">
                   Price
@@ -69,14 +89,12 @@ export default function CarsPageAdmin() {
                         className="w-full h-full rounded-full"
                         src={heroImage}
                         width={720}
-                        height={620}
+                        height={600}
                         alt="hero-image"
                       />
                     </div>
                     <div className="ml-3">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        VW GTI MK5
-                      </p>
+                      <p className="whitespace-no-wrap">VW GTI MK5</p>
                     </div>
                   </div>
                 </td>
@@ -109,6 +127,10 @@ export default function CarsPageAdmin() {
           </div>
         </div>
       </div>
+      <InventoryModal
+        isVisible={showModal}
+        handleClose={() => setShowModal(false)}
+      />
     </div>
   );
 }
