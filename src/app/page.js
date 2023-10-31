@@ -179,9 +179,9 @@ export function popUpAuto(
                   We are here to help...
                 </h2>
                 <p className="mx-auto mb-8 max-w-2xl font-light text-gray-500 md:mb-12 sm:text-xl dark:text-gray-400">
-                  We would love to assist; select what you are looking for and
-                  we will follow up in the coming days to ensure you got the
-                  assistance you need.
+                  We would love to assist; Please tell us what you are looking
+                  for and we will follow up in the coming days to ensure you got
+                  the assistance you need.
                 </p>
                 <form>
                   <div className="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-x-2 sm:space-y-0">
