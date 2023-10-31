@@ -1,3 +1,4 @@
+"use client";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 
 export function InventoryModal({ isVisible, handleClose }) {

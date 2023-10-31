@@ -1,3 +1,5 @@
+"use client";
+
 export function ButtonPrimary({
   label = "Button",
   className,
