@@ -2,27 +2,32 @@
 import { useContext, useState, useEffect } from "react";
 import Image from "next/image";
 import { ButtonSecondary } from "@/components/atoms/buttons";
-import { ModalAddProduct } from "./modal";
+import { ModalAddProduct, ModalEditProduct, ProductOptions } from "./compo";
 import { ProductsContext } from "@/app/context";
 import Loader from "@/components/loader";
 
 export default function InventoryPage() {
   const products = useContext(ProductsContext);
-  const [showModal, setShowModal] = useState(false);
-  const [randomNo, setRandomNo] = useState("");
+  const [activeModal, setModal] = useState("");
   const [loading, setLoading] = useState(true);
+  const [itemClicked, setItemClicked] = useState("");
+  // onMount
   useEffect(() => {
     setLoading(false);
   }, []);
-
+  // render
   return (
     <div className="py-8 max-w-screen-lg w-full px-4 md:px-8 lg:px-12">
-      {loading ? (
+      {loading || !products ? (
         <Loader />
       ) : (
         <>
+          {itemClicked && <ProductOptions options={itemClicked} />}
           <div className="flex flex-wrap items-center justify-between p-2 space-x-2 space-y-2">
-            <select className="h-full rounded-lg border-none max-w-120 pb-2 px-2 bg-backg-raised dark:bg-backg-dark-raised">
+            <select
+              name="category"
+              className="h-full rounded-lg border-none max-w-120 pb-2 px-2 bg-backg-raised dark:bg-backg-dark-raised"
+            >
               <option value="" defaultValue>
                 All
               </option>
@@ -60,9 +65,10 @@ export default function InventoryPage() {
               <ButtonSecondary
                 className="text-sm"
                 label="New Product"
-                onClick={() => {
-                  console.log(" > Button clicked to show inventory modal...");
-                  setShowModal(true);
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log(" > Button clicked to show Add-Product-Modal...");
+                  setModal("add");
                 }}
               />
             </div>
@@ -72,7 +78,7 @@ export default function InventoryPage() {
               <thead className="bg-backg-raised dark:bg-backg-dark-raised">
                 <tr className="border-b-2 border-backg-dark-raised ">
                   <th className="px-5 py-3  text-left text-xs font-semibold uppercase tracking-wider">
-                    Product
+                    Products {` (${products?.length})`}
                   </th>
                   <th className="px-5 py-3 text-left text-xs font-semibold  uppercase tracking-wider">
                     Category
@@ -89,8 +95,14 @@ export default function InventoryPage() {
                 {products &&
                   products.map((v, i) => (
                     <tr
+                      id={v._id}
                       key={v._id}
                       className="border-b border-font-inactive dark:border-font-dark-inactive hover:bg-backg dark:hover:bg-backg-dark-raised cursor-pointer"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setItemClicked(e.currentTarget.id);
+                        setModal("edit");
+                      }}
                     >
                       <td className="px-5 py-5 text-sm">
                         <div className="flex items-center">
@@ -129,7 +141,7 @@ export default function InventoryPage() {
                   ))}
               </tbody>
             </table>
-            {products && (
+            {products?.length > 50 && (
               <div className="px-5 py-5 border-none flex flex-col xs:flex-row items-center xs:justify-between          ">
                 <span className="text-xs xs:text-sm">
                   Showing {1} to {products.length < 20 ? products.length : ""}{" "}
@@ -146,15 +158,22 @@ export default function InventoryPage() {
               </div>
             )}
           </div>
-          <ModalAddProduct
-            key={randomNo}
-            isVisible={showModal}
-            // reset={() => setRandomNo(Math.floor(Math.random() * 100))}
-            handleClose={() => {
-              setShowModal(false);
-              setRandomNo(Math.floor(Math.random() * 100));
-            }}
-          />
+          {activeModal === "add" && (
+            <ModalAddProduct
+              handleClose={() => {
+                setModal("");
+              }}
+            />
+          )}
+          {activeModal === "edit" && itemClicked && (
+            <ModalEditProduct
+              product={products.find((obj) => obj._id === itemClicked)}
+              handleClose={() => {
+                setItemClicked("");
+                setModal("");
+              }}
+            />
+          )}
         </>
       )}
     </div>

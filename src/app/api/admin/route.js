@@ -1,4 +1,5 @@
 import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 
 export async function POST(request) {
   try {
@@ -24,10 +25,82 @@ export async function POST(request) {
   } catch (error) {
     // handle ERROR if caught
     console.log(
-      `ERROR: error caught in route admin65276\n >> ${
+      `ERROR: error caught in route admin -POST\n >> ${
         error.error || error
       }\n.........................`
     );
     return Response.json({ error: "Document was not saved" });
+  }
+}
+
+export async function PUT(request) {
+  try {
+    const doc = await request.json();
+    console.log(
+      `PUT REQUEST: to update product. \n >> \n..........................`
+    );
+    // target COLLECTION
+    console.log(
+      `CHECKPOINT: connecting to data source\n >> \n......................`
+    );
+    const client = await clientPromise;
+    console.log(
+      `CHECKPOINT: selecting collection\n >> \n.....................`
+    );
+    const collection = client.db(process.env.ATLAS_DB).collection("products");
+    // update DOC
+    const { _id, ...doc_ } = doc;
+    console.log(
+      `CHECKPOINT: updating doc\n >> _id: ${_id}\n >> fields: ${Object.keys(
+        doc_
+      )}\n..................`
+    );
+    collection.updateOne({ _id: new ObjectId(_id) }, { $set: { ...doc_ } });
+    console.log(`SUCCESS: A document was updated.\n.........................`);
+    // HTTP response
+    return Response.json({ success: "Document updated" });
+  } catch (error) {
+    // handle ERROR if caught
+    console.log(
+      `ERROR: error caught in route admin -PUT2\n >> ${
+        error.error || error
+      }\n.........................`
+    );
+    return Response.json({ error: "Document was not updated" });
+  }
+}
+
+export async function DELETE(request) {
+  try {
+    const doc = await request.json();
+    console.log(
+      `DELETE REQUEST: to delete a product. \n >> \n..........................`
+    );
+    // target COLLECTION
+    console.log(
+      `CHECKPOINT: connecting to data source\n >> \n......................`
+    );
+    const client = await clientPromise;
+    console.log(
+      `CHECKPOINT: selecting collection\n >> \n.....................`
+    );
+    const collection = client.db(process.env.ATLAS_DB).collection("products");
+    // delete DOC
+    const { _id } = doc;
+    console.log(
+      `CHECKPOINT: deleting doc\n >> _id: ${_id}\n..................`
+    );
+    collection.deleteOne({ _id: new ObjectId(_id) });
+    console.log(`SUCCESS: A document was deleted.\n.........................`);
+    // HTTP response
+    return Response.json({ success: "Document deleted" });
+  } catch (error) {
+    // handle ERROR if caught
+    console.log(
+      `ERROR: error caught in route admin -DELETE\n >> ${
+        error.error || error
+      }\n.........................`
+    );
+    return Response.json({ error: "Document was not deleted" });
   }
 }
