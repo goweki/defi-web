@@ -16,7 +16,6 @@ export function ModalAddProduct({ isVisible, handleClose }) {
   useEffect(() => {
     setLoading(false);
   }, []);
-
   // on ERROR
   useEffect(() => {
     if (error) {
