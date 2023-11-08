@@ -1,51 +1,60 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
 import Loader from "@/components/loader";
 export const ProductsContext = createContext();
 
 export default function Context({ children }) {
-  const [products, setProducts] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState(null);
+  const [UIstate, setUIstate] = useState("loading");
+  const [error, setError] = useState(null);
   // fetch products
   useEffect(() => {
     const fetchOptions = { method: "GET" };
-    // GET request using fetch
     fetch("/api/products", fetchOptions)
       .then((res_) => res_.json())
       .then((json_) => {
         if (json_.success) {
-          console.log("SUCCESS: Documents fetched\n.............");
+          console.log(
+            `SUCCESS: Documents fetched:${json_.success.length}\n.............`
+          );
           setProducts(json_.success);
         } else if (json_.error) {
           console.error(
-            "ERROR: fetching all products\n > " +
+            "ERROR: could not fetch products\n > " +
               JSON.stringify(json_.error) +
               "\n.............."
           );
-          //setError(json_.error);
+          setError(json_.error);
         } else {
           console.error(
-            "ERROR: Loading product failed\n > " +
+            "ERROR: Loading products failed\n > " +
               JSON.stringify(json_) +
               "\n.............."
           );
-          //setError("Unknown Error");
+          setError("ERROR: Check network and reload");
         }
       })
       .catch((err) => {
-        setError(err.error || err);
+        setUIstate;
         console.error("ERROR: caught error\n > " + err.error || err);
       });
   }, []);
   // onMount - delay
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      setUIstate("OK");
     }, 2500);
   }, []);
+  //on Error
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
   return (
     <ThemeProvider
       attribute="class"
@@ -55,7 +64,7 @@ export default function Context({ children }) {
     >
       <SessionProvider>
         <ProductsContext.Provider value={products}>
-          {loading || !products ? (
+          {UIstate === "loading" ? (
             <Loader />
           ) : (
             <React.StrictMode>

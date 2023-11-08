@@ -1,9 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
-import { resizeImage } from "@/helpers/imageHandlers";
-
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 
 export function ModalAddProduct({ isVisible, handleClose }) {
@@ -13,6 +10,13 @@ export function ModalAddProduct({ isVisible, handleClose }) {
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const imgCanvas = useRef(null);
+  // on Mount
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
   // on ERROR
   useEffect(() => {
     if (error) {
@@ -23,12 +27,16 @@ export function ModalAddProduct({ isVisible, handleClose }) {
 
   async function handleSubmit() {
     // confirm fields filled
-    if (!category || !name || !description || !price || !image.img) {
+    if (!category || !name || !description || !price || !image) {
       setError(`Fill empty fields`);
       return;
     }
-    // process image into binary
-    const imgBuffer = Buffer.from(image.img);
+    // Process canvas into binary
+    // const imgBuffer = Buffer.from(
+    //   imgCanvas.current.toDataURL("image/jpeg", 0.5),
+    //   "base64"
+    // );
+    const imgSTR = imgCanvas.current.toDataURL("image/jpeg", 1);
     // fetch options
     let fetchOptions = {
       method: "POST",
@@ -41,7 +49,8 @@ export function ModalAddProduct({ isVisible, handleClose }) {
         name,
         description,
         price,
-        image: imgBuffer,
+        // image: imgBuffer,
+        image: imgSTR,
       }),
     };
     // POST request using fetch
@@ -77,6 +86,71 @@ export function ModalAddProduct({ isVisible, handleClose }) {
         console.error("ERROR: caught error\n > " + err.error || err);
       });
   }
+
+  /** returns true if canvas is blank
+   * @param {HTMLCanvasElement} canvas - A Promise that resolves with the resulting image as a canvas element
+   * @return {boolean} returns true if empty
+   */
+  function isCanvasBlank(canvas) {
+    if (!canvas) return true;
+    const blank = document.getElementById("blankCanvas");
+    blank.width = canvas.width;
+    blank.height = canvas.height;
+
+    blank.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+    const isBlank = canvas.toDataURL() == blank.toDataURL();
+    isBlank ? console.log("blank canvas") : console.log("picture in canvas");
+    return isBlank;
+  }
+
+  /** image-resizing function
+   * @param {string} imgUrl - The source image
+   * @param {number} aspectRatio - The aspect ratio
+   * @return {boolean} A Promise that resolves with true if successfull
+   */
+  function imgPreview(imgUrl, aspectRatio = 1) {
+    // return a Promise that gets resolved with true if successful
+    return new Promise((resolve, reject) => {
+      // image to hold source image data
+      const inputImage = new Image();
+      // wait for image to load
+      inputImage.onload = () => {
+        // store the width and height of image
+        const inputWidth = inputImage.naturalWidth;
+        const inputHeight = inputImage.naturalHeight;
+        // Calculate the output width and height based on aspect ratio
+        let outputWidth, outputHeight;
+        if (inputWidth / inputHeight > aspectRatio) {
+          outputWidth = inputHeight * aspectRatio;
+          outputHeight = inputHeight;
+        } else {
+          outputWidth = inputWidth;
+          outputHeight = inputWidth / aspectRatio;
+        }
+        // calculate the position to draw the image at
+        const outputX = (outputWidth - inputWidth) * 0.5;
+        const outputY = (outputHeight - inputHeight) * 0.5;
+        // canvas that will present the output image
+        const outputImage = imgCanvas.current;
+        // set it to the same size as the image
+        outputImage.width = outputWidth;
+        outputImage.height = outputHeight;
+        // draw our image at position {calculated} on the canvas
+        const ctx = outputImage.getContext("2d");
+        ctx.drawImage(inputImage, outputX, outputY);
+        // Resolve the Promise with true
+        resolve(true);
+      };
+      // Handle image load errors
+      inputImage.onerror = (error) => {
+        reject(error);
+      };
+      // load image
+      setImage(imgUrl);
+      inputImage.src = URL.createObjectURL(imgUrl);
+    });
+  }
+
   return (
     <div
       id="modal"
@@ -204,14 +278,14 @@ export function ModalAddProduct({ isVisible, handleClose }) {
             {/* FIELD Image */}
             <div className="upload-container relative flex items-center justify-between sm:min-h-1/2">
               <div className="drop-area w-full sm:h-full rounded-lg border-2 border-dotted border-font-inactive transition-all hover:border-primary-dark text-center">
-                <label
-                  htmlFor="file-input"
-                  className={`${
-                    image ? "hidden" : ""
-                  } flex w-full h-full items-center justify-center text-font-inactive p-4 text-sm cursor-pointer`}
-                >
-                  Drop your image here or click to browse
-                </label>
+                {!image && (
+                  <label
+                    htmlFor="file-input"
+                    className={`flex w-full h-full items-center justify-center text-font-inactive p-4 text-sm cursor-pointer`}
+                  >
+                    Drop your image here or click to browse
+                  </label>
+                )}
                 <input
                   name="file"
                   type="file"
@@ -223,41 +297,64 @@ export function ModalAddProduct({ isVisible, handleClose }) {
                   onChange={async (e) => {
                     console.log(` > uploading image: ${e.target.value} ... \n`);
                     if (e.target.files && e.target.files[0]) {
-                      const image_ = await resizeImage(e.target.files[0]);
-                      setImage({
-                        img: image_,
-                        previewURL: URL.createObjectURL(e.target.files[0]),
-                      });
+                      const imgUrl = e.target.files[0];
+                      if (
+                        !imgUrl.name.match(/\.(jpg|jpeg|png|JPG|JPEG|PNG)$/)
+                      ) {
+                        setError("Invalid image file: select JPG,JPEG,PNG");
+                        return;
+                      }
+                      imgPreview(imgUrl, 1)
+                        .then((res_) => {
+                          if (res_ === true) {
+                            toast.success("Image uploaded successfully");
+                          } else {
+                            toast.error("Failed to upload image");
+                          }
+                        })
+                        .catch((error) => {
+                          console.error("Error loading image:", error);
+                        });
                     }
                   }}
                 />
                 {/* <!-- Image upload input --> */}
-                <div
-                  className={`${
-                    !image ? "hidden" : ""
-                  } items-center justify-center flex flex-col`}
-                >
-                  <div className="preview-image m-4 flex flex-col justify-center items-center w-36 h-36 rounded-lg">
-                    {/* <img alt="preview image" src={image}/> */}
-                    {image && (
+                {image && (
+                  <div className={`items-center justify-center flex flex-col`}>
+                    <div className="preview-image flex flex-col justify-center items-center w-36 h-36 rounded-lg">
+                      {/* {image && (
                       <Image
                         src={image.previewURL}
                         className="object-contain"
-                        width={500}
-                        height={500}
+                        width={300}
+                        height={300}
                         // fill={true}
                         alt="product image"
                       />
-                    )}
+                    )} */}
+                      <canvas ref={imgCanvas} className="w-36 h-36" />
+                      <canvas id="blankCanvas" className="hidden" />
+                    </div>
+                    {/* <span className="file-name my-4 text-sm font-medium"></span> */}
+                    <button
+                      className="cursor-pointer transition-all my-2 rounded-md px-3 py-1 border border-font-inactive text-xs text-state-danger hover:border-state-danger"
+                      // onClick={() => setImage("")}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        let canvasContext = imgCanvas.current.getContext("2d");
+                        canvasContext.clearRect(
+                          0,
+                          0,
+                          canvasContext.width,
+                          canvasContext.height
+                        );
+                        setImage(null);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </div>
-                  <span className="file-name my-4 text-sm font-medium"></span>
-                  <button
-                    className="close-button cursor-pointer transition-all mb-4 rounded-md px-3 py-1 border border-font-inactive text-xs text-state-danger hover:border-state-danger"
-                    onClick={() => setImage("")}
-                  >
-                    Delete
-                  </button>
-                </div>
+                )}
               </div>
             </div>
           </form>

@@ -16,8 +16,10 @@ export async function GET(request) {
     console.log(
       `ERROR: error caught in route\n >> ${JSON.stringify(
         error.error || error
-      )}\n.........................`
+      )}\n......................`
     );
-    return Response.json({ error: "Connection to database broke" });
+    return Response.json({
+      error: "Could not acquire product catalogue",
+    });
   }
 }

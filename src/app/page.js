@@ -1,13 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Image from "next/image";
 import heroImage from "@/assets/images/hero_image.png";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { CardLarge } from "@/components/cards";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
+import { ProductsContext } from "./context";
 
 export default function LandingPage() {
+  const products = useContext(ProductsContext);
   const [showPopup, setShowPopup] = useState(false);
   useEffect(() => {
     setTimeout(() => {
@@ -272,7 +274,7 @@ export function popUpAuto(
                       <textarea
                         id="message"
                         rows="2"
-                        class="block p-3 w-full text-sm bg-backg-raised dark:bg-backg-dark-raised rounded-lg border border-font-inactive "
+                        className="block p-3 w-full text-sm bg-backg-raised dark:bg-backg-dark-raised rounded-lg border border-font-inactive "
                         placeholder="Message (Optional)"
                       ></textarea>
                     </div>
