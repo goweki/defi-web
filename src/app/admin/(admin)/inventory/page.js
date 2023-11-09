@@ -17,6 +17,7 @@ export default function InventoryPage() {
   // onMount, fetch products
   useEffect(() => {
     if (!activeModal) {
+      setLoading(true);
       const fetchOptions = { method: "GET" };
       fetch("/api/products", fetchOptions)
         .then((res_) => res_.json())
