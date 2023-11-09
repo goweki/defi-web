@@ -5,7 +5,7 @@ import { ButtonSecondary } from "./atoms/buttons";
 export function CardLarge({ className, product }) {
   return (
     <div
-      className={`${className} group flex-none w-52 h-84 bg-backg-surface dark:bg-backg-dark-surface overflow-hidden rounded-xl shadow hover:shadow-lg`}
+      className={`${className} group flex-none w-52 h-84 bg-backg-surface dark:bg-backg-dark-surface overflow-hidden rounded-xl shadow hover:shadow-lg hover:scale-105 transition`}
     >
       <div className="w-52 aspect-square overflow-hidden">
         <Image
@@ -17,12 +17,8 @@ export function CardLarge({ className, product }) {
         />
       </div>
       <div className="p-4 w-full">
-        <h3 className="text-xl font-bold group-hover:scale-105 transition">
-          {product?.name}
-        </h3>
-        <p className="font-serif group-hover:scale-105 transition">
-          {product?.description}
-        </p>
+        <h3 className="text-xl font-bold ">{product?.name}</h3>
+        <p className="font-serif">{product?.description}</p>
       </div>
     </div>
   );
