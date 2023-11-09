@@ -396,11 +396,11 @@ export function ModalEditProduct({ product, handleClose }) {
       let newHeight = (img.height * canvas_.height) / img.height;
       // draw on canvas
       ctx.drawImage(img, 0, 0, newWidth, newHeight);
+      setLoading(false);
     };
     // load image
     img.src = product.image;
     // update component's loading state
-    setLoading(false);
   }, [product.image]);
   // on ERROR
   useEffect(() => {
@@ -412,7 +412,7 @@ export function ModalEditProduct({ product, handleClose }) {
   }, [error]);
   // save
   async function handleSave() {
-    setLoading(true)
+    setLoading(true);
     // confirm fields filled
     if (!category || !name || !description || !price || !image) {
       setError(`Fill empty fields`);
@@ -471,7 +471,7 @@ export function ModalEditProduct({ product, handleClose }) {
   }
   // delete
   async function handleDelete() {
-    setLoading(true)
+    setLoading(true);
     // confirm fields filled
     if (!product._id) {
       setError(`Cannot find product`);
