@@ -15,9 +15,7 @@ export function ModalAddProduct({ handleClose }) {
   const imgCanvas = useRef(null);
   // on Mount
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 5000);
+    setLoading(false);
   }, []);
   // on ERROR
   useEffect(() => {
@@ -409,10 +407,12 @@ export function ModalEditProduct({ product, handleClose }) {
     if (error) {
       toast.error(error);
       setError("");
+      setLoading(false);
     }
   }, [error]);
   // save
   async function handleSave() {
+    setLoading(true)
     // confirm fields filled
     if (!category || !name || !description || !price || !image) {
       setError(`Fill empty fields`);
@@ -471,6 +471,7 @@ export function ModalEditProduct({ product, handleClose }) {
   }
   // delete
   async function handleDelete() {
+    setLoading(true)
     // confirm fields filled
     if (!product._id) {
       setError(`Cannot find product`);
@@ -519,22 +520,6 @@ export function ModalEditProduct({ product, handleClose }) {
         setError("ERROR: operations failed");
         console.error("ERROR: caught error -92043\n > " + err.error || err);
       });
-  }
-
-  /** returns true if canvas is blank
-   * @param {HTMLCanvasElement} canvas - A Promise that resolves with the resulting image as a canvas element
-   * @return {boolean} returns true if empty
-   */
-  function isCanvasBlank(canvas) {
-    if (!canvas) return true;
-    const blank = document.getElementById("blankCanvas");
-    blank.width = canvas.width;
-    blank.height = canvas.height;
-
-    blank.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-    const isBlank = canvas.toDataURL() == blank.toDataURL();
-    isBlank ? console.log("blank canvas") : console.log("picture in canvas");
-    return isBlank;
   }
 
   /** image-resizing function
@@ -624,154 +609,165 @@ export function ModalEditProduct({ product, handleClose }) {
             </button>
           </div>
           {/* <!-- Modal body --> */}
-          <form className="flex flex-col justify-center p-4 sm:p-8 lg:p-12 sm:flex-row sm:space-x-4 md:space-x-8">
-            <div className="flex flex-col justify-center sm:w-1/2">
-              {/* FIELD Category */}
-              <div className="relative flex items-center mb-2 w-full ">
-                <select
-                  name="category"
-                  className={`${
-                    !category ? "italic" : ""
-                  } w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed invalid:italic`}
-                  value={category}
+          {loading ? (
+            <Loader />
+          ) : (
+            <form className="flex flex-col justify-center p-4 sm:p-8 lg:p-12 sm:flex-row sm:space-x-4 md:space-x-8">
+              <div className="flex flex-col justify-center sm:w-1/2">
+                {/* FIELD Category */}
+                <div className="relative flex items-center mb-2 w-full ">
+                  <select
+                    name="category"
+                    className={`${
+                      !category ? "italic" : ""
+                    } w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed invalid:italic`}
+                    value={category}
+                    onChange={(e) => {
+                      console.log(
+                        ` > Product category selected: ${e.target.value} ... \n`
+                      );
+                      setCategory(e.target.value);
+                    }}
+                  >
+                    <option value="" defaultValue>
+                      Select a Product category...
+                    </option>
+                    <option value="Car">Car</option>
+                    <option value="Part">Part</option>
+                    <option value="Service">Service</option>
+                  </select>
+                </div>
+                {/* FIELD Name */}
+                <input
+                  name="name"
+                  type="text"
+                  placeholder="Name"
+                  className="w-full px-3 py-2 mb-2 transition-all bg-backg-raised dark:bg-backg-dark-raised border border-font-inactive rounded-lg enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowedk placeholder:italic"
+                  value={name}
+                  autoComplete="name"
+                  disabled={!category}
                   onChange={(e) => {
                     console.log(
-                      ` > Product category selected: ${e.target.value} ... \n`
+                      ` > typing product name: ${e.target.value} ... \n`
                     );
-                    setCategory(e.target.value);
+                    setName(e.target.value);
                   }}
-                >
-                  <option value="" defaultValue>
-                    Select a Product category...
-                  </option>
-                  <option value="Car">Car</option>
-                  <option value="Part">Part</option>
-                  <option value="Service">Service</option>
-                </select>
-              </div>
-              {/* FIELD Name */}
-              <input
-                name="name"
-                type="text"
-                placeholder="Name"
-                className="w-full px-3 py-2 mb-2 transition-all bg-backg-raised dark:bg-backg-dark-raised border border-font-inactive rounded-lg enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowedk placeholder:italic"
-                value={name}
-                autoComplete="name"
-                disabled={!category}
-                onChange={(e) => {
-                  console.log(
-                    ` > typing product name: ${e.target.value} ... \n`
-                  );
-                  setName(e.target.value);
-                }}
-              />
-              {/* FIELD Description */}
-              <input
-                name="description"
-                type="text"
-                placeholder="Description"
-                maxLength="40"
-                className="w-full px-3 py-2 mb-2 transition-all bg-backg-raised dark:bg-backg-dark-raised border border-font-inactive rounded-lg enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed placeholder:italic"
-                value={description}
-                disabled={!category}
-                onChange={(e) => {
-                  console.log(` > typing description:${e.target.value} ... \n`);
-                  setDescription(e.target.value);
-                }}
-              />
-              {/* FIELD Price */}
-              <input
-                name="price"
-                type="number"
-                inputMode="numeric"
-                placeholder="Price"
-                className="w-full px-3 py-2 mb-2 transition-all bg-backg-raised dark:bg-backg-dark-raised border border-font-inactive rounded-lg enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed placeholder:italic"
-                value={price}
-                disabled={!category}
-                onChange={(e) => {
-                  if (e.target.value > 1000000000) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setError("Price cannot exceed 1 billion");
-                  } else {
-                    console.log(` > typing price: ${e.target.value} ... \n`);
-                    setPrice(e.target.value);
-                  }
-                }}
-              />
-            </div>
-            {/* FIELD Image */}
-            <div className="upload-container max-w-[148px] relative flex items-center justify-between sm:min-h-1/2">
-              <div className="drop-area w-full sm:h-full rounded-lg border-2 border-dotted border-font-inactive transition-all hover:border-primary-dark text-center">
-                {!image && (
-                  <label
-                    htmlFor="file-input"
-                    className={`flex w-full h-full items-center justify-center text-font-inactive p-4 text-sm cursor-pointer`}
-                  >
-                    Drop your image here or click to browse
-                  </label>
-                )}
+                />
+                {/* FIELD Description */}
                 <input
-                  name="file"
-                  type="file"
-                  id="file-input"
-                  accept="image/*"
-                  // accept=".png, .jpg, .jpeg"
-                  className="hidden"
-                  // value={image}
-                  onChange={async (e) => {
-                    console.log(` > uploading image: ${e.target.value} ... \n`);
-                    if (e.target.files && e.target.files[0]) {
-                      const imgUrl = e.target.files[0];
-                      if (
-                        !imgUrl.name.match(/\.(jpg|jpeg|png|JPG|JPEG|PNG)$/)
-                      ) {
-                        setError("Invalid image file: select JPG,JPEG,PNG");
-                        return;
-                      }
-                      imgPreview(imgUrl, 1)
-                        .then((res_) => {
-                          if (res_ === true) {
-                            toast.success("Image uploaded successfully");
-                          } else {
-                            toast.error("Failed to upload image");
-                          }
-                        })
-                        .catch((error) => {
-                          console.error("Error loading image:", error);
-                        });
+                  name="description"
+                  type="text"
+                  placeholder="Description"
+                  maxLength="40"
+                  className="w-full px-3 py-2 mb-2 transition-all bg-backg-raised dark:bg-backg-dark-raised border border-font-inactive rounded-lg enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed placeholder:italic"
+                  value={description}
+                  disabled={!category}
+                  onChange={(e) => {
+                    console.log(
+                      ` > typing description:${e.target.value} ... \n`
+                    );
+                    setDescription(e.target.value);
+                  }}
+                />
+                {/* FIELD Price */}
+                <input
+                  name="price"
+                  type="number"
+                  inputMode="numeric"
+                  placeholder="Price"
+                  className="w-full px-3 py-2 mb-2 transition-all bg-backg-raised dark:bg-backg-dark-raised border border-font-inactive rounded-lg enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed placeholder:italic"
+                  value={price}
+                  disabled={!category}
+                  onChange={(e) => {
+                    if (e.target.value > 1000000000) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setError("Price cannot exceed 1 billion");
+                    } else {
+                      console.log(` > typing price: ${e.target.value} ... \n`);
+                      setPrice(e.target.value);
                     }
                   }}
                 />
-                {/* <!-- Image upload input --> */}
-                {image && (
-                  <div className={`items-center justify-center flex flex-col`}>
-                    <div className="preview-image flex flex-col justify-center items-center w-36 h-36 rounded-lg">
-                      <canvas ref={imgCanvas} className="w-36 h-36" />
-                      <canvas id="blankCanvas" className="hidden" />
-                    </div>
-                    <button
-                      className="cursor-pointer transition-all my-2 rounded-md px-3 py-1 border border-font-inactive text-xs text-state-danger hover:border-state-danger"
-                      // onClick={() => setImage("")}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        let canvasContext = imgCanvas.current.getContext("2d");
-                        canvasContext.clearRect(
-                          0,
-                          0,
-                          canvasContext.width,
-                          canvasContext.height
-                        );
-                        setImage(null);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
               </div>
-            </div>
-          </form>
+              {/* FIELD Image */}
+              <div className="upload-container max-w-[148px] relative flex items-center justify-between sm:min-h-1/2">
+                <div className="drop-area w-full sm:h-full rounded-lg border-2 border-dotted border-font-inactive transition-all hover:border-primary-dark text-center">
+                  {!image && (
+                    <label
+                      htmlFor="file-input"
+                      className={`flex w-full h-full items-center justify-center text-font-inactive p-4 text-sm cursor-pointer`}
+                    >
+                      Drop your image here or click to browse
+                    </label>
+                  )}
+                  <input
+                    name="file"
+                    type="file"
+                    id="file-input"
+                    accept="image/*"
+                    // accept=".png, .jpg, .jpeg"
+                    className="hidden"
+                    // value={image}
+                    onChange={async (e) => {
+                      console.log(
+                        ` > uploading image: ${e.target.value} ... \n`
+                      );
+                      if (e.target.files && e.target.files[0]) {
+                        const imgUrl = e.target.files[0];
+                        if (
+                          !imgUrl.name.match(/\.(jpg|jpeg|png|JPG|JPEG|PNG)$/)
+                        ) {
+                          setError("Invalid image file: select JPG,JPEG,PNG");
+                          return;
+                        }
+                        imgPreview(imgUrl, 1)
+                          .then((res_) => {
+                            if (res_ === true) {
+                              toast.success("Image uploaded successfully");
+                            } else {
+                              toast.error("Failed to upload image");
+                            }
+                          })
+                          .catch((error) => {
+                            console.error("Error loading image:", error);
+                          });
+                      }
+                    }}
+                  />
+                  {/* <!-- Image upload input --> */}
+                  {image && (
+                    <div
+                      className={`items-center justify-center flex flex-col`}
+                    >
+                      <div className="preview-image flex flex-col justify-center items-center w-36 h-36 rounded-lg">
+                        <canvas ref={imgCanvas} className="w-36 h-36" />
+                        <canvas id="blankCanvas" className="hidden" />
+                      </div>
+                      <button
+                        className="cursor-pointer transition-all my-2 rounded-md px-3 py-1 border border-font-inactive text-xs text-state-danger hover:border-state-danger"
+                        // onClick={() => setImage("")}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          let canvasContext =
+                            imgCanvas.current.getContext("2d");
+                          canvasContext.clearRect(
+                            0,
+                            0,
+                            canvasContext.width,
+                            canvasContext.height
+                          );
+                          setImage(null);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </form>
+          )}
           {/* <!-- Modal footer --> */}
           <div className="flex items-center justify-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
             <ButtonSecondary label="Delete Product" onClick={handleDelete} />
