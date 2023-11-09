@@ -115,7 +115,7 @@ export default function LandingPage() {
           </>
         )}
         {showPopup &&
-          popUpAuto(function handleClose() {
+          autoPopUp(function handleClose() {
             setShowPopup(false);
           })}
       </main>
@@ -124,48 +124,7 @@ export default function LandingPage() {
   );
 }
 
-const data = [
-  {
-    name: "VW GTI MK5",
-    image:
-      "https://img.freepik.com/icones-gratuites/photo_318-224222.jpg?t=st=1692184185~exp=1692184785~hmac=9574e270a720386c1cab75eb8df937f8a31e20fbfcfebe219b3c4dd3705bc975",
-    comment: `you can add text with html tag <b>like this   </b>`,
-  },
-  {
-    link: "add link here",
-    image:
-      "https://img.freepik.com/icones-gratuites/photo_318-224222.jpg?t=st=1692184185~exp=1692184785~hmac=9574e270a720386c1cab75eb8df937f8a31e20fbfcfebe219b3c4dd3705bc975",
-    comment: `you can add text with html tag <b>like this   </b>`,
-  },
-  {
-    link: "add link here",
-    image:
-      "https://img.freepik.com/icones-gratuites/photo_318-224222.jpg?t=st=1692184185~exp=1692184785~hmac=9574e270a720386c1cab75eb8df937f8a31e20fbfcfebe219b3c4dd3705bc975",
-    comment: `you can add text with html tag <b>like this   </b>`,
-  },
-  {
-    link: "add link here",
-    image:
-      "https://img.freepik.com/icones-gratuites/photo_318-224222.jpg?t=st=1692184185~exp=1692184785~hmac=9574e270a720386c1cab75eb8df937f8a31e20fbfcfebe219b3c4dd3705bc975",
-    comment: `you can add text with html tag <b>like this   </b>`,
-  },
-  {
-    link: "add link here",
-    image:
-      "https://img.freepik.com/icones-gratuites/photo_318-224222.jpg?t=st=1692184185~exp=1692184785~hmac=9574e270a720386c1cab75eb8df937f8a31e20fbfcfebe219b3c4dd3705bc975",
-    comment: `you can add text with html tag <b>like this   </b>`,
-  },
-  {
-    link: "add link here",
-    image:
-      "https://img.freepik.com/icones-gratuites/photo_318-224222.jpg?t=st=1692184185~exp=1692184785~hmac=9574e270a720386c1cab75eb8df937f8a31e20fbfcfebe219b3c4dd3705bc975",
-    comment: `you can add text with html tag <b>like this   </b>`,
-  },
-];
-
-export function popUpAuto(
-  handleClose = () => console.log("handleClose clicked")
-) {
+export function autoPopUp(handleClose) {
   // ${showPopup ? "" : "hidden"}
   return (
     <div

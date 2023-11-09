@@ -17,8 +17,12 @@ export function CardLarge({ className, product }) {
         />
       </div>
       <div className="p-4 w-full">
-        <h3 className="text-xl font-bold">{product?.name}</h3>
-        <p className="font-serif">{product?.description}</p>
+        <h3 className="text-xl font-bold group-hover:scale-105 transition">
+          {product?.name}
+        </h3>
+        <p className="font-serif group-hover:scale-105 transition">
+          {product?.description}
+        </p>
       </div>
     </div>
   );
