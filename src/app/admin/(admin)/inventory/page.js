@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ButtonSecondary } from "@/components/atoms/buttons";
-import { ModalAddProduct, ModalEditProduct, ProductOptions } from "./compo";
+import { ModalAddProduct, ModalEditProduct } from "./compo";
 import { ProductsContext } from "@/app/context";
 import Loader from "@/components/loader";
 import toast from "react-hot-toast";
@@ -57,8 +57,7 @@ export default function InventoryPage() {
         <Loader />
       ) : (
         <>
-          {itemClicked && <ProductOptions options={itemClicked} />}
-          <div className="flex flex-wrap items-center justify-between p-2 space-x-2 space-y-2">
+          {/* <div className="flex flex-wrap items-center justify-between p-2 space-x-2 space-y-2">
             <select
               name="category"
               className="h-full rounded-lg border-none max-w-120 pb-2 px-2 bg-backg-raised dark:bg-backg-dark-raised"
@@ -106,6 +105,80 @@ export default function InventoryPage() {
                   setModal("add");
                 }}
               />
+            </div>
+          </div> */}
+          {/* HEADER */}
+          <div className="relative sm:rounded-lg">
+            <div className="flex flex-col items-center justify-between p-4 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
+              {/* search FIELD */}
+              <div className="relative w-full sm:max-w-[50%] min-w-[120px]">
+                <label
+                  htmlFor="searchPhrase"
+                  className="hidden mb-2 text-sm font-medium "
+                >
+                  Search
+                </label>
+                <div className="flex absolute inset-y-0 left-0 items-center pl-3">
+                  {/* <svg
+                className="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+              </svg> */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  className="block p-2 pl-10 w-full border bg-backg-raised rounded-lg dark:bg-backg-dark-raised"
+                  // className="rounded-lg w-full min-w-[240px] bg-backg-raised dark:bg-backg-dark-raised"
+                  placeholder="Search products by name..."
+                  type="searchPhrase"
+                  id="searchPhrase"
+                  required=""
+                />
+              </div>
+              {/* filter FIELDS */}
+              <div className="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 sm:w-auto sm:flex-row sm:space-y-0 sm:items-center sm:space-x-3">
+                <div className="flex items-center w-full space-x-3 md:w-auto">
+                  <select
+                    name="category"
+                    className="flex w-full min-w-[120px] rounded-lg border pb-2 px-2 bg-backg-raised dark:bg-backg-dark-raised"
+                  >
+                    <option value="" defaultValue className="italic py-2">
+                      Category...
+                    </option>
+                    <option>Car</option>
+                    <option>Part</option>
+                    <option>Service</option>
+                  </select>
+                  <ButtonSecondary
+                    className="flex w-full min-w-[120px] pb-2 px-2 text-sm"
+                    label="New Product"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      console.log(
+                        " > Button clicked to show Add-Product-Modal..."
+                      );
+                      setModal("add");
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div className="w-full shadow rounded-lg overflow-x-auto bg-backg-surface dark:bg-backg-dark-surface">

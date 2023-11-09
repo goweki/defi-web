@@ -131,7 +131,7 @@ export function autoPopUp(handleClose) {
       id="modal"
       tabIndex="-1"
       aria-hidden="true"
-      className={`fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full bg-backg dark:bg-backg-dark bg-opacity-90 dark:bg-opacity-90 flex items-center justify-center`}
+      className={`transition fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full bg-backg dark:bg-backg-dark bg-opacity-90 dark:bg-opacity-90 flex items-center justify-center`}
     >
       <div className="relative w-full max-w-screen-lg max-h-full my-auto">
         {/* <!-- Modal content --> */}

@@ -142,7 +142,7 @@ export function ModalAddProduct({ handleClose }) {
       id="modal"
       tabIndex="-1"
       aria-hidden="true"
-      className={`fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full bg-backg dark:bg-backg-dark bg-opacity-90 flex items-center justify-center`}
+      className={`transition fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full bg-backg dark:bg-backg-dark bg-opacity-90 flex items-center justify-center`}
     >
       <div className="relative w-full max-w-screen-lg max-h-full my-auto">
         {/* <!-- Modal content --> */}
@@ -575,7 +575,7 @@ export function ModalEditProduct({ product, handleClose }) {
       id="modal"
       tabIndex="-1"
       aria-hidden="true"
-      className={`fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full bg-backg dark:bg-backg-dark bg-opacity-90 flex items-center justify-center`}
+      className={`transition fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full bg-backg dark:bg-backg-dark bg-opacity-90 flex items-center justify-center`}
     >
       <div className="relative w-full max-w-screen-lg max-h-full my-auto">
         {/* <!-- Modal content --> */}
@@ -786,25 +786,25 @@ export function ModalEditProduct({ product, handleClose }) {
   );
 }
 
-export function ProductOptions({ options }) {
-  const { x, y, id } = options;
-  return (
-    <div
-      id="itemOptions"
-      className={`fixed z-10 top-[226px] left-[210px] bg-backg-raised divide-y divide-font-inactive rounded-lg shadow w-32 dark:bg-backg-dark-raised`}
-    >
-      <ul className="py-2 text-sm">
-        <li>
-          <button className="text-left block w-full px-4 py-2 hover:bg-backg dark:hover:bg-backg-dark">
-            Edit
-          </button>
-        </li>
-        <li>
-          <button className="text-left block w-full px-4 py-2 hover:bg-backg dark:hover:bg-backg-dark">
-            Delete Product
-          </button>
-        </li>
-      </ul>
-    </div>
-  );
-}
+// export function ProductOptions({ options }) {
+//   const { x, y, id } = options;
+//   return (
+//     <div
+//       id="itemOptions"
+//       className={`transition fixed z-10 top-[226px] left-[210px] bg-backg-raised divide-y divide-font-inactive rounded-lg shadow w-32 dark:bg-backg-dark-raised`}
+//     >
+//       <ul className="py-2 text-sm">
+//         <li>
+//           <button className="text-left block w-full px-4 py-2 hover:bg-backg dark:hover:bg-backg-dark">
+//             Edit
+//           </button>
+//         </li>
+//         <li>
+//           <button className="text-left block w-full px-4 py-2 hover:bg-backg dark:hover:bg-backg-dark">
+//             Delete Product
+//           </button>
+//         </li>
+//       </ul>
+//     </div>
+//   );
+// }
