@@ -2,9 +2,10 @@ import Image from "next/image";
 import carImage from "@/assets/images/car.jpg";
 import { ButtonSecondary } from "./atoms/buttons";
 
-export function CardLarge({ className, product }) {
+export function CardLarge({ className, product, onClick = () => null }) {
   return (
     <div
+      onClick={onClick}
       className={`${className} group flex-none w-52 h-84 bg-backg-surface dark:bg-backg-dark-surface overflow-hidden rounded-xl shadow hover:shadow-lg hover:scale-105 transition`}
     >
       <div className="w-52 aspect-square overflow-hidden">

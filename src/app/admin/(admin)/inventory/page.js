@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ButtonSecondary } from "@/components/atoms/buttons";
 import { ModalAddProduct, ModalEditProduct } from "./compo";
-import { ProductsContext } from "@/app/context";
 import Loader from "@/components/loader";
 import toast from "react-hot-toast";
 

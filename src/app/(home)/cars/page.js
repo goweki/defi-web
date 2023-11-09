@@ -1,11 +1,12 @@
 "use client";
 import { useContext, useState } from "react";
-import { ButtonSecondary } from "@/components/atoms/buttons";
+import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 import { ProductsContext } from "@/app/context";
 import { CardLarge } from "@/components/cards";
 
 export default function CarsPage() {
   const products = useContext(ProductsContext);
+  const [clickedCar, setClickedCar] = useState("");
   // const [searchPhrase, setSearchPhrase] = useState("");
   // const [sizeFilter, setSizeFilter] = useState("");
   return (
@@ -92,13 +93,89 @@ export default function CarsPage() {
             .map((v, i) => {
               return (
                 <CardLarge
+                  // onClick={(e) => console.log(v._id)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    console.log("Item clicked: " + v._id);
+                    setClickedCar(v);
+                  }}
                   product={v}
                   key={v._id}
-                  id={v._id}
+                  inID={v._id}
                   className={`inline-block m-4`}
                 />
               );
             })}
+      </div>
+      {clickedCar &&
+        clickPopUp(function () {
+          setClickedCar("");
+        }, clickedCar)}
+    </div>
+  );
+}
+
+function clickPopUp(handleClose, car) {
+  // ${showPopup ? "" : "hidden"}
+  return (
+    <div
+      id="modal"
+      tabIndex="-1"
+      aria-hidden="true"
+      className={`transition fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full bg-backg dark:bg-backg-dark bg-opacity-90 dark:bg-opacity-90 flex items-center justify-center`}
+    >
+      <div className="relative w-full max-w-screen-lg max-h-full my-auto">
+        {/* <!-- Modal content --> */}
+        <div className="relative bg-backg-surface rounded-lg shadow dark:bg-backg-dark-surface">
+          {/* <!-- Modal header --> */}
+          <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-font-inactive">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              Interested in a {car.category} ?
+            </h3>
+            <button
+              type="button"
+              className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              onClick={handleClose}
+            >
+              <svg
+                className="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+              <span className="sr-only">Close modal</span>
+            </button>
+          </div>
+          {/* <!-- Modal body --> */}
+          <div className="max-w-xl grid grid-cols-1 md:grid-cols-2 gap-x-4 m-auto h-fit pt-8">
+            <div className="bg-primary m-auto w-full h-full">
+              <canvas id="imgCanvas"></canvas>
+            </div>
+            <div className="bg-font-inactive">
+              <h2 className="mb-4 text-xl text-center tracking-tight font-extrabold sm:text-2xl ">
+                {car.name}
+              </h2>
+              <p className="text-center mb-4 font-light md:mb-8 sm:text-lg ">
+                Leave your phone number or email below, so we can schedule a
+                tes-drive
+              </p>
+            </div>
+          </div>
+          {/* <!-- Modal footer --> */}
+          <div className="flex items-center justify-center p-6 space-x-2 border-none  rounded-b">
+            <ButtonSecondary label="Cancel" onClick={handleClose} />
+            <ButtonPrimary label="Show Interest" onClick={handleClose} />
+          </div>
+        </div>
       </div>
     </div>
   );
