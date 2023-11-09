@@ -379,7 +379,7 @@ export function ModalEditProduct({ product, handleClose }) {
   const [price, setPrice] = useState(product.price);
   const [image, setImage] = useState(product.image);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const imgCanvas = useRef(null);
   // on Mount and change in product.image
   useEffect(() => {
@@ -396,11 +396,11 @@ export function ModalEditProduct({ product, handleClose }) {
       let newHeight = (img.height * canvas_.height) / img.height;
       // draw on canvas
       ctx.drawImage(img, 0, 0, newWidth, newHeight);
-      setLoading(false);
     };
     // load image
     img.src = product.image;
     // update component's loading state
+    setLoading(false);
   }, [product.image]);
   // on ERROR
   useEffect(() => {
