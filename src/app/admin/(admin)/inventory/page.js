@@ -1,20 +1,54 @@
 "use client";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ButtonSecondary } from "@/components/atoms/buttons";
 import { ModalAddProduct, ModalEditProduct, ProductOptions } from "./compo";
 import { ProductsContext } from "@/app/context";
 import Loader from "@/components/loader";
+import toast from "react-hot-toast";
 
 export default function InventoryPage() {
-  const products = useContext(ProductsContext);
+  const router = useRouter();
+  const [products, setProducts] = useState(null);
   const [activeModal, setModal] = useState("");
   const [loading, setLoading] = useState(true);
   const [itemClicked, setItemClicked] = useState("");
-  // onMount
+  // onMount, fetch products
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    if (!activeModal) {
+      const fetchOptions = { method: "GET" };
+      fetch("/api/products", fetchOptions)
+        .then((res_) => res_.json())
+        .then((json_) => {
+          if (json_.success) {
+            console.log(
+              `SUCCESS: Documents fetched:${json_.success.length}\n.............`
+            );
+            setProducts(json_.success);
+          } else if (json_.error) {
+            console.error(
+              "ERROR: could not fetch products\n > " +
+                JSON.stringify(json_.error) +
+                "\n.............."
+            );
+            toast.error(json_.error);
+          } else {
+            console.error(
+              "ERROR: Loading products failed\n > " +
+                JSON.stringify(json_) +
+                "\n.............."
+            );
+            toast.error("ERROR: Check network and reload");
+          }
+        })
+        .catch((err) => {
+          toast.error("ERROR: operations failed");
+          console.error("ERROR: caught error\n > " + err.error || err);
+        });
+      setLoading(false);
+    }
+  }, [activeModal]);
   // render
   return (
     <div className="py-8 max-w-screen-lg w-full px-4 md:px-8 lg:px-12">

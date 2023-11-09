@@ -38,7 +38,7 @@ export default function Context({ children }) {
         }
       })
       .catch((err) => {
-        setUIstate;
+        setUIstate("failure");
         console.error("ERROR: caught error\n > " + err.error || err);
       });
   }, []);

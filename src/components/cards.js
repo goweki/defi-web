@@ -2,23 +2,23 @@ import Image from "next/image";
 import carImage from "@/assets/images/car.jpg";
 import { ButtonSecondary } from "./atoms/buttons";
 
-export function CardLarge({ className }) {
+export function CardLarge({ className, product }) {
   return (
     <div
-      className={`${className} group bg-backg-surface dark:bg-backg-dark-surface overflow-hidden rounded-xl shadow hover:shadow-md`}
+      className={`${className} group flex-none w-52 h-84 bg-backg-surface dark:bg-backg-dark-surface overflow-hidden rounded-xl shadow hover:shadow-lg`}
     >
-      <div className="max-h-64 aspect-square overflow-hidden">
+      <div className="w-52 aspect-square overflow-hidden">
         <Image
           className={`object-cover transition group-hover:scale-110`}
-          src={carImage}
+          src={product?.image}
           width={300}
           height={300}
           alt="car_image"
         />
       </div>
-      <div className="p-4">
-        <h3 className="text-xl font-bold">VW GOLF GTI</h3>
-        <p className="font-serif">2019, 1600cc, 26000km</p>
+      <div className="p-4 w-full">
+        <h3 className="text-xl font-bold">{product?.name}</h3>
+        <p className="font-serif">{product?.description}</p>
       </div>
     </div>
   );

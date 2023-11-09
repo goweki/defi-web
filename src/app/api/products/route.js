@@ -1,5 +1,5 @@
 import clientPromise from "@/lib/mongodb";
-export const revalidate = 6; // false | 'force-cache' | 0 | number
+export const revalidate = 0; // false | 'force-cache' | 0 | number
 
 export async function GET(request) {
   try {

@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import { CardLarge } from "@/components/cards";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 import { ProductsContext } from "./context";
+import Loader from "@/components/loader";
 
 export default function LandingPage() {
   const products = useContext(ProductsContext);
@@ -53,35 +54,66 @@ export default function LandingPage() {
           </div>
         </div>
         {/* PICK of the Month */}
-        <div className="lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
-          <h2 className="pb-2">Pick of the Month</h2>
-          <div className="flex flex-row justify-between space-x-4">
-            <CardLarge className={`inline-block`} />
-            <CardLarge className={`hidden sm:inline-block`} />
-            <CardLarge className={`hidden md:inline-block`} />
-            <CardLarge className={`hidden lg:inline-block`} />
-          </div>
-        </div>
-        {/* CARS featured */}
-        <div className="lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
-          <h2 className="pb-2">Featured Cars</h2>
-          <div className="flex flex-row justify-between space-x-4">
-            <CardLarge className={`inline-block`} />
-            <CardLarge className={`hidden sm:inline-block`} />
-            <CardLarge className={`hidden md:inline-block`} />
-            <CardLarge className={`hidden lg:inline-block`} />
-          </div>
-        </div>
-        {/* SERVICES featured */}
-        <div className="lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
-          <h2 className="pb-2">Featured Services</h2>
-          <div className="flex flex-row justify-between space-x-4">
-            <CardLarge className={`inline-block`} />
-            <CardLarge className={`hidden sm:inline-block`} />
-            <CardLarge className={`hidden md:inline-block`} />
-            <CardLarge className={`hidden lg:inline-block`} />
-          </div>
-        </div>
+        {!products ? (
+          <Loader />
+        ) : (
+          <>
+            {/* Top deals */}
+            {/* <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
+              <h2 className="pb-2"> Top deals</h2>
+              <div className="flex flex-row w-full px-4 py-2 justify-start space-x-4 overflow-x-auto scrolling-touch">
+                {products
+                  .filter((obj) => obj.category === "Car")
+                  .map((v, i) => {
+                    return (
+                      <CardLarge
+                        product={v}
+                        key={v._id}
+                        id={v._id}
+                        className={`inline-block`}
+                      />
+                    );
+                  })}
+              </div>
+            </div> */}
+            {/* Cars featured */}
+            <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
+              <h2 className="pb-2">Featured Cars</h2>
+              <div className="flex flex-row w-full px-4 py-2 justify-start space-x-4 overflow-x-auto scrolling-touch">
+                {products
+                  .filter((obj) => obj.category === "Car")
+                  .map((v, i) => {
+                    return (
+                      <CardLarge
+                        product={v}
+                        key={v._id}
+                        id={v._id}
+                        className={`inline-block`}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+            {/* SERVICES featured */}
+            <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
+              <h2 className="pb-2">Featured Services</h2>
+              <div className="flex flex-row w-full px-4 py-2 justify-start space-x-4 overflow-x-auto scrolling-touch">
+                {products
+                  .filter((obj) => obj.category === "Part")
+                  .map((v, i) => {
+                    return (
+                      <CardLarge
+                        product={v}
+                        key={v._id}
+                        id={v._id}
+                        className={`inline-block`}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+          </>
+        )}
         {showPopup &&
           popUpAuto(function handleClose() {
             setShowPopup(false);
