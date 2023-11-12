@@ -21,13 +21,13 @@ export default function Navbar() {
               <div className="space-x-4 md:space-x-8 flex mx-6">
                 {[
                   { link: "cars" },
-                  { link: "parts" },
+                  { link: "services" },
                   {
                     logo: (
                       <SVGlogo className="transition h-8 w-auto mx-4 py-2 hover:scale-110 hover:text-primary dark:hover:text-primary" />
                     ),
                   },
-                  { link: "service" },
+                  { link: "blog" },
                   { link: "contacts" },
                 ].map((v, i) => (
                   <Link
