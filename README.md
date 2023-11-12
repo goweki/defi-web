@@ -14,10 +14,16 @@ Source code for DEFI Motors and Autoworks website.
 
 #### Admin Pages
 
-- Admin: [`/admin`](https://www.defioffroads.co.ke/admin)
-- Inventory: [`/admin/inventory`](https://www.defioffroads.co.ke/admin/inventory)
+- Home: [`/`](https://www.defioffroads.co.ke/)
+- Inventory (Products & Services): [`/admin/inventory`](https://www.defioffroads.co.ke/admin/inventory)
 - Blog: [`/admin/blog`](https://www.defioffroads.co.ke/admin/blog)
 - Leads: [`/admin/inventory`](https://www.defioffroads.co.ke/admin/leads)
+
+#### Backend routes
+
+- Authentication: [`/api/auth`]
+- Products: [`/api/products`] 
+- Blogs: [`/api/blogs`]
 
 ## Toolchain
 
@@ -25,6 +31,7 @@ Source code for DEFI Motors and Autoworks website.
 - css: [`Tailwind`](https://tailwindcss.com/) v3.
 - Hosting: [`Vercel`](https://vercel.com/).
 - Mail: [`nodemailer`](https://nodemailer.com/).
+- Authentication: [`Next.js Auth`](https://next-auth.js.org). 
 
 ### Running App
 
