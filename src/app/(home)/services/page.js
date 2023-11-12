@@ -10,7 +10,7 @@ export default function ServicesPage() {
   const [services, setServices] = useState("");
   // onUpdate PRODUCTS
   useEffect(() => {
-    setServices(products.filter((obj) => obj.category === "Service"));
+    setServices(products?.filter((obj) => obj.category === "Service"));
   }, [products]);
 
   // const [searchPhrase, setSearchPhrase] = useState("");

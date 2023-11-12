@@ -59,7 +59,7 @@ export default function CarsPage() {
           {/* filter FIELDS */}
           <div className="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 sm:w-auto sm:flex-row sm:space-y-0 sm:items-center sm:space-x-3">
             <div className="flex items-center w-full space-x-3 md:w-auto">
-              <select
+              {/* <select
                 name="model"
                 className="flex w-full min-w-[120px] rounded-lg border pb-2 px-2 bg-backg-raised dark:bg-backg-dark-raised"
               >
@@ -80,7 +80,7 @@ export default function CarsPage() {
                 <option>Large</option>
                 <option>Medium</option>
                 <option>Small</option>
-              </select>
+              </select> */}
             </div>
           </div>
         </div>
