@@ -2,17 +2,29 @@
 
 Source code for DEFI Motors and Autoworks website. 
 
-## Modules
+## Live site
 
-Home - Cars, Parts and Service buckets.
+#### Public Pages
 
-Admin dashboard - to manage website content
+- Home: [`/`](https://www.defioffroads.co.ke/)
+- Cars: [`/cars`](https://www.defioffroads.co.ke/cars)
+- Services: [`/services`](https://www.defioffroads.co.ke/services)
+- Blog: [`/blog`](https://www.defioffroads.co.ke/blog)
+- Contacts: [`/contacts`](https://www.defioffroads.co.ke/contacts)
+
+#### Admin Pages
+
+- Admin: [`/admin`](https://www.defioffroads.co.ke/admin)
+- Inventory: [`/admin/inventory`](https://www.defioffroads.co.ke/admin/inventory)
+- Blog: [`/admin/blog`](https://www.defioffroads.co.ke/admin/blog)
+- Leads: [`/admin/inventory`](https://www.defioffroads.co.ke/admin/leads)
 
 ## Toolchain
 
 - Next js 13: bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 - css: [`Tailwind`](https://tailwindcss.com/) v3.
 - Hosting: [`Vercel`](https://vercel.com/).
+- Mail: [`nodemailer`](https://nodemailer.com/).
 
 ### Running App
 

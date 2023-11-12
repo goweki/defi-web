@@ -130,7 +130,7 @@ function clickPopUp(handleClose, car) {
           {/* <!-- Modal header --> */}
           <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-font-inactive">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Interested in a {car.category} ?
+              Interested in this {car.category} ?
             </h3>
             <button
               type="button"
@@ -166,7 +166,7 @@ function clickPopUp(handleClose, car) {
               </h2>
               <p className="text-center mb-4 font-light md:mb-8 sm:text-lg ">
                 Leave your phone number or email below, so we can schedule a
-                tes-drive
+                test-drive
               </p>
             </div>
           </div>
