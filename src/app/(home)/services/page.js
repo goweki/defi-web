@@ -9,12 +9,18 @@ export default function ServicesPage() {
   const products = useContext(ProductsContext);
   const [services, setServices] = useState("");
   const [clickedService, setClickedService] = useState("");
-  // const [searchPhrase, setSearchPhrase] = useState("");
+  const [searchPhrase, setSearchPhrase] = useState("");
   // const [sizeFilter, setSizeFilter] = useState("");
-  // onMount
+  // setCars: onMount, on-Products, on-searchPhrase
   useEffect(() => {
-    setServices(products?.filter((obj) => obj.category === "Service"));
-  }, [products]);
+    setServices(
+      products
+        ?.filter((obj) => obj.category === "Service")
+        .filter((item) =>
+          item.name.toLowerCase().includes(searchPhrase.toLowerCase())
+        )
+    );
+  }, [products, searchPhrase]);
   if (services)
     return (
       <div className="py-8 max-w-screen-lg w-full px-4 md:px-8 lg:px-12">
@@ -30,15 +36,6 @@ export default function ServicesPage() {
                 Search
               </label>
               <div className="flex absolute inset-y-0 left-0 items-center pl-3">
-                {/* <svg
-                className="w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-              </svg> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -57,10 +54,15 @@ export default function ServicesPage() {
               <input
                 className="block p-2 pl-10 w-full border bg-backg-raised rounded-lg dark:bg-backg-dark-raised"
                 // className="rounded-lg w-full min-w-[240px] bg-backg-raised dark:bg-backg-dark-raised"
-                placeholder="Search cars by model..."
+                placeholder="Search services..."
                 type="searchPhrase"
                 id="searchPhrase"
                 required=""
+                value={searchPhrase}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setSearchPhrase(e.target.value);
+                }}
               />
             </div>
             {/* filter FIELDS */}
@@ -94,24 +96,22 @@ export default function ServicesPage() {
         </div>
         {/* product Cards */}
         <div className="flex flex-wrap p-4">
-          {services
-            .filter((obj) => obj.category === "Car")
-            .map((v, i) => {
-              return (
-                <CardLarge
-                  // onClick={(e) => console.log(v._id)}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    console.log("Item clicked: " + v._id);
-                    setClickedService(v);
-                  }}
-                  product={v}
-                  key={v._id}
-                  inID={v._id}
-                  className={`inline-block m-4`}
-                />
-              );
-            })}
+          {services.map((v, i) => {
+            return (
+              <CardLarge
+                // onClick={(e) => console.log(v._id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log("Item clicked: " + v._id);
+                  setClickedService(v);
+                }}
+                product={v}
+                key={v._id}
+                inID={v._id}
+                className={`inline-block m-4`}
+              />
+            );
+          })}
         </div>
         {clickedService &&
           clickPopUp(function () {
