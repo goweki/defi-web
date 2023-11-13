@@ -17,7 +17,7 @@ Source code for DEFI Motors and Autoworks website.
 - Home: [`/`](https://www.defioffroads.co.ke/)
 - Inventory (Products & Services): [`/admin/inventory`](https://www.defioffroads.co.ke/admin/inventory)
 - Blog: [`/admin/blog`](https://www.defioffroads.co.ke/admin/blog)
-- Leads: [`/admin/inventory`](https://www.defioffroads.co.ke/admin/leads)
+- Leads: [`/admin/leads`](https://www.defioffroads.co.ke/admin/leads)
 
 #### Backend routes
 
