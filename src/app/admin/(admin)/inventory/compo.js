@@ -200,7 +200,6 @@ export function ModalAddProduct({ handleClose }) {
                       Select a Product category...
                     </option>
                     <option value="Car">Car</option>
-                    <option value="Part">Part</option>
                     <option value="Service">Service</option>
                   </select>
                 </div>
@@ -633,7 +632,6 @@ export function ModalEditProduct({ product, handleClose }) {
                       Select a Product category...
                     </option>
                     <option value="Car">Car</option>
-                    <option value="Part">Part</option>
                     <option value="Service">Service</option>
                   </select>
                 </div>

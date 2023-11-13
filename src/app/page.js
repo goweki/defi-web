@@ -99,7 +99,7 @@ export default function LandingPage() {
               <h2 className="pb-2">Featured Services</h2>
               <div className="flex flex-row w-full px-4 py-2 justify-start space-x-4 overflow-x-auto scrolling-touch">
                 {products
-                  .filter((obj) => obj.category === "Part")
+                  .filter((obj) => obj.category === "Service")
                   .map((v, i) => {
                     return (
                       <CardLarge
