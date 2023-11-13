@@ -2,7 +2,11 @@ import Image from "next/image";
 import carImage from "@/assets/images/car.jpg";
 import { ButtonSecondary } from "./atoms/buttons";
 
-export function CardLarge({ className, product, onClick = () => null }) {
+export function CardLarge({
+  className,
+  product,
+  onClick = () => console.log("Card clicked"),
+}) {
   return (
     <div
       onClick={onClick}
@@ -25,13 +29,22 @@ export function CardLarge({ className, product, onClick = () => null }) {
   );
 }
 
-export function CardInFooter({ title, desc, btnText }) {
+export function CardInFooter({
+  title,
+  desc,
+  btnText,
+  onClick = () => console.log("Card button clicked"),
+}) {
   return (
     <div className="max-w-md flex flex-col items-start justify-start bg-gradientCard dark:bg-gradientCardDark rounded-lg p-6 m-3">
       <h4 className="mb-2 font-bold uppercase">{title}</h4>
       <div className="flex flex-wrap sm:flex-nowrap">
         <div className="max-h-20 mr-4 overflow-hidden">{desc}</div>
-        <ButtonSecondary label={btnText} className="ml-auto h-16 w-28" />
+        <ButtonSecondary
+          label={btnText}
+          onClick={onClick}
+          className="ml-auto h-16 w-28"
+        />
       </div>
     </div>
   );

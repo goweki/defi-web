@@ -1,8 +1,9 @@
-import { ButtonSecondary } from "./atoms/buttons";
+import { useRouter } from "next/navigation";
 import { SVGfblogo, SVGlogo, SVGxlogo } from "./atoms/svgs";
 import Link from "next/link";
 import { CardInFooter } from "./cards";
 export default function Footer() {
+  const router = useRouter();
   return (
     <footer className="bg-backg-surface dark:bg-backg-dark-surface w-full">
       <div className="mx-auto max-w-screen-lg p-4 py-6 lg:py-8">
@@ -21,15 +22,17 @@ export default function Footer() {
             title="Looking for a CAR?"
             desc="Check out our assortment of vehicles..."
             btnText="View Cars"
+            onClick={() => router.push("/cars")}
           />
           {/* Card 2 */}
           <CardInFooter
             title="Due for Car service?"
             desc="We love taking care of vehicles..."
             btnText="View Services"
+            onClick={() => router.push("/services")}
           />
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <hr className="my-6 border-font-inactive sm:mx-auto lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between mx-4">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
             © 2023{" "}

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useContext } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import heroImage from "@/assets/images/hero_image.png";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
@@ -10,6 +11,7 @@ import { ProductsContext } from "./context";
 import Loader from "@/components/loader";
 
 export default function LandingPage() {
+  const router = useRouter();
   const products = useContext(ProductsContext);
   const [showPopup, setShowPopup] = useState(false);
   useEffect(() => {
@@ -35,10 +37,14 @@ export default function LandingPage() {
                 </p>
                 <br />
                 <div className="space-x-6 my-2 inline-block">
-                  <ButtonPrimary label="Cars" />
+                  <ButtonPrimary
+                    label="A Car"
+                    onClick={() => router.push("/cars")}
+                  />
                   <ButtonSecondary
-                    label="Service"
+                    label="A Service"
                     className="text-font-dark hover:text-font"
+                    onClick={() => router.push("/services")}
                   />
                 </div>
               </div>
