@@ -74,7 +74,9 @@ export default function Navbar() {
                 </Link> */}
                 <Link
                   href={"/admin/blog"}
-                  className={`flex justify-center items-center font-medium transition`}
+                  className={`${
+                    pathname === "/admin/blog" ? "text-primary" : ""
+                  } flex justify-center items-center font-medium transition`}
                 >
                   Blog
                 </Link>
