@@ -22,7 +22,9 @@ Source code for DEFI Motors and Autoworks website.
 
 - Authentication: [`/api/auth`]
 - Products: [`/api/products`] 
-- Blogs: [`/api/blogs`]
+- Blogs: [under development...]
+
+- Protected route for managing website content: [`/api/admin`]
 
 ## Toolchain
 
