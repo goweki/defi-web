@@ -51,8 +51,8 @@ export function ModalAddProduct({ handleClose }) {
         name,
         description,
         price,
-        // image: imgBuffer,
         image: imgSTR,
+        docType: "product",
       }),
     };
     // POST request using fetch

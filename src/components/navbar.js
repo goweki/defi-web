@@ -64,13 +64,19 @@ export default function Navbar() {
                 >
                   Inventory
                 </Link>
-                <Link
+                {/* <Link
                   href={"/"}
                   className={`${
                     pathname === "/" ? "text-primary" : ""
                   } flex justify-center items-center font-medium transition`}
                 >
                   <SVGlogo className="transition h-8 w-auto mx-4 py-2 hover:scale-110 hover:text-primary dark:hover:text-primary" />
+                </Link> */}
+                <Link
+                  href={"/admin/blog"}
+                  className={`flex justify-center items-center font-medium transition`}
+                >
+                  Blog
                 </Link>
                 <Link
                   href={"/admin/inventory"}

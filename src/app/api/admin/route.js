@@ -15,13 +15,16 @@ export async function POST(request) {
     console.log(
       `CHECKPOINT: selecting collection\n >> \n.........................`
     );
-    const collection = client.db(process.env.ATLAS_DB).collection("products");
+    const { docType, ...doc_ } = doc;
+    const collection = client
+      .db(process.env.ATLAS_DB)
+      .collection(`${docType}s`);
     // insert DOC
     console.log(`CHECKPOINT: inserting doc\n >> \n.........................`);
-    const res_ = await collection.insertOne(doc);
+    const res_ = await collection.insertOne(doc_);
     console.log(`SUCCESS: A document was inserted.\n.........................`);
     // HTTP response
-    return Response.json({ success: "Document saved" });
+    return Response.json({ success: res_ });
   } catch (error) {
     // handle ERROR if caught
     console.log(

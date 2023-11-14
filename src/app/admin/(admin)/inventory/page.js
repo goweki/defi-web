@@ -1,6 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ButtonSecondary } from "@/components/atoms/buttons";
 import { ModalAddProduct, ModalEditProduct } from "./compo";
@@ -8,15 +7,15 @@ import Loader from "@/components/loader";
 import toast from "react-hot-toast";
 
 export default function InventoryPage() {
-  const router = useRouter();
   const [products, setProducts] = useState(null);
   const [activeModal, setModal] = useState("");
   const [loading, setLoading] = useState(true);
   const [itemClicked, setItemClicked] = useState("");
+  const [filterCategory, setFilterCategory] = useState("");
+  // const [searchPhrase, setSearchPhrase] = useState("")
   // onMount, fetch products
   useEffect(() => {
     if (!activeModal) {
-      setLoading(true);
       const fetchOptions = { method: "GET" };
       fetch("/api/products", fetchOptions)
         .then((res_) => res_.json())
@@ -46,8 +45,8 @@ export default function InventoryPage() {
           toast.error("ERROR: operations failed");
           console.error("ERROR: caught error\n > " + err.error || err);
         });
-      setLoading(false);
     }
+    setLoading(false);
   }, [activeModal]);
   // render
   return (
@@ -61,22 +60,13 @@ export default function InventoryPage() {
             <div className="flex flex-col items-center justify-between p-4 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
               {/* search FIELD */}
               <div className="relative w-full sm:max-w-[50%] min-w-[120px]">
-                <label
+                {/* <label
                   htmlFor="searchPhrase"
                   className="hidden mb-2 text-sm font-medium "
                 >
                   Search
                 </label>
                 <div className="flex absolute inset-y-0 left-0 items-center pl-3">
-                  {/* <svg
-                className="w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-              </svg> */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -99,7 +89,12 @@ export default function InventoryPage() {
                   type="searchPhrase"
                   id="searchPhrase"
                   required=""
-                />
+                  value={searchPhrase}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    setSearchPhrase(e.target.value);
+                  }}
+                /> */}
               </div>
               {/* filter FIELDS */}
               <div className="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 sm:w-auto sm:flex-row sm:space-y-0 sm:items-center sm:space-x-3">
@@ -107,12 +102,18 @@ export default function InventoryPage() {
                   <select
                     name="category"
                     className="flex w-full min-w-[120px] rounded-lg border pb-2 px-2 bg-backg-raised dark:bg-backg-dark-raised"
+                    value={filterCategory}
+                    onChange={(e) => {
+                      console.log(
+                        ` > filter category selected: ${e.target.value} ... \n`
+                      );
+                      setFilterCategory(e.target.value);
+                    }}
                   >
                     <option value="" defaultValue className="italic py-2">
-                      Category...
+                      All
                     </option>
                     <option>Car</option>
-                    <option>Part</option>
                     <option>Service</option>
                   </select>
                   <ButtonSecondary
@@ -150,52 +151,60 @@ export default function InventoryPage() {
               </thead>
               <tbody className="divide-y divide-font-inactive dark:divide-font-dark-inactive border-none">
                 {products &&
-                  products.map((v, i) => (
-                    <tr
-                      id={v._id}
-                      key={v._id}
-                      className="border-b border-font-inactive dark:border-font-dark-inactive hover:bg-backg dark:hover:bg-backg-dark-raised cursor-pointer"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setItemClicked(e.currentTarget.id);
-                        setModal("edit");
-                      }}
-                    >
-                      <td className="px-5 py-5 text-sm">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 w-10 h-10">
-                            {/* <img
+                  products
+                    .filter((item) => {
+                      if (filterCategory) {
+                        return item.category === filterCategory;
+                      } else {
+                        return true;
+                      }
+                    })
+                    .map((v, i) => (
+                      <tr
+                        id={v._id}
+                        key={v._id}
+                        className="border-b border-font-inactive dark:border-font-dark-inactive hover:bg-backg dark:hover:bg-backg-dark-raised cursor-pointer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setItemClicked(e.currentTarget.id);
+                          setModal("edit");
+                        }}
+                      >
+                        <td className="px-5 py-5 text-sm">
+                          <div className="flex items-center">
+                            <div className="flex-shrink-0 w-10 h-10">
+                              {/* <img
                           className="w-full h-full rounded-full"
                           src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
                           alt=""
                         /> */}
-                            <Image
-                              className="w-full h-full rounded-full"
-                              src={v.image}
-                              width={512}
-                              height={512}
-                              alt="img"
-                            />
+                              <Image
+                                className="w-full h-full rounded-full"
+                                src={v.image}
+                                width={512}
+                                height={512}
+                                alt="img"
+                              />
+                            </div>
+                            <div className="ml-3">
+                              <p className="whitespace-no-wrap">{v.name}</p>
+                              {/* <p>{Buffer(v.image).toString("base64")}</p> */}
+                            </div>
                           </div>
-                          <div className="ml-3">
-                            <p className="whitespace-no-wrap">{v.name}</p>
-                            {/* <p>{Buffer(v.image).toString("base64")}</p> */}
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-5 py-5 text-sm">
-                        <p className="whitespace-no-wrap">{v.category}</p>
-                      </td>
-                      <td className="px-5 py-5 text-sm">
-                        <p className="whitespace-no-wrap">{v.description}</p>
-                      </td>
-                      <td className="px-5 py-5 text-sm">
-                        <span className="relative inline-block font-semibold leading-tight">
-                          {parseInt(v.price) / 1000 + " K"}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td className="px-5 py-5 text-sm">
+                          <p className="whitespace-no-wrap">{v.category}</p>
+                        </td>
+                        <td className="px-5 py-5 text-sm">
+                          <p className="whitespace-no-wrap">{v.description}</p>
+                        </td>
+                        <td className="px-5 py-5 text-sm">
+                          <span className="relative inline-block font-semibold leading-tight">
+                            {parseInt(v.price) / 1000 + " K"}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
               </tbody>
             </table>
             {products?.length > 50 && (
