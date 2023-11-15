@@ -1,5 +1,6 @@
-import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 
 export default function AutoPopUp({ handleClose }) {
   const [email, setEmail] = useState("");
@@ -22,12 +23,11 @@ export default function AutoPopUp({ handleClose }) {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        email,
-        category,
-        message,
+        subject: `NEW LEAD`,
+        text: `Email: ${email} \nInterest: ${category} \nMessage: ${message}`,
       }),
     };
-    // PUT request using fetch
+    // POST request using fetch
     fetch("/api/mailer", fetchOptions)
       .then((res_) => res_.json())
       .then((json_) => {
@@ -136,7 +136,7 @@ export default function AutoPopUp({ handleClose }) {
 
                       <select
                         name="categories"
-                        id="categories"
+                        id="category"
                         className="block p-3 pl-10 w-full text-sm bg-backg-raised rounded-lg border border-font-inactive sm:rounded-none dark:bg-backg-dark-raised"
                         value={category}
                         onChange={(e) => {
@@ -144,6 +144,9 @@ export default function AutoPopUp({ handleClose }) {
                           setCategory(e.target.value);
                         }}
                       >
+                        <option defaultValue value="">
+                          Select category...
+                        </option>
                         <option value="Cars">Cars</option>
                         <option value="Services">Services</option>
                       </select>
