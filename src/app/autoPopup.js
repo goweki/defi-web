@@ -6,7 +6,8 @@ export default function AutoPopUp({ handleClose }) {
   const [category, setCategory] = useState("");
   const [message, setMessage] = useState("");
 
-  async function handleSubmit() {
+  async function handleSubmit(e) {
+    e.preventDefault();
     //setLoading(true);
     // confirm fields filled
     if (!email || !category) {
@@ -143,8 +144,8 @@ export default function AutoPopUp({ handleClose }) {
                           setCategory(e.target.value);
                         }}
                       >
-                        <option value="volvo">Cars</option>
-                        <option value="opel">Services</option>
+                        <option value="Cars">Cars</option>
+                        <option value="Services">Services</option>
                       </select>
                     </div>
                     <div className="relative w-full">
@@ -225,7 +226,7 @@ export default function AutoPopUp({ handleClose }) {
           {/* <!-- Modal footer --> */}
           <div className="flex items-center justify-end p-6 space-x-2 border-none  rounded-b">
             <ButtonSecondary label="Cancel" onClick={handleClose} />
-            <ButtonPrimary label="Show Interest" onClick={handleClose} />
+            <ButtonPrimary label="Show Interest" onClick={handleSubmit} />
           </div>
         </div>
       </div>
