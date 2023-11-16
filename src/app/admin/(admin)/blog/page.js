@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import Link from "next/link";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 
 export default function BlogsPage() {
@@ -14,39 +13,41 @@ export default function BlogsPage() {
     author: "",
     article: "",
   });
-  // onMount - fetch blogposts
+  // onMount,blogs - fetch blogposts
   useEffect(() => {
-    const fetchOptions = { method: "GET" };
-    fetch("/api/blog", fetchOptions)
-      .then((res_) => res_.json())
-      .then((json_) => {
-        if (json_.success) {
-          console.log(
-            `SUCCESS: Documents fetched:${json_.success.length}\n.............`
-          );
-          setBlogs(json_.success);
-        } else if (json_.error) {
-          console.error(
-            "ERROR: could not fetch products\n > " +
-              JSON.stringify(json_.error) +
-              "\n.............."
-          );
-          setError(json_.error);
-        } else {
-          console.error(
-            "ERROR: Loading products failed\n > " +
-              JSON.stringify(json_) +
-              "\n.............."
-          );
-          setError("ERROR: Check network and reload");
-        }
-        setUIstate("OK");
-      })
-      .catch((err) => {
-        setUIstate("failed");
-        console.error("ERROR: caught error\n > " + err.error || err);
-      });
-  }, []);
+    if (!blogs) {
+      const fetchOptions = { method: "GET" };
+      fetch("/api/blog", fetchOptions)
+        .then((res_) => res_.json())
+        .then((json_) => {
+          if (json_.success) {
+            console.log(
+              `SUCCESS: Documents fetched:${json_.success.length}\n.............`
+            );
+            setBlogs(json_.success);
+          } else if (json_.error) {
+            console.error(
+              "ERROR: could not fetch products\n > " +
+                JSON.stringify(json_.error) +
+                "\n.............."
+            );
+            setError(json_.error);
+          } else {
+            console.error(
+              "ERROR: Loading products failed\n > " +
+                JSON.stringify(json_) +
+                "\n.............."
+            );
+            setError("ERROR: Check network and reload");
+          }
+          setUIstate("OK");
+        })
+        .catch((err) => {
+          setUIstate("failed");
+          console.error("ERROR: caught error\n > " + err.error || err);
+        });
+    }
+  }, [blogs]);
   // onError
   useEffect(() => {
     if (error) {
@@ -54,7 +55,7 @@ export default function BlogsPage() {
       setError("");
     }
   }, [error]);
-  // onBlogSelect
+  // onBlogSelect/Deselect
   useEffect(() => {
     if (selectedBlog) {
       setBlogEdit({
@@ -62,11 +63,18 @@ export default function BlogsPage() {
         author: selectedBlog.author,
         article: selectedBlog.article,
       });
+    } else {
+      setBlogEdit({
+        title: "",
+        author: "",
+        article: "",
+      });
     }
   }, [selectedBlog]);
   // onSubmit
   async function handleSave(e) {
-    // e.preventDefault();
+    e.stopPropagation();
+    e.preventDefault();
     // setLoading(true);
     // confirm fields filled
     if (!blogEdit.title || !blogEdit.author || !blogEdit.article) {
@@ -116,6 +124,12 @@ export default function BlogsPage() {
               "\n.............."
           );
           toast.success("Blog saved!");
+          setBlogEdit({
+            title: "",
+            author: "",
+            article: "",
+          });
+          setBlogs("");
         } else if (json_.error) {
           console.error(
             "ERROR: Document update failed\n > " +
@@ -138,7 +152,9 @@ export default function BlogsPage() {
       });
   }
   // onDelete
-  async function handleDelete() {
+  async function handleDelete(e) {
+    e.stopPropagation();
+    e.preventDefault();
     // setLoading(true);
     // confirm fields filled
     if (!selectedBlog) {
@@ -168,6 +184,8 @@ export default function BlogsPage() {
               "\n.............."
           );
           toast.success("Document deleted!");
+          setBlogs("");
+          setSelectedBlog("");
         } else if (json_.error) {
           console.error(
             "ERROR: failed to delete document\n > " +
@@ -194,54 +212,55 @@ export default function BlogsPage() {
     return (
       <div className="container mx-auto flex flex-wrap py-6">
         {/* <!-- Side Section --> */}
-        {blogs && (
-          <aside className="hidden md:w-1/3 md:flex flex-col items-center px-3">
-            <div className="w-full p-5 mb-4 border border-font-inactive rounded-lg bg-backg-surface dark:bg-backg-dark-surface max-h-[1500px] overflow-y-auto">
-              <p className="text-lg font-medium uppercase">Blogs</p>
-              {blogs.length > 0 ? (
-                <ol className="mt-3 divide-y divider-font-inactive">
-                  {blogs.map((v, i) => (
-                    <li
-                      key={v._id}
-                      onClick={(e) =>
-                        setSelectedBlog(blogs.find((o) => o._id === v._id))
-                      }
-                      className="cursor-pointer"
-                    >
-                      <div className="flex flex-col p-3 sm:flex hover:bg-backg dark:hover:bg-backg-dark hover:text-primary-dark">
-                        <div className="text-base font-normal">
-                          <p className="font-bold lg:text-lg">{v.title}</p>
-                        </div>
-                        <div className="text-sm font-normal">
-                          By:{" " + v.author}
-                        </div>
-                        <span className="inline-flex items-center text-xs font-normal my-2">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-4 h-4 mx-1"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                          </svg>
-                          {v.date}
-                        </span>
+
+        <aside className="hidden md:w-1/3 md:flex flex-col items-center px-3">
+          <div className="w-full p-5 mb-4 border border-font-inactive rounded-lg bg-backg-surface dark:bg-backg-dark-surface max-h-[1500px] overflow-y-auto">
+            <p className="text-lg font-medium uppercase">Blogs</p>
+            {blogs?.length > 0 ? (
+              <ol className="mt-3 divide-y divider-font-inactive">
+                {blogs.map((v, i) => (
+                  <li
+                    key={v._id}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setSelectedBlog(blogs.find(({ _id }) => _id === v._id));
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex flex-col p-3 sm:flex hover:bg-backg dark:hover:bg-backg-dark hover:text-primary-dark">
+                      <div className="text-base font-normal">
+                        <p className="font-bold lg:text-lg">{v.title}</p>
                       </div>
-                    </li>
-                  ))}
-                </ol>
-              ) : (
-                <p>No blogs</p>
-              )}
-            </div>
-          </aside>
-        )}
+                      <div className="text-sm font-normal">
+                        By:{" " + v.author}
+                      </div>
+                      <span className="inline-flex items-center text-xs font-normal my-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="w-4 h-4 mx-1"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        {v.date}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p>No blogs</p>
+            )}
+          </div>
+        </aside>
         {/* <!-- Posts Section --> */}
         <section className="w-full md:w-2/3 flex flex-col items-center px-3">
           <form
@@ -287,9 +306,22 @@ export default function BlogsPage() {
             </div>
             <div className="flex flex-row space-x-4 mt-4">
               {selectedBlog && (
-                <ButtonSecondary label="Delete post" onClick={handleDelete} />
+                <>
+                  <ButtonSecondary
+                    label="Cancel Selection"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setSelectedBlog("");
+                    }}
+                  />
+                  <ButtonSecondary label="Delete post" onClick={handleDelete} />
+                </>
               )}
-              <ButtonPrimary label="Publish post" onClick={handleSave} />
+              <ButtonPrimary
+                label={!selectedBlog ? `Publish Post` : `Save Post`}
+                onClick={handleSave}
+              />
             </div>
           </form>
         </section>
