@@ -42,11 +42,11 @@ export default function Context({ children }) {
         console.error("ERROR: caught error\n > " + err.error || err);
       });
   }, []);
-  // onMount - 2.5sec delay
+  // onMount - 1sec delay
   useEffect(() => {
     setTimeout(() => {
       setUIstate("OK");
-    }, 2500);
+    }, 1000);
   }, []);
   //on Error
   useEffect(() => {
