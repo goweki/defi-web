@@ -296,24 +296,3 @@ export default function BlogsPage() {
       </div>
     );
 }
-
-// const data = [
-//   {
-//     _id: "blog001",
-//     title: "What to look for in a first Car",
-//     author: "Mama Mboga",
-//     date: "12/11/2013",
-//     category: ["Technology", "automotive"],
-//     content:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//   },
-//   {
-//     _id: "blog002",
-//     title: "What to look for in a second Car",
-//     author: "Mama Skuma",
-//     category: ["Technology", "automotive"],
-//     date: "11/11/2013",
-//     content:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//   },
-// ];
