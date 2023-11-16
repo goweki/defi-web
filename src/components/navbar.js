@@ -1,11 +1,14 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { SVGhambuger, SVGlogo } from "./atoms/svgs";
 import ThemeToggle from "./atoms/themeToggle";
+
 export default function Navbar() {
   const pathname = usePathname();
+  const [hamIsOPen, setHamIsOpen] = useState(false);
   return (
     <nav className="bg-backg-surface dark:bg-backg-dark-surface">
       <div className="mx-auto items-center justify-center flex h-16 px-2 sm:px-6 lg:px-8 lg:max-w-screen-lg">
@@ -13,7 +16,42 @@ export default function Navbar() {
           {/* collapsed menu items */}
           <div className="sm:hidden flex flex-row flex-1 justify-between items-center">
             <SVGlogo className="h-8 w-auto mx-8 py-2 text-backg-dark dark:text-backg hover:scale-110 hover:text-primary dark:hover:text-primary" />
-            <SVGhambuger className="w-6 h-6 mx-8" />
+            <button onClick={() => setHamIsOpen(true)} className="flex p-3">
+              <SVGhambuger className="w-6 h-6" />
+            </button>
+            {hamIsOPen && (
+              <div className="bg-backg/90 dark:bg-backg-dark/90 shadow fixed top-0 left-0 z-30 w-full h-full transition p-8 ">
+                <div className="w-fit m-auto p-8 bg-backg-raised dark:bg-backg-dark-raised rounded-lg [&>li]:pl-4 [&>li]:pr-8 [&>li>a]:text-center [&>li>a]:relative [&>li>a]:transition [&>li>a]:duration-200 [&>li>a]:ease-in-out [&>li>a]:font-medium [&>li>a]:text-lg">
+                  <div className="flex flex-row justify-end">
+                    <Link
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setHamIsOpen(false);
+                      }}
+                      className="font-bold mb-4"
+                      href="#"
+                    >
+                      X
+                    </Link>
+                  </div>
+                  <li>
+                    <Link href="/cars" onClick={(e) => setHamIsOpen(false)}>
+                      Cars
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/services" onClick={(e) => setHamIsOpen(false)}>
+                      Parts
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/blog" onClick={(e) => setHamIsOpen(false)}>
+                      Blog
+                    </Link>
+                  </li>
+                </div>
+              </div>
+            )}
           </div>
           {/* expanded menu items */}
           {!pathname.includes("/admin") && (
