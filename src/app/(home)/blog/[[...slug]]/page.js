@@ -13,7 +13,7 @@ export default function BlogsPage({ params }) {
   // onMount - fetch products
   useEffect(() => {
     const fetchOptions = { method: "GET" };
-    fetch("/api/blogs", fetchOptions)
+    fetch("/api/blog", fetchOptions)
       .then((res_) => res_.json())
       .then((json_) => {
         if (json_.success) {
@@ -56,56 +56,57 @@ export default function BlogsPage({ params }) {
       <div className="container mx-auto flex flex-wrap py-6">
         {/* <!-- Posts Section --> */}
         <section className="w-full md:w-2/3 flex flex-col items-center px-3">
-          {data.map((v, i) => (
-            <article
-              key={v._id}
-              className="group hover:shadow-lg cursor-pointer flex flex-col shadow my-4 bg-backg-surface dark:bg-backg-dark-surface rounded-lg overflow-hidden"
-            >
-              {/* <!-- card IMAGE --> */}
-              <div className="aspect-[2/1] overflow-hidden">
-                <Image
-                  src="/stock_image.jpg"
-                  width={1000}
-                  height={500}
-                  alt="article image"
-                  className="group-hover:scale-110 transition"
-                />
-              </div>
-              {/* Card  */}
-              <div className="flex flex-col justify-start p-6">
-                <p className="group-hover:text-primary-dark text-3xl font-bold pb-4">
-                  {v.title}
-                </p>
-                <p className="text-sm pb-3">
-                  By <span className="font-semibold">{v.author}</span>,
-                  Published on {v.date}
-                </p>
-                <p href="#" className="pb-6">
-                  {trancStr(v.content, 210)}
-                </p>
-                <p className="group-hover:text-primary-dark uppercase no-wrap">
-                  Continue Reading
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-4 h-4 inline-block mx-1"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                    />
-                  </svg>
-                </p>
-              </div>
-            </article>
-          ))}
+          {blogs &&
+            blogs.map((v, i) => (
+              <article
+                key={v._id}
+                className="group hover:shadow-lg cursor-pointer flex flex-col shadow my-4 bg-backg-surface dark:bg-backg-dark-surface rounded-lg overflow-hidden"
+              >
+                {/* <!-- card IMAGE --> */}
+                <div className="aspect-[2/1] overflow-hidden">
+                  <Image
+                    src="/stock_image.jpg"
+                    width={1000}
+                    height={500}
+                    alt="article image"
+                    className="group-hover:scale-110 transition"
+                  />
+                </div>
+                {/* Card  */}
+                <div className="flex flex-col justify-start p-6">
+                  <p className="group-hover:text-primary-dark text-3xl font-bold pb-4">
+                    {v.title}
+                  </p>
+                  <p className="text-sm pb-3">
+                    By <span className="font-semibold">{v.author}</span>,
+                    Published on {v.date}
+                  </p>
+                  <p href="#" className="pb-6">
+                    {trancStr(v.article, 210)}
+                  </p>
+                  <p className="group-hover:text-primary-dark uppercase no-wrap">
+                    Continue Reading
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-4 h-4 inline-block mx-1"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                      />
+                    </svg>
+                  </p>
+                </div>
+              </article>
+            ))}
 
           {/* <!-- Pagination --> */}
-          {data.length > 2 && (
+          {data.length > 3 && (
             <div className="flex items-center py-8">
               <a
                 href="#"
@@ -147,41 +148,42 @@ export default function BlogsPage({ params }) {
         </section>
 
         {/* <!-- Sidebar Section --> */}
-        <aside className="w-full md:w-1/3 flex flex-col items-center px-3">
+        <aside className="hidden md:w-1/3 md:flex flex-col items-center px-3">
           <div className="p-5 mb-4 border border-font-inactive rounded-lg bg-backg-surface dark:bg-backg-dark-surface max-h-[1500px] overflow-y-auto">
             <ol className="mt-3 divide-y divider-font-inactive">
-              {data.map((v, i) => (
-                <li key={v._id}>
-                  <Link
-                    href="#"
-                    className="flex flex-col p-3 sm:flex hover:bg-backg dark:hover:bg-backg-dark hover:text-primary-dark"
-                  >
-                    <div className="text-base font-normal">
-                      <p className="font-bold lg:text-lg">{v.title}</p>
-                    </div>
-                    <div className="text-sm font-normal">
-                      By:{" " + v.author}
-                    </div>
-                    <span className="inline-flex items-center text-xs font-normal my-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="w-4 h-4 mx-1"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      {v.date}
-                    </span>
-                  </Link>
-                </li>
-              ))}
+              {blogs &&
+                blogs.map((v, i) => (
+                  <li key={v._id}>
+                    <Link
+                      href="#"
+                      className="flex flex-col p-3 sm:flex hover:bg-backg dark:hover:bg-backg-dark hover:text-primary-dark"
+                    >
+                      <div className="text-base font-normal">
+                        <p className="font-bold lg:text-lg">{v.title}</p>
+                      </div>
+                      <div className="text-sm font-normal">
+                        By:{" " + v.author}
+                      </div>
+                      <span className="inline-flex items-center text-xs font-normal my-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="w-4 h-4 mx-1"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        {v.date}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
             </ol>
           </div>
         </aside>
