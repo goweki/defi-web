@@ -12,7 +12,7 @@ export default function AutoPopUp({ handleClose }) {
     //setLoading(true);
     // confirm fields filled
     if (!email || !category) {
-      setError(`Fill empty fields`);
+      toast.error(`Fill empty fields`);
       return;
     }
     // fetch options

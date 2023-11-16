@@ -1,4 +1,5 @@
 import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 export const revalidate = 0; // false | 'force-cache' | 0 | number
 
 export async function GET(request) {
@@ -10,8 +11,20 @@ export async function GET(request) {
     // find DOCs
     const res_ = await collection.find({}).toArray();
     console.log(`SUCCESS: Docs fetched in array \n........................`);
-    // HTTP response
-    return Response.json({ success: res_ });
+    // parse timestamp
+    const res = res_.map((element) => ({
+      ...element,
+      date: new ObjectId(element._id).getTimestamp().toDateString(),
+    }));
+    // // HTTP response
+    // console.log(
+    //   `Timetamp for element 1: \n >> ${new ObjectId(res_[0]._id)
+    //     .getTimestamp()
+    //     .toDateString()}\n......................`
+    // );
+    return Response.json({
+      success: res,
+    });
   } catch (error) {
     // handle ERROR if caught
     console.log(

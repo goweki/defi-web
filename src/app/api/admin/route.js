@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 export async function POST(request) {
   try {
     const doc = await request.json();
+    const { docType, ...doc_ } = doc;
     console.log(
       `POST REQUEST: to add a new product. \n >> \n..........................`
     );
@@ -15,7 +16,6 @@ export async function POST(request) {
     console.log(
       `CHECKPOINT: selecting collection\n >> \n.........................`
     );
-    const { docType, ...doc_ } = doc;
     const collection = client
       .db(process.env.ATLAS_DB)
       .collection(`${docType}s`);
@@ -39,6 +39,7 @@ export async function POST(request) {
 export async function PUT(request) {
   try {
     const doc = await request.json();
+    const { _id, docType, ...doc_ } = doc;
     console.log(
       `PUT REQUEST: to update product. \n >> \n..........................`
     );
@@ -50,9 +51,10 @@ export async function PUT(request) {
     console.log(
       `CHECKPOINT: selecting collection\n >> \n.....................`
     );
-    const collection = client.db(process.env.ATLAS_DB).collection("products");
+    const collection = client
+      .db(process.env.ATLAS_DB)
+      .collection(`${docType}s`);
     // update DOC
-    const { _id, ...doc_ } = doc;
     console.log(
       `CHECKPOINT: updating doc\n >> _id: ${_id}\n >> fields: ${Object.keys(
         doc_
@@ -76,8 +78,9 @@ export async function PUT(request) {
 export async function DELETE(request) {
   try {
     const doc = await request.json();
+    const { _id, docType } = doc;
     console.log(
-      `DELETE REQUEST: to delete a product. \n >> \n..........................`
+      `DELETE REQUEST: to delete a document. \n >> \n..........................`
     );
     // target COLLECTION
     console.log(
@@ -87,9 +90,10 @@ export async function DELETE(request) {
     console.log(
       `CHECKPOINT: selecting collection\n >> \n.....................`
     );
-    const collection = client.db(process.env.ATLAS_DB).collection("products");
+    const collection = client
+      .db(process.env.ATLAS_DB)
+      .collection(`${docType}s`);
     // delete DOC
-    const { _id } = doc;
     console.log(
       `CHECKPOINT: deleting doc\n >> _id: ${_id}\n..................`
     );

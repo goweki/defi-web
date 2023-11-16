@@ -409,7 +409,7 @@ export function ModalEditProduct({ product, handleClose }) {
       setLoading(false);
     }
   }, [error]);
-  // save
+  // onSave
   async function handleSave() {
     setLoading(true);
     // confirm fields filled
@@ -468,7 +468,7 @@ export function ModalEditProduct({ product, handleClose }) {
         console.error("ERROR: caught error -679\n > " + err.error || err);
       });
   }
-  // delete
+  // onDelete
   async function handleDelete() {
     setLoading(true);
     // confirm fields filled
@@ -520,7 +520,6 @@ export function ModalEditProduct({ product, handleClose }) {
         console.error("ERROR: caught error -92043\n > " + err.error || err);
       });
   }
-
   /** image-resizing function
    * @param {string} imgUrl - The source image
    * @param {number} aspectRatio - The aspect ratio

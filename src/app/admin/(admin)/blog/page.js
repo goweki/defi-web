@@ -2,24 +2,22 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import Image from "next/image";
-import { trancStr } from "@/helpers/stringHandlers";
-import { ButtonPrimary } from "@/components/atoms/buttons";
+import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 
-export default function BlogsPage({ params }) {
+export default function BlogsPage() {
   const [UIstate, setUIstate] = useState("");
   const [error, setError] = useState("");
   const [blogs, setBlogs] = useState("");
+  const [selectedBlog, setSelectedBlog] = useState("");
   const [blogEdit, setBlogEdit] = useState({
     title: "",
     author: "",
     article: "",
   });
-  useState;
-  // onMount - fetch products
+  // onMount - fetch blogposts
   useEffect(() => {
     const fetchOptions = { method: "GET" };
-    fetch("/api/blogs", fetchOptions)
+    fetch("/api/blog", fetchOptions)
       .then((res_) => res_.json())
       .then((json_) => {
         if (json_.success) {
@@ -56,52 +54,200 @@ export default function BlogsPage({ params }) {
       setError("");
     }
   }, [error]);
+  // onBlogSelect
+  useEffect(() => {
+    if (selectedBlog) {
+      setBlogEdit({
+        title: selectedBlog.title,
+        author: selectedBlog.author,
+        article: selectedBlog.article,
+      });
+    }
+  }, [selectedBlog]);
+  // onSubmit
+  async function handleSave(e) {
+    // e.preventDefault();
+    // setLoading(true);
+    // confirm fields filled
+    if (!blogEdit.title || !blogEdit.author || !blogEdit.article) {
+      toast.error(`Fill empty fields`);
+      return;
+    }
+    // fetch options
+    let fetchOptions = "";
+    if (!selectedBlog) {
+      fetchOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify({
+          docType: "blogpost",
+          title: blogEdit.title,
+          author: blogEdit.author,
+          article: blogEdit.article,
+        }),
+      };
+    } else {
+      fetchOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify({
+          docType: "blogpost",
+          _id: selectedBlog._id,
+          title: blogEdit.title,
+          author: blogEdit.author,
+          article: blogEdit.article,
+        }),
+      };
+    }
+    // make CALL using fetch
+    fetch("/api/admin", fetchOptions)
+      .then((res_) => res_.json())
+      .then((json_) => {
+        if (json_.success) {
+          console.log(
+            "SUCCESS: Document updated\n > " +
+              JSON.stringify(json_) +
+              "\n.............."
+          );
+          toast.success("Blog saved!");
+        } else if (json_.error) {
+          console.error(
+            "ERROR: Document update failed\n > " +
+              JSON.stringify(json_) +
+              "\n.............."
+          );
+          setError(json_.error);
+        } else {
+          console.error(
+            "ERROR: Document update failed with no response\n > " +
+              JSON.stringify(json_) +
+              "\n.............."
+          );
+          setError("No Response");
+        }
+      })
+      .catch((err) => {
+        setError("ERROR: Saving failed");
+        console.error("ERROR: caught error -679\n > " + err.error || err);
+      });
+  }
+  // onDelete
+  async function handleDelete() {
+    // setLoading(true);
+    // confirm fields filled
+    if (!selectedBlog) {
+      toast.error(`Blog not found`);
+      return;
+    }
+    // fetch options
+    let fetchOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({
+        docType: "blogpost",
+        _id: selectedBlog._id,
+      }),
+    };
+    // DELETE request using fetch
+    fetch("/api/admin", fetchOptions)
+      .then((res_) => res_.json())
+      .then((json_) => {
+        if (json_.success) {
+          console.log(
+            "SUCCESS: Document deleted\n > " +
+              JSON.stringify(json_) +
+              "\n.............."
+          );
+          toast.success("Document deleted!");
+        } else if (json_.error) {
+          console.error(
+            "ERROR: failed to delete document\n > " +
+              JSON.stringify(json_) +
+              "\n.............."
+          );
+          setError("FAILED: Operation failed");
+        } else {
+          console.error(
+            "ERROR: Document deletion failed with no response\n > " +
+              JSON.stringify(json_) +
+              "\n.............."
+          );
+          setError("ERROR... Check connectivity");
+        }
+      })
+      .catch((err) => {
+        setError("ERROR: operations failed");
+        console.error("ERROR: caught error blog page\n > " + err.error || err);
+      });
+  }
   // return
   if (UIstate === "OK")
     return (
       <div className="container mx-auto flex flex-wrap py-6">
         {/* <!-- Side Section --> */}
-        <aside className="w-full md:w-1/3 flex flex-col items-center px-3">
-          <div className="p-5 mb-4 border border-font-inactive rounded-lg bg-backg-surface dark:bg-backg-dark-surface max-h-[1500px] overflow-y-auto">
-            <ol className="mt-3 divide-y divider-font-inactive">
-              {data.map((v, i) => (
-                <li key={v._id}>
-                  <Link
-                    href="#"
-                    className="flex flex-col p-3 sm:flex hover:bg-backg dark:hover:bg-backg-dark hover:text-primary-dark"
-                  >
-                    <div className="text-base font-normal">
-                      <p className="font-bold lg:text-lg">{v.title}</p>
-                    </div>
-                    <div className="text-sm font-normal">
-                      By:{" " + v.author}
-                    </div>
-                    <span className="inline-flex items-center text-xs font-normal my-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="w-4 h-4 mx-1"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      {v.date}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </aside>
+        {blogs && (
+          <aside className="hidden md:w-1/3 md:flex flex-col items-center px-3">
+            <div className="w-full p-5 mb-4 border border-font-inactive rounded-lg bg-backg-surface dark:bg-backg-dark-surface max-h-[1500px] overflow-y-auto">
+              <p className="text-lg font-medium uppercase">Blogs</p>
+              {blogs.length > 0 ? (
+                <ol className="mt-3 divide-y divider-font-inactive">
+                  {blogs.map((v, i) => (
+                    <li
+                      key={v._id}
+                      onClick={(e) =>
+                        setSelectedBlog(blogs.find((o) => o._id === v._id))
+                      }
+                      className="cursor-pointer"
+                    >
+                      <div className="flex flex-col p-3 sm:flex hover:bg-backg dark:hover:bg-backg-dark hover:text-primary-dark">
+                        <div className="text-base font-normal">
+                          <p className="font-bold lg:text-lg">{v.title}</p>
+                        </div>
+                        <div className="text-sm font-normal">
+                          By:{" " + v.author}
+                        </div>
+                        <span className="inline-flex items-center text-xs font-normal my-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-4 h-4 mx-1"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                          {v.date}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p>No blogs</p>
+              )}
+            </div>
+          </aside>
+        )}
         {/* <!-- Posts Section --> */}
         <section className="w-full md:w-2/3 flex flex-col items-center px-3">
-          <form className="w-full bg-backg-surface dark:bg-backg-dark-surface rounded-lg shadow p-4 md:p-8">
+          <form
+            id=" blogForm"
+            className="w-full bg-backg-surface dark:bg-backg-dark-surface rounded-lg shadow p-4 md:p-8"
+          >
             <input
               type="text"
               placeholder="Title..."
@@ -139,30 +285,35 @@ export default function BlogsPage({ params }) {
                 }}
               ></textarea>
             </div>
-            <ButtonPrimary label="Publish post" className="mt-4" />
+            <div className="flex flex-row space-x-4 mt-4">
+              {selectedBlog && (
+                <ButtonSecondary label="Delete post" onClick={handleDelete} />
+              )}
+              <ButtonPrimary label="Publish post" onClick={handleSave} />
+            </div>
           </form>
         </section>
       </div>
     );
 }
 
-const data = [
-  {
-    _id: "blog001",
-    title: "What to look for in a first Car",
-    author: "Mama Mboga",
-    date: "12/11/2013",
-    category: ["Technology", "automotive"],
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-  {
-    _id: "blog002",
-    title: "What to look for in a second Car",
-    author: "Mama Skuma",
-    category: ["Technology", "automotive"],
-    date: "11/11/2013",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-];
+// const data = [
+//   {
+//     _id: "blog001",
+//     title: "What to look for in a first Car",
+//     author: "Mama Mboga",
+//     date: "12/11/2013",
+//     category: ["Technology", "automotive"],
+//     content:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+//   },
+//   {
+//     _id: "blog002",
+//     title: "What to look for in a second Car",
+//     author: "Mama Skuma",
+//     category: ["Technology", "automotive"],
+//     date: "11/11/2013",
+//     content:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+//   },
+// ];
