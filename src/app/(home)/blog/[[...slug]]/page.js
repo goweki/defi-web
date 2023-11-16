@@ -51,163 +51,173 @@ export default function BlogsPage({ params }) {
     }
   }, [error]);
   // return
-  if (UIstate === "OK")
+  if (blogs && params?.slug) {
+    const selectedBlog = blogs.find(({ _id }) => _id === params.slug[0]);
+    if (selectedBlog)
+      return (
+        <div className="flex justify-between p-4 pt-4 mx-auto max-w-screen-lg transition">
+          <article className="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+            <Link href="/blog" className="my-6 flex flex-row no-wrap">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 mx-2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                />
+              </svg>
+              All blog-posts
+            </Link>
+            {/* <header className="mb-4 lg:mb-6 not-format">
+              <h1 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
+                {selectedBlog.title}
+              </h1>
+            </header> */}
+            <figure className="my-8">
+              <img
+                src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
+                alt=""
+              />
+              {/* <figcaption>Digital art by Anonymous</figcaption> */}
+            </figure>
+            <header className="mb-4 lg:mb-6 not-format">
+              <h2 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
+                {selectedBlog.title}
+              </h2>
+            </header>
+            <p>{selectedBlog.article}</p>
+            <address className="flex items-center mt-3 mb-6 not-italic">
+              <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-12 h-12"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                  />
+                </svg>
+
+                <div>
+                  <Link
+                    href="#"
+                    rel="author"
+                    className="text-xl font-bold text-gray-900 dark:text-white"
+                  >
+                    {selectedBlog.author}
+                  </Link>
+                  <p className="text-sm">
+                    <time dateTime={selectedBlog.date}>
+                      {selectedBlog.date}
+                    </time>
+                  </p>
+                </div>
+              </div>
+            </address>
+          </article>
+        </div>
+      );
+  } else if (blogs && UIstate === "OK") {
     return (
-      <div className="container mx-auto flex flex-wrap py-6">
-        {/* <!-- Posts Section --> */}
-        <section className="w-full md:w-2/3 flex flex-col items-center px-3">
-          {blogs &&
-            blogs.map((v, i) => (
+      <section className="transition">
+        <div className="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
+          <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+            <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold">
+              Lets discuss vehicles
+            </h2>
+            <p className="font-light sm:text-xl">
+              We enjoy talking about cars. Here are some thoughts and words
+              about the machines we love
+            </p>
+          </div>
+          <div className="grid gap-8 lg:grid-cols-2">
+            {blogs.map((v, i) => (
               <article
                 key={v._id}
-                className="group hover:shadow-lg cursor-pointer flex flex-col shadow my-4 bg-backg-surface dark:bg-backg-dark-surface rounded-lg overflow-hidden"
+                className="p-6 bg-backg-surface dark:bg-backg-dark-surface rounded-lg border border-font-inactive shadow"
               >
-                {/* <!-- card IMAGE --> */}
-                <div className="aspect-[2/1] overflow-hidden">
-                  <Image
-                    src="/stock_image.jpg"
-                    width={1000}
-                    height={500}
-                    alt="article image"
-                    className="group-hover:scale-110 transition"
-                  />
+                <div className="flex justify-between items-center mb-5 text-gray-500">
+                  <span className="bg-primary-light dark:text-font text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
+                    {/* <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                      />
+                    </svg> */}
+                    blog-post
+                  </span>
+                  <span className="text-sm">{v.date}</span>
                 </div>
-                {/* Card  */}
-                <div className="flex flex-col justify-start p-6">
-                  <p className="group-hover:text-primary-dark text-3xl font-bold pb-4">
-                    {v.title}
-                  </p>
-                  <p className="text-sm pb-3">
-                    By <span className="font-semibold">{v.author}</span>,
-                    Published on {v.date}
-                  </p>
-                  <p href="#" className="pb-6">
-                    {trancStr(v.article, 210)}
-                  </p>
-                  <p className="group-hover:text-primary-dark uppercase no-wrap">
-                    Continue Reading
+                <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  <Link href={`/blog/${v._id}`}>{v.title}</Link>
+                </h2>
+                <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
+                  {trancStr(v.article, 210)}
+                </p>
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center space-x-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
-                      className="w-4 h-4 inline-block mx-1"
+                      className="w-6 h-6"
                     >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                        d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
                       />
                     </svg>
-                  </p>
+
+                    <span className="font-medium dark:text-white">
+                      {v.author}
+                    </span>
+                  </div>
+                  <Link
+                    href={`/blog/${v._id}`}
+                    className="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
+                  >
+                    Read more
+                    <svg
+                      className="ml-2 w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                  </Link>
                 </div>
               </article>
             ))}
-
-          {/* <!-- Pagination --> */}
-          {data.length > 3 && (
-            <div className="flex items-center py-8">
-              <a
-                href="#"
-                className="h-10 w-10 bg-blue-800 hover:bg-blue-600 font-semibold text-white text-sm flex items-center justify-center"
-              >
-                1
-              </a>
-              <a
-                href="#"
-                className="h-10 w-10 font-semibold text-gray-800 hover:bg-blue-600 hover:text-white text-sm flex items-center justify-center"
-              >
-                2
-              </a>
-              <a
-                href="#"
-                className="h-10 w-10 font-semibold text-gray-800 hover:text-gray-900 text-sm flex items-center justify-center ml-3"
-              >
-                Next{" "}
-                <svg
-                  className="svg-inline--fa fa-arrow-right fa-w-14 ml-2"
-                  aria-hidden="true"
-                  focusable="false"
-                  data-prefix="fas"
-                  data-icon="arrow-right"
-                  role="img"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 448 512"
-                  data-fa-i2svg=""
-                >
-                  <path
-                    fill="currentColor"
-                    d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"
-                  ></path>
-                </svg>
-                <i className="fas fa-arrow-right ml-2"></i>
-              </a>
-            </div>
-          )}
-        </section>
-
-        {/* <!-- Sidebar Section --> */}
-        <aside className="hidden md:w-1/3 md:flex flex-col items-center px-3">
-          <div className="p-5 mb-4 border border-font-inactive rounded-lg bg-backg-surface dark:bg-backg-dark-surface max-h-[1500px] overflow-y-auto">
-            <ol className="mt-3 divide-y divider-font-inactive">
-              {blogs &&
-                blogs.map((v, i) => (
-                  <li key={v._id}>
-                    <Link
-                      href="#"
-                      className="flex flex-col p-3 sm:flex hover:bg-backg dark:hover:bg-backg-dark hover:text-primary-dark"
-                    >
-                      <div className="text-base font-normal">
-                        <p className="font-bold lg:text-lg">{v.title}</p>
-                      </div>
-                      <div className="text-sm font-normal">
-                        By:{" " + v.author}
-                      </div>
-                      <span className="inline-flex items-center text-xs font-normal my-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-4 h-4 mx-1"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                        {v.date}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-            </ol>
           </div>
-        </aside>
-      </div>
+        </div>
+      </section>
     );
+  } else return null;
 }
-
-const data = [
-  {
-    _id: "blog001",
-    title: "What to look for in a first Car",
-    author: "Mama Mboga",
-    date: "12/11/2013",
-    category: ["Technology", "automotive"],
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-  {
-    _id: "blog002",
-    title: "What to look for in a second Car",
-    author: "Mama Skuma",
-    category: ["Technology", "automotive"],
-    date: "11/11/2013",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-];
