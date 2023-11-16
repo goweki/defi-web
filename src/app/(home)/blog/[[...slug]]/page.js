@@ -79,10 +79,18 @@ export default function BlogsPage({ params }) {
                 {selectedBlog.title}
               </h1>
             </header> */}
-            <figure className="my-8">
-              <img
+            <figure className="relative my-8 h-[360px] md:h-[400px] lg:h-[440px] w-full overflow-hidden rounded-lg shadow-lg">
+              {/* <Image
                 src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
                 alt=""
+              /> */}
+              <Image
+                src="/blogBanners/1.jpg"
+                // width={500}
+                // height={500}
+                fill={true}
+                alt="blog banner"
+                className="object-cover"
               />
               {/* <figcaption>Digital art by Anonymous</figcaption> */}
             </figure>
@@ -91,8 +99,13 @@ export default function BlogsPage({ params }) {
                 {selectedBlog.title}
               </h2>
             </header>
-            <p>{selectedBlog.article}</p>
-            <address className="flex items-center mt-3 mb-6 not-italic">
+            <p className="bg-backg-surface dark:bg-backg-dark-surface p-4 rounded-lg shadow">
+              {selectedBlog.article}
+              <br />
+              <span className="text-sm italic">by {selectedBlog.author}, </span>
+              <span className="text-xs italic"> on {selectedBlog.date}</span>
+            </p>
+            {/* <address className="flex items-center mt-3 mb-6 not-italic">
               <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +137,7 @@ export default function BlogsPage({ params }) {
                   </p>
                 </div>
               </div>
-            </address>
+            </address> */}
           </article>
         </div>
       );
