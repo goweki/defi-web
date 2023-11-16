@@ -15,7 +15,7 @@ export default function LandingPage() {
   const router = useRouter();
   const products = useContext(ProductsContext);
   const [showPopup, setShowPopup] = useState(false);
-  // popup timer
+  // popup timer-20sec
   useEffect(() => {
     setTimeout(() => {
       setShowPopup(true);
