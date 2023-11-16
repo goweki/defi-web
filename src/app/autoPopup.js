@@ -6,7 +6,7 @@ export default function AutoPopUp({ handleClose }) {
   const [email, setEmail] = useState("");
   const [category, setCategory] = useState("");
   const [message, setMessage] = useState("");
-
+  //onSubmit
   async function handleSubmit(e) {
     e.preventDefault();
     //setLoading(true);

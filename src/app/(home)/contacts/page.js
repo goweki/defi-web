@@ -1,19 +1,84 @@
 "use client";
-import { ButtonPrimary } from "@/components/atoms/buttons";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { ButtonPrimary } from "@/components/atoms/buttons";
 
 export default function ContactsPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState("");
   const [message, setMessage] = useState("");
+  // onSubmit
+  function handleSubmit(e) {
+    e.preventDefault();
+    //setLoading(true);
+    // confirm fields filled
+    if (!email && !tel) {
+      toast(`Please provide either an email or Tel. No.`);
+      return;
+    }
+    if (!message) {
+      toast(`Please provide a message.`);
+      return;
+    }
+    // fetch options
+    let fetchOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({
+        subject: `CONTACT VIA WEBSITE`,
+        text: `Name: ${name} \nEmail: ${email} \nTel: ${tel}\nMessage: ${message}`,
+      }),
+    };
+    // POST request using fetch
+    fetch("/api/mailer", fetchOptions)
+      .then((res_) => res_.json())
+      .then((json_) => {
+        if (json_.success) {
+          console.log(
+            "SUCCESS: message sent\n > " +
+              JSON.stringify(json_) +
+              "\n.............."
+          );
+          toast.success("Message submitted!");
+          setName("");
+          setEmail("");
+          setTel("");
+          setMessage("");
+        } else if (json_.error) {
+          console.error(
+            "ERROR: failed sending message-contact1\n > " +
+              JSON.stringify(json_) +
+              "\n.............."
+          );
+          toast.error(json_.error);
+        } else {
+          console.error(
+            "ERROR: failed sending message-contact2\n > " +
+              JSON.stringify(json_) +
+              "\n.............."
+          );
+          toast.error("No Response");
+        }
+      })
+      .catch((err) => {
+        toast.error("ERROR: failed to send message -contact3");
+        console.error(
+          "ERROR: caught error -contact page\n > " + err.error || err
+        );
+      });
+  }
+  // render
   return (
     <section className="relative z-10 overflow-hidden bg-white dark:bg-dark py-20 lg:py-[120px]">
       <div className="container mx-auto">
         <div className="flex flex-wrap -mx-4 lg:justify-between">
           <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
             <div className="mb-12 max-w-[570px] lg:mb-0">
-              <h2 className="text-dark dark:text-white mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]">
+              <h2 className="text-dark dark:text-white mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px]">
                 GET IN TOUCH WITH US
               </h2>
               <p className="text-base leading-relaxed text-body-color dark:text-dark-6 mb-9">
@@ -153,6 +218,7 @@ export default function ContactsPage() {
                     rows="3"
                     placeholder="Your Message"
                     className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full rounded py-3 px-[14px] text-base outline-none"
+                    required
                     value={message}
                     onChange={(e) => {
                       e.preventDefault();
@@ -162,8 +228,10 @@ export default function ContactsPage() {
                 </div>
                 <div>
                   <ButtonPrimary
+                    type="submit"
                     label="Send Message"
                     className="w-full h-full"
+                    onClick={handleSubmit}
                   />
                 </div>
               </form>
