@@ -1,5 +1,6 @@
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+export const revalidate = 0; // false | 'force-cache' | 0 | number
 
 export async function POST(request) {
   try {
