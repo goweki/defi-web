@@ -20,12 +20,11 @@ Source code for DEFI Motors and Autoworks website.
 
 #### Backend routes
 
-
 - Authentication: [`/api/auth`]
-- fetch Products: [`/api/products`] 
-- fetch Blog-posts: [under development...] [`/api/blog`]
-
-- Protected route for managing website content: [`/api/admin`]
+- Products: [`/api/products`] 
+- Blog: [`/api/blog`]
+- Admin: [`/api/admin`]
+- Mailing: [`/api/mailer`]
 
 ## Toolchain
 
