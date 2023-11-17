@@ -181,7 +181,7 @@ export default function ContactsPage() {
                   <input
                     type="text"
                     placeholder="Your Name"
-                    className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full rounded py-3 px-[14px] text-base outline-none"
+                    className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full rounded py-3 px-[14px] text-base outline-none placeholder:italic"
                     value={name}
                     onChange={(e) => {
                       e.preventDefault();
@@ -205,7 +205,7 @@ export default function ContactsPage() {
                   <input
                     type="text"
                     placeholder="Your Phone"
-                    className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full rounded py-3 px-[14px] text-base outline-none"
+                    className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full rounded py-3 px-[14px] text-base outline-none placeholder:italic"
                     value={tel}
                     onChange={(e) => {
                       e.preventDefault();
@@ -217,7 +217,7 @@ export default function ContactsPage() {
                   <textarea
                     rows="3"
                     placeholder="Your Message"
-                    className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full rounded py-3 px-[14px] text-base outline-none"
+                    className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full rounded py-3 px-[14px] text-base outline-none placeholder:italic"
                     required
                     value={message}
                     onChange={(e) => {
