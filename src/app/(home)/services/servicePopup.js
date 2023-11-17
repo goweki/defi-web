@@ -59,19 +59,19 @@ export function ServicePopup({ handleClose, service }) {
               JSON.stringify(json_) +
               "\n.............."
           );
-          toast.success("Interest submitted!");
+          toast.success("Interest in service submitted!");
           setShowInterest({ name: "", email: "", tel: "" });
           handleClose();
         } else if (json_.error) {
           console.error(
-            "ERROR: failed sending Interest\n > " +
+            "ERROR: failed sending Interest in service\n > " +
               JSON.stringify(json_) +
               "\n.............."
           );
           toast.error(json_.error);
         } else {
           console.error(
-            "ERROR: failed sending Interest\n > " +
+            "ERROR: failed sending Interest in service\n > " +
               JSON.stringify(json_) +
               "\n.............."
           );
@@ -81,7 +81,7 @@ export function ServicePopup({ handleClose, service }) {
       .catch((err) => {
         toast.error("ERROR: failed to submit interest");
         console.error(
-          "ERROR: caught error while submitting interest (service)\n > " +
+          "ERROR: caught error while submitting interest in service\n > " +
             err.error || err
         );
       });
