@@ -98,17 +98,17 @@ export default function CarsPage() {
         <div className="flex flex-wrap p-4">
           {cars.map((v, i) => {
             return (
-              <CardLarge
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log("Item clicked: " + v._id);
-                  setClickedCar(v);
-                }}
-                product={v}
-                key={v._id}
-                inID={v._id}
-                className={`inline-block m-4 cursor-pointer`}
-              />
+              <div key={v._id} className="m-auto">
+                <CardLarge
+                  onClick={(e) => {
+                    e.preventDefault();
+                    console.log("Item clicked: " + v._id);
+                    setClickedCar(v);
+                  }}
+                  product={v}
+                  className={`inline-block cursor-pointer m-4`}
+                />
+              </div>
             );
           })}
         </div>
