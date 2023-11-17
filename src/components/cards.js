@@ -21,9 +21,9 @@ export function CardLarge({
           alt="car_image"
         />
       </div>
-      <div className="p-4 w-full">
-        <h3 className="text-lg font-semibold ">{product?.name}</h3>
-        <p className="font-serif">{product?.description}</p>
+      <div className="p-4 pt-2 w-full">
+        <h3 className="text-lg font-semibold truncate">{product?.name}</h3>
+        <p className="text-xs truncate">{product?.description}</p>
       </div>
     </div>
   );
