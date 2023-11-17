@@ -107,7 +107,7 @@ export default function CarsPage() {
                 product={v}
                 key={v._id}
                 inID={v._id}
-                className={`inline-block m-4`}
+                className={`inline-block m-4 cursor-pointer`}
               />
             );
           })}
