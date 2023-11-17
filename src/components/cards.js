@@ -22,7 +22,7 @@ export function CardLarge({
         />
       </div>
       <div className="p-4 w-full">
-        <h3 className="text-xl font-bold ">{product?.name}</h3>
+        <h3 className="text-lg font-semibold ">{product?.name}</h3>
         <p className="font-serif">{product?.description}</p>
       </div>
     </div>
