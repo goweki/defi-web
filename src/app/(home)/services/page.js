@@ -58,10 +58,10 @@ export default function ServicesPage() {
                 type="searchPhrase"
                 id="searchPhrase"
                 required=""
-                value={searchPhrase}
+                value={""}
                 onChange={(e) => {
                   e.preventDefault();
-                  setSearchPhrase(e.target.value);
+                  // do
                 }}
               />
             </div>
@@ -162,19 +162,50 @@ function clickPopUp(handleClose, car) {
               <span className="sr-only">Close modal</span>
             </button>
           </div>
-          {/* <!-- Modal body --> */}
-          <div className="max-w-xl grid grid-cols-1 md:grid-cols-2 gap-x-4 m-auto h-fit pt-8">
-            <div className="bg-primary m-auto w-full h-full">
-              <canvas id="imgCanvas"></canvas>
+          {/* <!-- Modal body - GRID --> */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="h-full aspect-square">
+              <canvas></canvas>
             </div>
-            <div className="bg-font-inactive">
-              <h2 className="mb-4 text-xl text-center tracking-tight font-extrabold sm:text-2xl ">
-                {car.name}
-              </h2>
-              <p className="text-center mb-4 font-light md:mb-8 sm:text-lg ">
-                Leave your phone number or email below, so we can schedule a
-                test-drive
-              </p>
+            <div className="p-8 bg-backg-surface dark:bg-backg-dark-surface border-t-2 md:border-l-2  border-font-dark">
+              <form>
+                <div className="mb-6">
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full rounded py-3 px-[14px] text-base outline-none placeholder:italic"
+                    value={""}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      // do
+                    }}
+                  />
+                </div>
+                <div className="mb-6">
+                  <input
+                    type="email"
+                    placeholder="Your Email"
+                    className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full rounded py-3 px-[14px] text-base outline-none placeholder:italic"
+                    value={""}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      // do
+                    }}
+                  />
+                </div>
+                <div className="mb-6">
+                  <input
+                    type="text"
+                    placeholder="Your Phone"
+                    className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full rounded py-3 px-[14px] text-base outline-none placeholder:italic"
+                    value={""}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      // do
+                    }}
+                  />
+                </div>
+              </form>
             </div>
           </div>
           {/* <!-- Modal footer --> */}

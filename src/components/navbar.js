@@ -124,6 +124,12 @@ export default function Navbar() {
                   Blog
                 </Link>
                 <Link
+                  href={"/"}
+                  className={`flex justify-center items-center font-medium transition`}
+                >
+                  Website
+                </Link>
+                <Link
                   href={"/admin/inventory"}
                   className={`flex justify-center items-center font-medium transition`}
                   onClick={(e) => {
