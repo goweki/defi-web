@@ -94,11 +94,11 @@ export default function ServicesPage() {
             </div> */}
           </div>
         </div>
-        {/* product Serviceds */}
-        <div className="flex flex-wrap p-4">
+        {/* product Services */}
+        <div className="flex flex-wrap p-4 justify-center">
           {services.map((v, i) => {
             return (
-              <div key={v._id} className="m-auto">
+              <div key={v._id}>
                 <CardLarge
                   onClick={(e) => {
                     e.preventDefault();

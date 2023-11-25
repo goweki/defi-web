@@ -95,10 +95,10 @@ export default function CarsPage() {
           </div>
         </div>
         {/* product Cards */}
-        <div className="flex flex-wrap p-4">
+        <div className="flex flex-wrap p-4 justify-center">
           {cars.map((v, i) => {
             return (
-              <div key={v._id} className="m-auto">
+              <div key={v._id}>
                 <CardLarge
                   onClick={(e) => {
                     e.preventDefault();
