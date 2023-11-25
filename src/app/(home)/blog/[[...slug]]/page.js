@@ -99,12 +99,15 @@ export default function BlogsPage({ params }) {
                 {selectedBlog.title}
               </h2>
             </header>
-            <p className="bg-backg-surface dark:bg-backg-dark-surface p-4 rounded-lg shadow whitespace-break-spaces">
-              {selectedBlog.article}
-              <br />
-              <span className="text-sm italic">by {selectedBlog.author}, </span>
-              <span className="text-xs italic"> on {selectedBlog.date}</span>
-            </p>
+            <div className="bg-backg-surface dark:bg-backg-dark-surface p-4 rounded-lg shadow whitespace-break-spaces">
+              <p>{selectedBlog.article}</p>
+              <p className="pt-4">
+                <span className="text-sm italic">
+                  by {selectedBlog.author},{" "}
+                </span>
+                <span className="text-xs italic"> on {selectedBlog.date}</span>
+              </p>
+            </div>
             {/* <address className="flex items-center mt-3 mb-6 not-italic">
               <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                 <svg
