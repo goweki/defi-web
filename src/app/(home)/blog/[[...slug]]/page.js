@@ -99,7 +99,7 @@ export default function BlogsPage({ params }) {
                 {selectedBlog.title}
               </h2>
             </header>
-            <p className="bg-backg-surface dark:bg-backg-dark-surface p-4 rounded-lg shadow">
+            <p className="bg-backg-surface dark:bg-backg-dark-surface p-4 rounded-lg shadow whitespace-break-spaces">
               {selectedBlog.article}
               <br />
               <span className="text-sm italic">by {selectedBlog.author}, </span>
