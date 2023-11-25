@@ -32,7 +32,7 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:max-w-screen-lg m-auto">
               <div className="m-auto flex flex-col items-center">
                 <h1 className="text-font-dark-focus mb-4 text-center">
-                  Where offroads come alive
+                  Let&apos;s go offroad
                 </h1>
                 <div className="inline-block">
                   <p className="text-font-dark inline-block">
@@ -55,8 +55,9 @@ export default function LandingPage() {
               <div className="hidden sm:block">
                 <Image
                   src={heroImage}
-                  width={720}
-                  height={395}
+                  priority={true}
+                  width={718}
+                  height={463}
                   alt="hero-image"
                 />
               </div>
