@@ -2,7 +2,7 @@
 import { useEffect, useState, useContext } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import heroImage from "@/assets/images/hero_image.png";
+import heroImage from "@/assets/images/hero_image_lighter.png";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { CardLarge } from "@/components/cards";
@@ -29,7 +29,7 @@ export default function LandingPage() {
         <main className="flex flex-col flex-1 w-full mb-12">
           {/* HERO */}
           <div className=" bg-backg-dark-surface dark:bg-backg-dark-raised p-6 sm:p-12 md:p-20">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:max-w-screen-lg m-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:max-w-screen-lg m-auto">
               <div className="m-auto flex flex-col items-center">
                 <h1 className="text-font-dark-focus mb-4 text-center">
                   Let&apos;s go offroad
@@ -52,12 +52,12 @@ export default function LandingPage() {
                   </div>
                 </div>
               </div>
-              <div className="hidden sm:block">
+              <div className="hidden md:block">
                 <Image
                   src={heroImage}
                   priority={true}
-                  width={718}
-                  height={463}
+                  width={720}
+                  height={465}
                   alt="hero-image"
                 />
               </div>

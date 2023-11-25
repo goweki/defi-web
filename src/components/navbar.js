@@ -14,7 +14,7 @@ export default function Navbar() {
       <div className="mx-auto items-center justify-center flex h-16 px-2 sm:px-6 lg:px-8 lg:max-w-screen-lg">
         <div className="flex flex-1 items-center justify-center">
           {/* collapsed menu items */}
-          <div className="sm:hidden flex flex-row flex-1 justify-between items-center">
+          <div className="md:hidden flex flex-row flex-1 justify-between items-center">
             <SVGlogo className="h-8 w-auto mx-8 py-2 text-backg-dark dark:text-backg hover:scale-110 hover:text-primary dark:hover:text-primary" />
             <button onClick={() => setHamIsOpen(true)} className="flex p-3">
               <SVGhambuger className="w-6 h-6" />
@@ -60,7 +60,7 @@ export default function Navbar() {
           </div>
           {/* expanded menu items */}
           {!pathname.includes("/admin") && (
-            <div className="hidden sm:flex sm:flex-row">
+            <div className="hidden md:flex md:flex-row">
               <div className="space-x-4 md:space-x-8 flex mx-6">
                 {[
                   { link: "cars" },
@@ -97,7 +97,7 @@ export default function Navbar() {
           )}
           {/* admin menu items */}
           {pathname.includes("/admin") && (
-            <div className="hidden sm:flex sm:flex-row">
+            <div className="hidden md:flex md:flex-row">
               <div className="space-x-4 md:space-x-8 flex mx-6">
                 <Link
                   href={"/admin/inventory"}
