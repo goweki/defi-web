@@ -2,14 +2,14 @@ import { useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 
-export function ServicePopup({ handleClose, service }) {
+export function ServicePopup({ handleClose, car }) {
   const imgCanvas = useRef(null);
   const [showInterest, setShowInterest] = useState({
     name: "",
     email: "",
     tel: "",
   });
-  // on Mount and change in service.image
+  // on Mount and change in car.image
   useEffect(() => {
     // canvas that will present the output image
     let canvas_ = imgCanvas.current;
@@ -26,8 +26,8 @@ export function ServicePopup({ handleClose, service }) {
       ctx.drawImage(img, 0, 0, newWidth, newHeight);
     };
     // load image
-    img.src = service.image;
-  }, [service.image]);
+    img.src = car.image;
+  }, [car.image]);
   // onSubmit
   function handleSubmit(e) {
     e.preventDefault();
@@ -45,8 +45,8 @@ export function ServicePopup({ handleClose, service }) {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        subject: `NEW LEAD: SERVICE`,
-        text: `Name: ${showInterest.name} \nEmail: ${showInterest.email} \nTel: ${showInterest.tel} \nInterest: ${service.name}`,
+        subject: `NEW LEAD: CAR`,
+        text: `Name: ${showInterest.name} \nEmail: ${showInterest.email} \nTel: ${showInterest.tel} \nInterest: ${car.name}`,
       }),
     };
     // POST request using fetch
@@ -59,19 +59,19 @@ export function ServicePopup({ handleClose, service }) {
               JSON.stringify(json_) +
               "\n.............."
           );
-          toast.success("Interest in service submitted!");
+          toast.success("Interest in car submitted!");
           setShowInterest({ name: "", email: "", tel: "" });
           handleClose();
         } else if (json_.error) {
           console.error(
-            "ERROR: failed sending Interest in service\n > " +
+            "ERROR: failed sending Interest in car\n > " +
               JSON.stringify(json_) +
               "\n.............."
           );
           toast.error(json_.error);
         } else {
           console.error(
-            "ERROR: failed sending Interest in service\n > " +
+            "ERROR: failed sending Interest in car\n > " +
               JSON.stringify(json_) +
               "\n.............."
           );
@@ -81,7 +81,7 @@ export function ServicePopup({ handleClose, service }) {
       .catch((err) => {
         toast.error("ERROR: failed to submit interest");
         console.error(
-          "ERROR: caught error while submitting interest in service\n > " +
+          "ERROR: caught error while submitting interest in car\n > " +
             err.error || err
         );
       });
@@ -100,7 +100,7 @@ export function ServicePopup({ handleClose, service }) {
           {/* <!-- Modal header --> */}
           <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-font-inactive">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Interested in this {service.category} ?
+              Interested in this {car.category} ?
             </h3>
             <button
               type="button"
@@ -131,7 +131,7 @@ export function ServicePopup({ handleClose, service }) {
               <p className="mx-auto mb-4 font-light sm:text-lg text-center">
                 <span className="block font-bold text-2xl mb-4">
                   {" "}
-                  {service.name}
+                  {car.name}
                 </span>
                 Leave us your contacts and we will get back to you
               </p>

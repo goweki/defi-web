@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
 import { ProductsContext } from "@/app/context";
-import { CardSimple } from "@/components/cards";
+import { CardProduct } from "@/components/cards";
 import Loader from "@/components/loader";
 import { ServicePopup } from "./servicePopup";
 
@@ -11,7 +11,7 @@ export default function ServicesPage() {
   const [clickedService, setClickedService] = useState("");
   const [searchPhrase, setSearchPhrase] = useState("");
   // const [sizeFilter, setSizeFilter] = useState("");
-  // setServices: onMount, on-Products, on-searchPhrase
+  // setCars: onMount, on-Products, on-searchPhrase
 
   useEffect(() => {
     setServices(
@@ -24,7 +24,7 @@ export default function ServicesPage() {
   }, [products, searchPhrase]);
   if (services)
     return (
-      <div className="py-8 max-w-screen-lg w-full px-4 md:px-8 lg:px-12">
+      <div className="py-8 max-w-screen-lg w-full px-3 md:px-6">
         {/* HEADER */}
         <div className="relative sm:rounded-lg">
           <div className="flex flex-col items-center justify-center p-4 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
@@ -94,19 +94,19 @@ export default function ServicesPage() {
             </div> */}
           </div>
         </div>
-        {/* product Services */}
-        <div className="flex flex-wrap p-4 justify-center">
+        {/* product Cards */}
+        <div className="flex flex-wrap justify-center">
           {services.map((v, i) => {
             return (
               <div key={v._id}>
-                <CardSimple
+                <CardProduct
                   onClick={(e) => {
                     e.preventDefault();
                     console.log("Item clicked: " + v._id);
                     setClickedService(v);
                   }}
                   product={v}
-                  className={`inline-block cursor-pointer m-2`}
+                  className={`inline-block`}
                 />
               </div>
             );
@@ -115,7 +115,7 @@ export default function ServicesPage() {
         {clickedService && (
           <ServicePopup
             handleClose={() => setClickedService("")}
-            service={clickedService}
+            car={clickedService}
           />
         )}
       </div>
