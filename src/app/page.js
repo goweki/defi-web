@@ -32,7 +32,7 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:max-w-screen-lg m-auto">
               <div className="m-auto flex flex-col items-center">
                 <h1 className="text-font-dark-focus mb-4 text-center">
-                  Let&apos;s go offroad
+                  Let&apos;s take it offroad
                 </h1>
                 <div className="inline-block">
                   <p className="text-font-dark inline-block">
