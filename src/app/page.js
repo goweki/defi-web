@@ -85,8 +85,8 @@ export default function LandingPage() {
             </div> */}
           {/* Cars featured */}
           <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
-            <h2 className="pb-2">Featured Cars</h2>
-            <div className="flex flex-row w-full px-4 py-2 justify-start space-x-4 overflow-x-auto scrolling-touch">
+            <h2 className="pb-2 text-center">Featured Cars</h2>
+            <div className="flex flex-row w-full px-4 py-2 space-x-4 overflow-x-auto scrolling-touch justify-center">
               {products
                 .filter((obj) => obj.category === "Car")
                 .map((v, i) => {
@@ -103,8 +103,8 @@ export default function LandingPage() {
           </div>
           {/* SERVICES featured */}
           <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
-            <h2 className="pb-2">Featured Services</h2>
-            <div className="flex flex-row w-full px-4 py-2 justify-start space-x-4 overflow-x-auto scrolling-touch">
+            <h2 className="pb-2 text-center">Featured Services</h2>
+            <div className="flex flex-row w-full px-4 py-2 space-x-4 overflow-x-auto scrolling-touch justify-center">
               {products
                 .filter((obj) => obj.category === "Service")
                 .map((v, i) => {
