@@ -64,15 +64,16 @@ export default function LibraryPage({ params }) {
               Select a library item to view more items
             </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-2 mr-4">
-            {galleryCategories.map((v, i) => (
-              <Link
-                key={v}
-                href={v === "blogpost" ? `/library/blog` : `/library/${v}`}
-              >
-                <CardSimple />
-              </Link>
-            ))}
+          <div className="flex flex-wrap justify-center">
+            <Link href="/library/blog">
+              <CardSimple item={libraryCategories.blog} />
+            </Link>
+            <Link href="/library/album">
+              <CardSimple item={libraryCategories.album} />
+            </Link>
+            <Link href="/library/events">
+              <CardSimple item={libraryCategories.events} />
+            </Link>
           </div>
         </div>
       </section>
@@ -86,7 +87,7 @@ const libraryCategories = {
     image: offroadIllustration1,
     description: "Let us talk offroads!",
   },
-  blog: {
+  album: {
     name: "images",
     image: offroadIllustration2,
     description: "A visual tour of the machines we love",

@@ -131,6 +131,7 @@ export default function InventoryPage() {
               </div>
             </div>
           </div>
+          {/* table */}
           <div className="w-full shadow rounded-lg overflow-x-auto bg-backg-surface dark:bg-backg-dark-surface">
             <table className="min-w-full leading-normal">
               <thead className="bg-backg-raised dark:bg-backg-dark-raised">
@@ -200,14 +201,17 @@ export default function InventoryPage() {
                         </td>
                         <td className="px-5 py-5 text-sm">
                           <span className="relative inline-block font-semibold leading-tight">
-                            {parseInt(v.price) / 1000 + " K"}
+                            {/* {parseInt(v.price) / 1000 + " K"} */}
+                            {v.price.toString().length > 6
+                              ? Math.ceil(v.price / 1000000) + " M"
+                              : Math.ceil(v.price / 1000) + " K"}{" "}
                           </span>
                         </td>
                       </tr>
                     ))}
               </tbody>
             </table>
-            {products?.length > 50 && (
+            {/* {products?.length > 50 && (
               <div className="px-5 py-5 border-none flex flex-col xs:flex-row items-center xs:justify-between          ">
                 <span className="text-xs xs:text-sm">
                   Showing {1} to {products.length < 20 ? products.length : ""}{" "}
@@ -222,7 +226,7 @@ export default function InventoryPage() {
                   </button>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
           {activeModal === "add" && (
             <ModalAddProduct

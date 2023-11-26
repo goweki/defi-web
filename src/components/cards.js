@@ -9,7 +9,7 @@ export function CardSimple({
   return (
     <div
       onClick={onClick}
-      className={`${className} group flex-none w-52 h-84 bg-backg-surface dark:bg-backg-dark-surface overflow-hidden rounded-xl shadow hover:shadow-lg hover:scale-105 transition`}
+      className={`${className} group flex-none w-52 h-84 overflow-hidden rounded-xl bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-dark shadow hover:scale-105 hover:shadow-lg cursor-pointer transition hover:text-font-dark-focus m-2 md:m-4`}
     >
       <div className="w-52 aspect-square overflow-hidden">
         <Image
@@ -34,7 +34,10 @@ export function CardProduct({
   onClick = () => console.log("Card clicked"),
 }) {
   return (
-    <div className="group relative h-84 w-52 m-2 md:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-light dark:hover:bg-primary-dark shadow hover:scale-105 hover:shadow-lg cursor-pointer transition">
+    <div
+      onClick={onClick}
+      className="group relative h-84 w-52 m-2 md:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-dark hover:text-font-dark-focus shadow hover:scale-105 hover:shadow-lg cursor-pointer transition"
+    >
       <div className="relative flex w-full overflow-hidden">
         <Image
           className={`object-cover h-full w-full group-hover:scale-110 transition ${className}`}
@@ -44,12 +47,12 @@ export function CardProduct({
           alt="car_image"
         />
         <span
-          className={`bg-state-success text-font-dark-focus absolute top-0 left-0 m-2 rounded-full px-2 text-center text-sm font-medium text-white`}
+          className={`bg-state-success text-font-dark-focus absolute top-0 left-0 m-2 rounded-full px-2 text-center text-sm font-medium`}
         >
           available
         </span>
       </div>
-      <div className="mt-4 px-2 pb-3 group-hover:text-font-focus dark:group-hover:text-font-dark-focus flex flex-col flex-1 justify-between">
+      <div className="mt-4 px-2 pb-3 flex flex-col flex-1 justify-between">
         <h5 className="md:text-lg tracking-tight text-center truncate">
           {product?.name}
         </h5>

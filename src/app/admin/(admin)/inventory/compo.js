@@ -149,9 +149,7 @@ export function ModalAddProduct({ handleClose }) {
         <div className="relative bg-backg-surface rounded-lg shadow dark:bg-backg-dark-surface">
           {/* <!-- Modal header --> */}
           <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-font-inactive">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Add Product
-            </h3>
+            <h3 className="text-xl font-semibold">Add Product</h3>
             <button
               type="button"
               className="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
@@ -185,9 +183,7 @@ export function ModalAddProduct({ handleClose }) {
                 <div className="relative flex items-center mb-2 w-full ">
                   <select
                     name="category"
-                    className={`${
-                      !category ? "italic" : ""
-                    } w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed invalid:italic`}
+                    className={`w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed invalid:italic`}
                     value={category}
                     onChange={(e) => {
                       console.log(
@@ -196,11 +192,13 @@ export function ModalAddProduct({ handleClose }) {
                       setCategory(e.target.value);
                     }}
                   >
-                    <option value="" defaultValue>
+                    <option value="" defaultValue disabled>
                       Select a Product category...
                     </option>
                     <option value="Car">Car</option>
                     <option value="Service">Service</option>
+                    <option value="Part">Part</option>
+                    <option value="Accessory">Accessory</option>
                   </select>
                 </div>
                 {/* FIELD Name */}
@@ -616,9 +614,7 @@ export function ModalEditProduct({ product, handleClose }) {
                 <div className="relative flex items-center mb-2 w-full ">
                   <select
                     name="category"
-                    className={`${
-                      !category ? "italic" : ""
-                    } w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed invalid:italic`}
+                    className={`w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed invalid:italic`}
                     value={category}
                     onChange={(e) => {
                       console.log(
@@ -627,11 +623,13 @@ export function ModalEditProduct({ product, handleClose }) {
                       setCategory(e.target.value);
                     }}
                   >
-                    <option value="" defaultValue>
+                    <option value="" defaultValue disabled>
                       Select a Product category...
                     </option>
                     <option value="Car">Car</option>
                     <option value="Service">Service</option>
+                    <option value="Part">Part</option>
+                    <option value="Accessory">Accessory</option>
                   </select>
                 </div>
                 {/* FIELD Name */}
