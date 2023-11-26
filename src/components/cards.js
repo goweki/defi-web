@@ -50,9 +50,9 @@ export function CardProduct({
           available
         </span>
       </div>
-      <div className="mt-4 px-5 pb-3 group-hover:text-font-focus dark:group-hover:text-font-dark-focus">
+      <div className="mt-4 px-2 pb-3 group-hover:text-font-focus dark:group-hover:text-font-dark-focus">
         <h5 className="text-lg tracking-tight text-center">{product?.name}</h5>
-        <div className="mt-2 mb-5 flex items-center justify-center">
+        <div className="mt-2 mb-4 flex items-center justify-center">
           <p>
             <span className="text-lg md:text-xl font-bold">
               <span className="text-sm uppercase">Ksh. </span>
