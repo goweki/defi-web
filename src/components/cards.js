@@ -35,7 +35,7 @@ export function CardProduct({
   onClick = () => console.log("Card clicked"),
 }) {
   return (
-    <div className="group relative w-52 m-1 md:m-2 lg:m-4 flex max-w-xs flex-col overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-light dark:hover:bg-primary-dark shadow hover:scale-105 hover:shadow-lg cursor-pointer transition">
+    <div className="group relative h-84 w-52 m-1 md:m-2 lg:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-light dark:hover:bg-primary-dark shadow hover:scale-105 hover:shadow-lg cursor-pointer transition">
       <div className="relative flex w-full overflow-hidden">
         <Image
           className={`object-cover h-full w-full group-hover:scale-110 transition`}
@@ -51,7 +51,7 @@ export function CardProduct({
         </span>
       </div>
       <div className="mt-4 px-2 pb-3 group-hover:text-font-focus dark:group-hover:text-font-dark-focus flex flex-col flex-1 justify-between">
-        <h5 className="md:text-lg tracking-tight text-center">
+        <h5 className="md:text-lg tracking-tight text-center truncate">
           {product?.name}
         </h5>
         <div className="mt-2 mb-4 flex items-center justify-center">

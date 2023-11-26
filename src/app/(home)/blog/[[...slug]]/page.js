@@ -163,7 +163,7 @@ export default function BlogsPage({ params }) {
                 key={v._id}
                 className="p-6 bg-backg-surface dark:bg-backg-dark-surface rounded-lg border border-font-inactive shadow"
               >
-                <div className="flex justify-between items-center mb-5 text-gray-500">
+                <div className="flex justify-between items-center mb-5">
                   <span className="bg-primary-light dark:text-font text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
                     {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -183,12 +183,10 @@ export default function BlogsPage({ params }) {
                   </span>
                   <span className="text-sm">{v.date}</span>
                 </div>
-                <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h2 className="mb-2 text-2xl font-bold tracking-tight">
                   <Link href={`/blog/${v._id}`}>{v.title}</Link>
                 </h2>
-                <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
-                  {trancStr(v.article, 210)}
-                </p>
+                <p className="mb-5 font-light">{trancStr(v.article, 210)}</p>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-4">
                     <svg
