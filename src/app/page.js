@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import heroImage from "@/assets/images/hero_image.png";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import { CardLarge } from "@/components/cards";
+import { CardLarge, CardProduct } from "@/components/cards";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 import { ProductsContext } from "./context";
 import Loader from "@/components/loader";
@@ -91,7 +91,7 @@ export default function LandingPage() {
                 .filter((obj) => obj.category === "Car")
                 .map((v, i) => {
                   return (
-                    <CardLarge
+                    <CardProduct
                       product={v}
                       key={v._id}
                       id={v._id}
@@ -109,7 +109,7 @@ export default function LandingPage() {
                 .filter((obj) => obj.category === "Service")
                 .map((v, i) => {
                   return (
-                    <CardLarge
+                    <CardProduct
                       product={v}
                       key={v._id}
                       id={v._id}

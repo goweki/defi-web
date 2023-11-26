@@ -1,46 +1,30 @@
-import nodemailer from "nodemailer";
+import { sendEmail } from "@/lib/sendEmail";
+import { sendSMS } from "@/lib/sendSMS";
 
 export async function POST(request) {
+  if (!process.env.SENDING_CHANNELS)
+    return Response.json({ error: "no sending channels defined" });
   try {
+    // sending channels
+    const channels = process.env.SENDING_CHANNELS.split(" ");
     // request body
     const doc = await request.json();
     console.log(
       `POST REQUEST: to send an email. \n >> \n..........................`
     );
-    // nodemailer transporter obj
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.GMAIL_ACCOUNT_USERNAME,
-        pass: process.env.GMAIL_ACCOUNT_PASS,
-      },
-    });
-    // nodemailer options
-    const mailOptions = {
-      from: process.env.GMAIL_ACCOUNT_FROM,
-      to: process.env.GMAIL_ACCOUNT_TO,
-      subject: doc.subject,
-      text: doc.text,
-    };
-    console.log(`CHECKPOINT: Sending mail \n >> \n..........................`);
-    // send email
-    const result = await transporter.sendMail(
-      mailOptions
-      //     function (error, info) {
-      //   console.log(`CHECKPOINT: 675765465 \n >> \n..........................`);
-      //   if (error) {
-      //     //if failed
-      //     console.log("ERROR: failed to send email: " + error);
-      //     return Response.json({ error: error });
-      //   } else {
-      //     // success
-      //     console.log("SUCCESS: Email sent: " + info.response);
-      //     return Response.json({ success: info.response });
-      //   }
-      // }
-    );
-    if (result.accepted.length > 0) return Response.json({ success: result });
-    else return Response.json({ error: result });
+    let mailerRes = {};
+    if (channels.includes("email")) {
+      const res_ = await sendEmail(doc);
+      if (res_.success) mailerRes.email = "success";
+    }
+    if (channels.includes("sms")) {
+      const res_ = await sendSMS(doc);
+      if (res_.success) mailerRes.sms = "success";
+    }
+    // const mailerRes = await sendEmail(doc);
+    if (Object.values(mailerRes).includes("success"))
+      return Response.json({ success: mailerRes });
+    else return Response.json({ error: mailerRes });
   } catch (error) {
     // handle ERROR if caught
     console.log(
@@ -48,6 +32,6 @@ export async function POST(request) {
         error.error || error
       }\n.........................`
     );
-    return Response.json({ error: "Email was not sent" });
+    return Response.json({ error: "Message was not sent" });
   }
 }

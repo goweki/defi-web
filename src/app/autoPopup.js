@@ -33,7 +33,7 @@ export default function AutoPopUp({ handleClose }) {
       .then((json_) => {
         if (json_.success) {
           console.log(
-            "SUCCESS: email sent\n > " +
+            "SUCCESS: info sent\n > " +
               JSON.stringify(json_) +
               "\n.............."
           );
@@ -41,14 +41,14 @@ export default function AutoPopUp({ handleClose }) {
           handleClose();
         } else if (json_.error) {
           console.error(
-            "ERROR: failed sending email\n > " +
+            "ERROR: failed sending info\n > " +
               JSON.stringify(json_) +
               "\n.............."
           );
           toast.error(json_.error);
         } else {
           console.error(
-            "ERROR: failed sending email\n > " +
+            "ERROR: failed sending info\n > " +
               JSON.stringify(json_) +
               "\n.............."
           );

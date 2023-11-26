@@ -29,9 +29,9 @@ module.exports = {
       transparent: "transparent",
       primary: customColours.primary,
       gray: customColours.gray,
-      state:{
+      state: {
         danger: "#9f1239",
-        sucees: "#065f46"
+        success: "#065f46",
       },
       backg: {
         DEFAULT: customColours.gray.w3,
