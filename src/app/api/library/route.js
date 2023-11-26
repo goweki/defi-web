@@ -4,13 +4,13 @@ export const revalidate = 0; // false | 'force-cache' | 0 | number
 
 export async function GET(request) {
   try {
-    console.log(`GET REQUEST: all blog-posts.\n..........................`);
+    console.log(`GET REQUEST: library.\n..........................`);
     // target COLLECTION
     const client = await clientPromise;
-    const collection = client.db(process.env.ATLAS_DB).collection("blogposts");
+    const collection = client.db(process.env.ATLAS_DB).collection("library");
     // find DOCs
     const res_ = await collection.find({}).toArray();
-    console.log(`SUCCESS: Docs fetched in array \n........................`);
+    console.log(`SUCCESS: library array fetched \n........................`);
     // parse timestamp
     const res = res_.map((element) => ({
       ...element,
@@ -33,7 +33,7 @@ export async function GET(request) {
       )}\n......................`
     );
     return Response.json({
-      error: "Could not acquire blog posts",
+      error: "Could not acquire library",
     });
   }
 }

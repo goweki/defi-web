@@ -85,7 +85,7 @@ export default function LandingPage() {
             </div> */}
           {/* Cars featured */}
           <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
-            <h2 className="pb-2 text-center">Featured Cars</h2>
+            <h2 className="pb-2 text-center">The Cars</h2>
             <div className="flex flex-row w-full px-4 py-2 space-x-4 overflow-x-auto scrolling-touch justify-start">
               {products
                 .filter((obj) => obj.category === "Car")
@@ -103,7 +103,7 @@ export default function LandingPage() {
           </div>
           {/* SERVICES featured */}
           <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
-            <h2 className="pb-2 text-center">Featured Services</h2>
+            <h2 className="pb-2 text-center">The Services</h2>
             <div className="flex flex-row w-full px-4 py-2 space-x-4 overflow-x-auto scrolling-touch justify-start">
               {products
                 .filter((obj) => obj.category === "Service")

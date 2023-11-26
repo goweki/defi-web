@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
 import { ProductsContext } from "@/app/context";
-import { CardLarge } from "@/components/cards";
+import { CardProduct } from "@/components/cards";
 import Loader from "@/components/loader";
 import { CarPopup } from "./carPopup";
 
@@ -24,7 +24,7 @@ export default function CarsPage() {
   }, [products, searchPhrase]);
   if (cars)
     return (
-      <div className="py-8 max-w-screen-lg w-full px-4 md:px-8 lg:px-12">
+      <div className="py-8 max-w-screen-lg w-full px-3 md:px-6">
         {/* HEADER */}
         <div className="relative sm:rounded-lg">
           <div className="flex flex-col items-center justify-center p-4 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
@@ -95,18 +95,18 @@ export default function CarsPage() {
           </div>
         </div>
         {/* product Cards */}
-        <div className="flex flex-wrap p-4 justify-center">
+        <div className="flex flex-wrap justify-center">
           {cars.map((v, i) => {
             return (
               <div key={v._id}>
-                <CardLarge
+                <CardProduct
                   onClick={(e) => {
                     e.preventDefault();
                     console.log("Item clicked: " + v._id);
                     setClickedCar(v);
                   }}
                   product={v}
-                  className={`inline-block cursor-pointer m-2`}
+                  className={`inline-block`}
                 />
               </div>
             );

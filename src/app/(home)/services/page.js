@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
 import { ProductsContext } from "@/app/context";
-import { CardLarge } from "@/components/cards";
+import { CardSimple } from "@/components/cards";
 import Loader from "@/components/loader";
 import { ServicePopup } from "./servicePopup";
 
@@ -99,7 +99,7 @@ export default function ServicesPage() {
           {services.map((v, i) => {
             return (
               <div key={v._id}>
-                <CardLarge
+                <CardSimple
                   onClick={(e) => {
                     e.preventDefault();
                     console.log("Item clicked: " + v._id);

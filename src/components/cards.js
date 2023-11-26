@@ -1,10 +1,9 @@
 import Image from "next/image";
-import carImage from "@/assets/images/car.jpg";
 import { ButtonSecondary } from "./atoms/buttons";
 
-export function CardLarge({
+export function CardSimple({
   className,
-  product,
+  item,
   onClick = () => console.log("Card clicked"),
 }) {
   return (
@@ -15,15 +14,15 @@ export function CardLarge({
       <div className="w-52 aspect-square overflow-hidden">
         <Image
           className={`object-cover transition group-hover:scale-110`}
-          src={product?.image}
+          src={item?.image}
           width={300}
           height={300}
           alt="car_image"
         />
       </div>
       <div className="p-4 pt-2 w-full">
-        <h3 className="text-lg font-semibold truncate">{product?.name}</h3>
-        <p className="text-xs truncate">{product?.description}</p>
+        <h3 className="text-lg font-semibold truncate">{item?.name}</h3>
+        <p className="text-xs truncate">{item?.description}</p>
       </div>
     </div>
   );
@@ -35,10 +34,10 @@ export function CardProduct({
   onClick = () => console.log("Card clicked"),
 }) {
   return (
-    <div className="group relative h-84 w-52 m-1 md:m-2 lg:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-light dark:hover:bg-primary-dark shadow hover:scale-105 hover:shadow-lg cursor-pointer transition">
+    <div className="group relative h-84 w-52 m-2 md:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-light dark:hover:bg-primary-dark shadow hover:scale-105 hover:shadow-lg cursor-pointer transition">
       <div className="relative flex w-full overflow-hidden">
         <Image
-          className={`object-cover h-full w-full group-hover:scale-110 transition`}
+          className={`object-cover h-full w-full group-hover:scale-110 transition ${className}`}
           src={product?.image}
           width={300}
           height={300}

@@ -8,7 +8,7 @@ import ThemeToggle from "./atoms/themeToggle";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [hamIsOPen, setHamIsOpen] = useState(false);
+  const [hamIsOpen, setHamIsOpen] = useState(false);
   return (
     <nav className="bg-backg-surface dark:bg-backg-dark-surface">
       <div className="mx-auto items-center justify-center flex h-16 px-2 sm:px-6 lg:px-8 lg:max-w-screen-lg">
@@ -19,7 +19,7 @@ export default function Navbar() {
             <button onClick={() => setHamIsOpen(true)} className="flex p-3">
               <SVGhambuger className="w-6 h-6" />
             </button>
-            {hamIsOPen && (
+            {hamIsOpen && (
               <div className="bg-backg/90 dark:bg-backg-dark/90 shadow fixed top-0 left-0 z-30 w-full h-full transition p-8 ">
                 <div className="w-fit m-auto p-8 bg-backg-raised dark:bg-backg-dark-raised rounded-lg [&>li]:pl-4 [&>li]:pr-8 [&>li>a]:text-center [&>li>a]:relative [&>li>a]:transition [&>li>a]:duration-200 [&>li>a]:ease-in-out [&>li>a]:font-medium [&>li>a]:text-lg">
                   <div className="flex flex-row justify-end">
@@ -64,13 +64,16 @@ export default function Navbar() {
               <div className="space-x-4 md:space-x-8 flex mx-6">
                 {[
                   { link: "cars" },
-                  { link: "services" },
+                  { link: "parts" },
+                  { link: "accessories" },
                   {
                     logo: (
                       <SVGlogo className="transition h-8 w-auto mx-4 py-2 hover:scale-110 hover:text-primary dark:hover:text-primary" />
                     ),
                   },
-                  { link: "blog" },
+                  { link: "services" },
+                  // { link: "blog" },
+                  { link: "library" },
                   { link: "contacts" },
                 ].map((v, i) => (
                   <Link
