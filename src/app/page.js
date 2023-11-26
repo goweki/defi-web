@@ -2,7 +2,7 @@
 import { useEffect, useState, useContext } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import heroImage from "@/assets/images/hero_image_lighter.png";
+import heroImage from "@/assets/images/hero_image.png";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { CardLarge } from "@/components/cards";
