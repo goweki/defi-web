@@ -50,11 +50,13 @@ export function CardProduct({
           available
         </span>
       </div>
-      <div className="mt-4 px-2 pb-3 group-hover:text-font-focus dark:group-hover:text-font-dark-focus">
-        <h5 className="text-lg tracking-tight text-center">{product?.name}</h5>
+      <div className="mt-4 px-2 pb-3 group-hover:text-font-focus dark:group-hover:text-font-dark-focus flex flex-col flex-1 justify-between">
+        <h5 className="md:text-lg tracking-tight text-center">
+          {product?.name}
+        </h5>
         <div className="mt-2 mb-4 flex items-center justify-center">
           <p>
-            <span className="text-lg md:text-xl font-bold">
+            <span className="md:text-xl font-bold">
               <span className="text-sm uppercase">Ksh. </span>
               {product?.price.toString().length > 6
                 ? Math.ceil(product?.price / 1000000) + "M"
