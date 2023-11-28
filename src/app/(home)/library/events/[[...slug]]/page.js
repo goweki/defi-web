@@ -1,48 +1,24 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import Image from "next/image";
 import { trancStr } from "@/helpers/stringHandlers";
+import { LibraryContext } from "../../layout";
+import Loader from "@/components/loader";
 
 export default function BlogsPage({ params }) {
-  const [UIstate, setUIstate] = useState("");
+  const library = useContext(LibraryContext);
+  const [UIstate, setUIstate] = useState("loading");
   const [error, setError] = useState("");
-  const [blogs, setBlogs] = useState("");
-  useState;
-  // onMount - fetch products
+  const [events, setEvents] = useState("");
+  // onMount - load events
   useEffect(() => {
-    const fetchOptions = { method: "GET" };
-    fetch("/api/blog", fetchOptions)
-      .then((res_) => res_.json())
-      .then((json_) => {
-        if (json_.success) {
-          console.log(
-            `SUCCESS: Documents fetched:${json_.success.length}\n.............`
-          );
-          setBlogs(json_.success);
-        } else if (json_.error) {
-          console.error(
-            "ERROR: could not fetch products\n > " +
-              JSON.stringify(json_.error) +
-              "\n.............."
-          );
-          setError(json_.error);
-        } else {
-          console.error(
-            "ERROR: Loading products failed\n > " +
-              JSON.stringify(json_) +
-              "\n.............."
-          );
-          setError("ERROR: Check network and reload");
-        }
-        setUIstate("OK");
-      })
-      .catch((err) => {
-        setUIstate("failed");
-        console.error("ERROR: caught error\n > " + err.error || err);
-      });
-  }, []);
+    if (library) {
+      setEvents(library.filter((v) => v.type === "event"));
+    }
+    setUIstate("OK");
+  }, [library]);
   // onError
   useEffect(() => {
     if (error) {
@@ -51,8 +27,8 @@ export default function BlogsPage({ params }) {
     }
   }, [error]);
   // return
-  if (blogs && params?.slug) {
-    const selectedBlog = blogs.find(({ _id }) => _id === params.slug[0]);
+  if (UIstate === "OK" && params?.slug) {
+    const selectedBlog = events.find(({ _id }) => _id === params.slug[0]);
     if (selectedBlog)
       return (
         <div className="flex justify-between p-4 pt-4 mx-auto max-w-screen-lg transition">
@@ -144,21 +120,21 @@ export default function BlogsPage({ params }) {
           </article>
         </div>
       );
-  } else if (blogs && UIstate === "OK") {
+  } else if (UIstate === "OK") {
     return (
       <section className="transition">
         <div className="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
           <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
             <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold">
-              Lets discuss vehicles
+              Lets discuss events
             </h2>
             <p className="font-light sm:text-xl">
-              We enjoy talking about cars. Here are some thoughts and words
-              about the machines we love
+              We enjoy talking about events. Here are some events about the
+              machines we love
             </p>
           </div>
           <div className="grid gap-8 lg:grid-cols-2">
-            {blogs.map((v, i) => (
+            {events.map((v, i) => (
               <article
                 key={v._id}
                 className="p-6 bg-backg-surface dark:bg-backg-dark-surface rounded-lg border border-font-inactive shadow"
@@ -179,7 +155,7 @@ export default function BlogsPage({ params }) {
                         d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
                       />
                     </svg> */}
-                    blog-post
+                    event
                   </span>
                   <span className="text-sm">{v.date}</span>
                 </div>
@@ -233,5 +209,5 @@ export default function BlogsPage({ params }) {
         </div>
       </section>
     );
-  } else return null;
+  } else return <Loader />;
 }

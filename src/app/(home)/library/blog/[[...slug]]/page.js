@@ -15,7 +15,7 @@ export default function BlogsPage({ params }) {
   // onMount - load blogposts
   useEffect(() => {
     if (library) {
-      setBlogs(library.filter((v) => v.type === "blogpost"));
+      setBlogs(library.filter((v) => v.type === "event"));
     }
     setUIstate("OK");
   }, [library]);

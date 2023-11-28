@@ -40,7 +40,7 @@ const libraryCategories = {
     description: "Let us talk offroads!",
   },
   album: {
-    name: "images",
+    name: "photos",
     image: offroadIllustration2,
     description: "A visual tour of the machines we love",
   },
