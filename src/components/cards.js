@@ -9,7 +9,7 @@ export function CardSimple({
   return (
     <div
       onClick={onClick}
-      className={`${className} group flex-none w-52 h-84 overflow-hidden rounded-xl bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-dark shadow hover:scale-105 hover:shadow-lg cursor-pointer transition hover:text-font-dark-focus m-2 md:m-4`}
+      className={`${className} group flex-none w-52 h-84 overflow-hidden rounded-xl bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-dark dark:hover:bg-primary-dark shadow hover:scale-105 hover:shadow-lg cursor-pointer transition hover:text-font-dark-focus m-2 md:m-4`}
     >
       <div className="w-52 aspect-square overflow-hidden">
         <Image
@@ -36,7 +36,7 @@ export function CardProduct({
   return (
     <div
       onClick={onClick}
-      className="group relative h-84 w-52 m-2 md:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-dark hover:text-font-dark-focus shadow hover:scale-105 hover:shadow-lg cursor-pointer transition"
+      className="group relative h-84 w-52 m-2 md:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-dark dark:hover:bg-primary-dark hover:text-font-dark-focus shadow hover:scale-105 hover:shadow-lg cursor-pointer transition"
     >
       <div className="relative flex w-full overflow-hidden">
         <Image
@@ -56,7 +56,7 @@ export function CardProduct({
         <h5 className="md:text-lg tracking-tight text-center truncate">
           {product?.name}
         </h5>
-        <div className="mt-2 mb-4 flex items-center justify-center">
+        <div className="mt-1 mb-4 flex items-center justify-center">
           <p>
             <span className="md:text-xl font-bold">
               <span className="text-sm uppercase">Ksh. </span>

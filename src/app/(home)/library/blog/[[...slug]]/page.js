@@ -1,48 +1,24 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import Image from "next/image";
 import { trancStr } from "@/helpers/stringHandlers";
+import { LibraryContext } from "../../layout";
+import Loader from "@/components/loader";
 
 export default function BlogsPage({ params }) {
-  const [UIstate, setUIstate] = useState("");
+  const library = useContext(LibraryContext);
+  const [UIstate, setUIstate] = useState("loading");
   const [error, setError] = useState("");
   const [blogs, setBlogs] = useState("");
-  useState;
-  // onMount - fetch products
+  // onMount - load blogposts
   useEffect(() => {
-    const fetchOptions = { method: "GET" };
-    fetch("/api/blog", fetchOptions)
-      .then((res_) => res_.json())
-      .then((json_) => {
-        if (json_.success) {
-          console.log(
-            `SUCCESS: Documents fetched:${json_.success.length}\n.............`
-          );
-          setBlogs(json_.success);
-        } else if (json_.error) {
-          console.error(
-            "ERROR: could not fetch products\n > " +
-              JSON.stringify(json_.error) +
-              "\n.............."
-          );
-          setError(json_.error);
-        } else {
-          console.error(
-            "ERROR: Loading products failed\n > " +
-              JSON.stringify(json_) +
-              "\n.............."
-          );
-          setError("ERROR: Check network and reload");
-        }
-        setUIstate("OK");
-      })
-      .catch((err) => {
-        setUIstate("failed");
-        console.error("ERROR: caught error\n > " + err.error || err);
-      });
-  }, []);
+    if (library) {
+      setBlogs(library.filter((v) => v.type === "blogpost"));
+    }
+    setUIstate("OK");
+  }, [library]);
   // onError
   useEffect(() => {
     if (error) {
@@ -233,5 +209,5 @@ export default function BlogsPage({ params }) {
         </div>
       </section>
     );
-  } else return null;
+  } else return <Loader />;
 }
