@@ -21,11 +21,11 @@ export default function LibraryPage() {
           <Link href="/library/blog">
             <CardSimple item={libraryCategories.blog} />
           </Link>
-          <Link href="/library/album">
-            <CardSimple item={libraryCategories.album} />
-          </Link>
           <Link href="/library/events">
             <CardSimple item={libraryCategories.events} />
+          </Link>
+          <Link href="/library/album">
+            <CardSimple item={libraryCategories.album} />
           </Link>
         </div>
       </div>
