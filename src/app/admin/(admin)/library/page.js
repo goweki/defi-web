@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 
@@ -8,12 +8,63 @@ export default function LibraryPage() {
   const [error, setError] = useState("");
   const [library, setLibrary] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
+  const imgCanvas = useRef(null);
   const [itemEdit, setItemEdit] = useState({
     type: "",
     title: "",
     author: "",
     content: "",
+    eventDate: "",
+    image: "",
+    description: "",
   });
+  /** image-resizing function
+   * @param {string} imgUrl - The source image
+   * @param {number} aspectRatio - The aspect ratio
+   * @return {boolean} A Promise that resolves with true if successfull
+   */
+  function imgPreview(imgUrl, aspectRatio = 1) {
+    // return a Promise that gets resolved with true if successful
+    return new Promise((resolve, reject) => {
+      // image to hold source image data
+      const inputImage = new Image();
+      // wait for image to load
+      inputImage.onload = () => {
+        // store the width and height of image
+        const inputWidth = inputImage.naturalWidth;
+        const inputHeight = inputImage.naturalHeight;
+        // Calculate the output width and height based on aspect ratio
+        let outputWidth, outputHeight;
+        if (inputWidth / inputHeight > aspectRatio) {
+          outputWidth = inputHeight * aspectRatio;
+          outputHeight = inputHeight;
+        } else {
+          outputWidth = inputWidth;
+          outputHeight = inputWidth / aspectRatio;
+        }
+        // calculate the position to draw the image at
+        const outputX = (outputWidth - inputWidth) * 0.5;
+        const outputY = (outputHeight - inputHeight) * 0.5;
+        // canvas that will present the output image
+        const outputImage = imgCanvas.current;
+        // set it to the same size as the image
+        outputImage.width = outputWidth;
+        outputImage.height = outputHeight;
+        // draw our image at position {calculated} on the canvas
+        const ctx = outputImage.getContext("2d");
+        ctx.drawImage(inputImage, outputX, outputY);
+        // Resolve the Promise with true
+        resolve(true);
+      };
+      // Handle image load errors
+      inputImage.onerror = (error) => {
+        reject(error);
+      };
+      // load image
+      setItemEdit({ ...itemEdit, image: imgUrl });
+      inputImage.src = URL.createObjectURL(imgUrl);
+    });
+  }
   // onMount,library - fetch item
   useEffect(() => {
     if (!library) {
@@ -192,7 +243,6 @@ export default function LibraryPage() {
     return (
       <div className="container mx-auto flex flex-wrap py-6">
         {/* <!-- Side Section --> */}
-
         <aside className="hidden md:w-1/3 md:flex flex-col items-center px-3">
           <div className="w-full p-5 mb-4 border border-font-inactive rounded-lg bg-backg-surface dark:bg-backg-dark-surface max-h-[1500px] overflow-y-auto">
             <p className="text-lg font-medium uppercase">Gallery</p>
@@ -253,7 +303,16 @@ export default function LibraryPage() {
               value={itemEdit.type}
               onChange={(e) => {
                 e.preventDefault();
-                setItemEdit({ ...itemEdit, type: e.target.value });
+                // setItemEdit({ , type: e.target.value });
+                setItemEdit({
+                  type: e.target.value,
+                  title: "",
+                  author: "",
+                  content: "",
+                  eventDate: "",
+                  image: "",
+                  description: "",
+                });
               }}
             >
               <option value="" defaultValue disabled className="italic">
@@ -263,64 +322,228 @@ export default function LibraryPage() {
               <option value="photo">Photo</option>
               <option value="event">Event</option>
             </select>
-            <input
-              type="text"
-              placeholder="Title..."
-              className="rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
-              value={itemEdit.title}
-              onChange={(e) => {
-                e.preventDefault();
-                setItemEdit({ ...itemEdit, title: e.target.value });
-              }}
-            />
-            <input
-              type="text"
-              placeholder="Author..."
-              className="rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
-              value={itemEdit.author}
-              onChange={(e) => {
-                e.preventDefault();
-                setItemEdit({ ...itemEdit, author: e.target.value });
-              }}
-            />
-            <div>
-              <label htmlFor="editor" className="sr-only">
-                Publish post
-              </label>
-              {itemEdit.type === "blogpost" && (
-                <textarea
-                  id="editor"
-                  rows="16"
-                  className="block w-full bg-transparent border border-font-inactive focus:border-transparent focus:ring-primary px-[7px] text-base outline-none placeholder:italic"
-                  placeholder="Write an article..."
-                  required
-                  value={itemEdit.content}
+            {itemEdit.type === "blogpost" ? (
+              <>
+                <input
+                  type="text"
+                  placeholder="Title..."
+                  className="rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
+                  value={itemEdit.title}
                   onChange={(e) => {
                     e.preventDefault();
-                    setItemEdit({ ...itemEdit, content: e.target.value });
+                    setItemEdit({ ...itemEdit, title: e.target.value });
                   }}
-                ></textarea>
-              )}
-            </div>
-            <div className="flex flex-row space-x-4 pt-4">
-              {selectedItem && (
-                <>
-                  <ButtonSecondary
-                    label="Cancel Selection"
-                    onClick={(e) => {
+                />
+                <input
+                  type="text"
+                  placeholder="Author..."
+                  className="rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
+                  value={itemEdit.author}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    setItemEdit({ ...itemEdit, author: e.target.value });
+                  }}
+                />
+                <div>
+                  <label htmlFor="article" className="sr-only">
+                    Article
+                  </label>
+                  <textarea
+                    id="article"
+                    rows="16"
+                    className="block w-full bg-transparent border border-font-inactive focus:border-transparent focus:ring-primary px-[7px] text-base outline-none placeholder:italic"
+                    placeholder="Write an article..."
+                    required
+                    value={itemEdit.content}
+                    onChange={(e) => {
                       e.preventDefault();
-                      e.stopPropagation();
-                      setSelectedItem("");
+                      setItemEdit({ ...itemEdit, content: e.target.value });
                     }}
                   />
-                  <ButtonSecondary label="Delete post" onClick={handleDelete} />
-                </>
-              )}
-              <ButtonPrimary
-                label={!selectedItem ? `Publish Post` : `Save Post`}
-                onClick={handleSave}
-              />
-            </div>
+                </div>
+              </>
+            ) : itemEdit.type === "event" ? (
+              <>
+                <input
+                  type="date"
+                  placeholder="Date..."
+                  className="rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
+                  value={itemEdit.eventDate}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    setItemEdit({ ...itemEdit, eventDate: e.target.value });
+                  }}
+                />
+                <input
+                  type="text"
+                  placeholder="Name..."
+                  className="rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
+                  value={itemEdit.title}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    setItemEdit({ ...itemEdit, title: e.target.value });
+                  }}
+                />
+                <input
+                  type="text"
+                  placeholder="Host..."
+                  className="rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
+                  value={itemEdit.author}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    setItemEdit({ ...itemEdit, author: e.target.value });
+                  }}
+                />
+                <div>
+                  <label htmlFor="description" className="sr-only">
+                    Article
+                  </label>
+                  <textarea
+                    id="description"
+                    rows="2"
+                    className="block w-full bg-transparent border rounded-lg border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised px-[7px] text-base outline-none placeholder:italic"
+                    placeholder="Event description..."
+                    required
+                    value={itemEdit.content}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setItemEdit({ ...itemEdit, content: e.target.value });
+                    }}
+                  />
+                </div>
+              </>
+            ) : itemEdit.type === "photo" ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div className="block w-full bg-transparent border rounded-lg border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised px-[7px] text-base outline-none aspect-square">
+                  {!itemEdit.image && (
+                    <label
+                      htmlFor="image-upload"
+                      className={`flex w-full h-full items-center justify-center text-center text-font-inactive p-4 text-sm cursor-pointer`}
+                    >
+                      Drop your image here or click to browse
+                    </label>
+                  )}
+                  <input
+                    name="file"
+                    type="file"
+                    id="image-upload"
+                    // accept="image/*"
+                    accept=".png, .jpg, .jpeg"
+                    className="hidden"
+                    // value={image}
+                    onChange={async (e) => {
+                      console.log(
+                        ` > uploading image: ${e.target.value} ... \n`
+                      );
+                      if (e.target.files && e.target.files[0]) {
+                        const imgUrl = e.target.files[0];
+                        if (
+                          !imgUrl.name.match(/\.(jpg|jpeg|png|JPG|JPEG|PNG)$/)
+                        ) {
+                          setError("Invalid image file: select JPG,JPEG,PNG");
+                          return;
+                        }
+                        imgPreview(imgUrl, 1)
+                          .then((res_) => {
+                            if (res_ === true) {
+                              toast.success("Image loaded successfully");
+                            } else {
+                              toast.error("Failed to load image");
+                            }
+                          })
+                          .catch((error) => {
+                            console.error("Error loading image:", error);
+                          });
+                      }
+                    }}
+                  />
+                  {/* <!-- Image upload input --> */}
+                  {itemEdit.image && (
+                    <div
+                      className={`items-center justify-center flex flex-col`}
+                    >
+                      <div className="preview-image flex flex-col justify-center items-center w-full h-full rounded-lg">
+                        {/* {image && (
+                          <Image
+                            src={image.previewURL}
+                            className="object-contain"
+                            width={300}
+                            height={300}
+                            // fill={true}
+                            alt="product image"
+                          />
+                        )} */}
+                        <canvas
+                          ref={imgCanvas}
+                          className="w-full h-full mt-2 rounded"
+                        />
+                        <canvas id="blankCanvas" className="hidden" />
+                      </div>
+                      {/* <span className="file-name my-4 text-sm font-medium"></span> */}
+                      <button
+                        className="cursor-pointer transition-all my-2 rounded-md px-3 py-1 border border-font-inactive text-xs hover:border-state-danger"
+                        // onClick={() => setItemEdit({ ...itemEdit, image: ""})}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          let canvasContext =
+                            imgCanvas.current.getContext("2d");
+                          canvasContext.clearRect(
+                            0,
+                            0,
+                            canvasContext.width,
+                            canvasContext.height
+                          );
+                          setItemEdit({ ...itemEdit, image: "" });
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="description" className="sr-only">
+                    Description
+                  </label>
+                  <textarea
+                    id="description"
+                    rows="3"
+                    className="block w-full bg-transparent border rounded-lg border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised px-[7px] text-base outline-none placeholder:italic"
+                    placeholder="Photo description..."
+                    required
+                    value={itemEdit.description}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setItemEdit({ ...itemEdit, content: e.target.value });
+                    }}
+                  />
+                </div>
+              </div>
+            ) : null}
+            {itemEdit.title && (
+              <div className="flex flex-row space-x-4 pt-4">
+                {selectedItem && (
+                  <>
+                    <ButtonSecondary
+                      label="Cancel Selection"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setSelectedItem("");
+                      }}
+                    />
+                    <ButtonSecondary
+                      label="Delete selection"
+                      onClick={handleDelete}
+                    />
+                  </>
+                )}
+                <ButtonPrimary
+                  label={!selectedItem ? `Create item` : `Save Edits`}
+                  onClick={handleSave}
+                />
+              </div>
+            )}
           </form>
         </section>
       </div>

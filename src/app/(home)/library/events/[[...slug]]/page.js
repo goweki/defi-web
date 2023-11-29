@@ -7,7 +7,7 @@ import { trancStr } from "@/helpers/stringHandlers";
 import { LibraryContext } from "../../layout";
 import Loader from "@/components/loader";
 
-export default function BlogsPage({ params }) {
+export default function EventsPage({ params }) {
   const library = useContext(LibraryContext);
   const [UIstate, setUIstate] = useState("loading");
   const [error, setError] = useState("");
@@ -27,32 +27,34 @@ export default function BlogsPage({ params }) {
     }
   }, [error]);
   // return
-  if (UIstate === "OK" && params?.slug) {
-    const selectedBlog = events.find(({ _id }) => _id === params.slug[0]);
-    if (selectedBlog)
+  if (events && params?.slug) {
+    const selectedEvent = events.find(({ _id }) => _id === params.slug[0]);
+    if (selectedEvent)
       return (
         <div className="flex justify-between p-4 pt-4 mx-auto max-w-screen-lg transition">
           <article className="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
-            <Link href="/blog" className="my-6 flex flex-row no-wrap">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6 mx-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
-                />
-              </svg>
-              All blog-posts
-            </Link>
+            <div className="my-6 flex flex-row no-wrap">
+              <Link href="/library/events" className="flex flex-row no-wrap">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6 mx-2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                  />
+                </svg>
+                All events
+              </Link>
+            </div>
             {/* <header className="mb-4 lg:mb-6 not-format">
               <h1 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
-                {selectedBlog.title}
+                {selectedEvent.title}
               </h1>
             </header> */}
             <figure className="relative my-8 h-[360px] md:h-[400px] lg:h-[440px] w-full overflow-hidden rounded-lg shadow-lg">
@@ -65,23 +67,25 @@ export default function BlogsPage({ params }) {
                 // width={500}
                 // height={500}
                 fill={true}
-                alt="blog banner"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                alt="event banner"
                 className="object-cover"
+                priority={true}
               />
               {/* <figcaption>Digital art by Anonymous</figcaption> */}
             </figure>
             <header className="mb-4 lg:mb-6 not-format">
               <h2 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
-                {selectedBlog.title}
+                {selectedEvent.title}
               </h2>
             </header>
             <div className="bg-backg-surface dark:bg-backg-dark-surface p-4 rounded-lg shadow whitespace-break-spaces">
-              <p>{selectedBlog.article}</p>
+              <p>{selectedEvent.content}</p>
               <p className="pt-4">
                 <span className="text-sm italic">
-                  by {selectedBlog.author},{" "}
+                  by {selectedEvent.author},{" "}
                 </span>
-                <span className="text-xs italic"> on {selectedBlog.date}</span>
+                <span className="text-xs italic"> on {selectedEvent.date}</span>
               </p>
             </div>
             {/* <address className="flex items-center mt-3 mb-6 not-italic">
@@ -107,11 +111,11 @@ export default function BlogsPage({ params }) {
                     rel="author"
                     className="text-xl font-bold text-gray-900 dark:text-white"
                   >
-                    {selectedBlog.author}
+                    {selectedEvent.author}
                   </Link>
                   <p className="text-sm">
-                    <time dateTime={selectedBlog.date}>
-                      {selectedBlog.date}
+                    <time dateTime={selectedEvent.date}>
+                      {selectedEvent.date}
                     </time>
                   </p>
                 </div>
@@ -120,17 +124,36 @@ export default function BlogsPage({ params }) {
           </article>
         </div>
       );
-  } else if (UIstate === "OK") {
+  } else if (events && UIstate === "OK") {
     return (
       <section className="transition">
         <div className="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
+          <div className="my-6 flex flex-row no-wrap">
+            <Link href="/library" className="flex flex-row no-wrap">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 mx-2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                />
+              </svg>
+              Back to Library menu
+            </Link>
+          </div>
           <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
             <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold">
-              Lets discuss events
+              Lets discuss vehicles
             </h2>
             <p className="font-light sm:text-xl">
-              We enjoy talking about events. Here are some events about the
-              machines we love
+              We enjoy talking about cars. Here are some thoughts and words
+              about the machines we love
             </p>
           </div>
           <div className="grid gap-8 lg:grid-cols-2">
@@ -160,9 +183,9 @@ export default function BlogsPage({ params }) {
                   <span className="text-sm">{v.date}</span>
                 </div>
                 <h2 className="mb-2 text-2xl font-bold tracking-tight">
-                  <Link href={`/blog/${v._id}`}>{v.title}</Link>
+                  <Link href={`/library/events/${v._id}`}>{v.title}</Link>
                 </h2>
-                <p className="mb-5 font-light">{trancStr(v.article, 210)}</p>
+                <p className="mb-5 font-light">{v.content}</p>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-4">
                     <svg
@@ -185,7 +208,7 @@ export default function BlogsPage({ params }) {
                     </span>
                   </div>
                   <Link
-                    href={`/blog/${v._id}`}
+                    href={`/library/events/${v._id}`}
                     className="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
                   >
                     Read more

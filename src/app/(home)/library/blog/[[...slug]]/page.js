@@ -15,7 +15,7 @@ export default function BlogsPage({ params }) {
   // onMount - load blogposts
   useEffect(() => {
     if (library) {
-      setBlogs(library.filter((v) => v.type === "event"));
+      setBlogs(library.filter((v) => v.type === "blogpost"));
     }
     setUIstate("OK");
   }, [library]);
@@ -33,23 +33,25 @@ export default function BlogsPage({ params }) {
       return (
         <div className="flex justify-between p-4 pt-4 mx-auto max-w-screen-lg transition">
           <article className="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
-            <Link href="/blog" className="my-6 flex flex-row no-wrap">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6 mx-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
-                />
-              </svg>
-              All blog-posts
-            </Link>
+            <div className="my-6 flex flex-row no-wrap">
+              <Link href="/library/blog" className="flex flex-row no-wrap">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6 mx-2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                  />
+                </svg>
+                All blog-posts
+              </Link>
+            </div>
             {/* <header className="mb-4 lg:mb-6 not-format">
               <h1 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
                 {selectedBlog.title}
@@ -65,8 +67,10 @@ export default function BlogsPage({ params }) {
                 // width={500}
                 // height={500}
                 fill={true}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 alt="blog banner"
                 className="object-cover"
+                priority={true}
               />
               {/* <figcaption>Digital art by Anonymous</figcaption> */}
             </figure>
@@ -76,7 +80,7 @@ export default function BlogsPage({ params }) {
               </h2>
             </header>
             <div className="bg-backg-surface dark:bg-backg-dark-surface p-4 rounded-lg shadow whitespace-break-spaces">
-              <p>{selectedBlog.article}</p>
+              <p>{selectedBlog.content}</p>
               <p className="pt-4">
                 <span className="text-sm italic">
                   by {selectedBlog.author},{" "}
@@ -124,6 +128,25 @@ export default function BlogsPage({ params }) {
     return (
       <section className="transition">
         <div className="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
+          <div className="my-6 flex flex-row no-wrap">
+            <Link href="/library" className="flex flex-row no-wrap">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 mx-2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                />
+              </svg>
+              Back to Library menu
+            </Link>
+          </div>
           <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
             <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold">
               Lets discuss vehicles
@@ -160,9 +183,9 @@ export default function BlogsPage({ params }) {
                   <span className="text-sm">{v.date}</span>
                 </div>
                 <h2 className="mb-2 text-2xl font-bold tracking-tight">
-                  <Link href={`/blog/${v._id}`}>{v.title}</Link>
+                  <Link href={`/library/blog/${v._id}`}>{v.title}</Link>
                 </h2>
-                <p className="mb-5 font-light">{trancStr(v.article, 210)}</p>
+                <p className="mb-5 font-light">{trancStr(v.content, 210)}</p>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-4">
                     <svg
@@ -185,7 +208,7 @@ export default function BlogsPage({ params }) {
                     </span>
                   </div>
                   <Link
-                    href={`/blog/${v._id}`}
+                    href={`/library/blog/${v._id}`}
                     className="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
                   >
                     Read more
