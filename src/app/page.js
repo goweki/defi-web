@@ -39,13 +39,13 @@ export default function LandingPage() {
                     What are you looking for?
                   </p>
                   <br />
-                  <div className="space-x-6 my-2 inline-block">
+                  <div className="space-x-6 my-2 inline-block justify-center">
                     <ButtonPrimary
-                      label="A Car"
+                      label="Car"
                       onClick={() => router.push("/cars")}
                     />
                     <ButtonSecondary
-                      label="A Service"
+                      label="Service"
                       className="text-font-dark hover:text-font"
                       onClick={() => router.push("/services")}
                     />
