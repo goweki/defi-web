@@ -75,7 +75,7 @@ export default function LibraryPage() {
         .then((json_) => {
           if (json_.success) {
             console.log(
-              `SUCCESS: Documents fetched:${json_.success.length}\n.............`
+              `SUCCESS: Docs fetched:${json_.success.length}\n.............`
             );
             setLibrary(json_.success);
           } else if (json_.error) {
