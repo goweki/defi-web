@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { SVGfblogo, SVGlogo, SVGxlogo } from "./atoms/svgs";
+import { SVGfblogo, SVGiglogo, SVGlogo, SVGxlogo } from "./atoms/svgs";
 import Link from "next/link";
 import { CardInFooter } from "./cards";
 export default function Footer() {
@@ -46,18 +46,25 @@ export default function Footer() {
           </span>
           <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
             <Link
-              href="https://www.defioffroads.co.ke/"
+              href="https://m.facebook.com/people/Defimotors-Ke/100087672914932/"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <SVGfblogo className="w-4 h-4" />
-              <span className="sr-only">Facebook profile</span>
+              <span className="sr-only">facebook</span>
             </Link>
             <Link
-              href="https://www.defioffroads.co.ke/"
+              href="https://www.instagram.com/defimotors/"
+              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+            >
+              <SVGiglogo className="w-4 h-4" />
+              <span className="sr-only">instagram</span>
+            </Link>
+            <Link
+              href="https://twitter.com/defi_motors"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <SVGxlogo className="w-4 h-4" />
-              <span className="sr-only">X profile</span>
+              <span className="sr-only">X</span>
             </Link>
           </div>
         </div>
