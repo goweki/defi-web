@@ -38,7 +38,7 @@ export async function POST(request) {
 export async function PUT(request) {
   try {
     const doc = await request.json();
-    const { _id, docType, ...doc_ } = doc;
+    const { _id, colle_, ...doc_ } = doc;
     console.log(
       `PUT REQUEST: to update product. \n >> \n..........................`
     );
@@ -50,9 +50,7 @@ export async function PUT(request) {
     console.log(
       `CHECKPOINT: selecting collection\n >> \n.....................`
     );
-    const collection = client
-      .db(process.env.ATLAS_DB)
-      .collection(`${docType}s`);
+    const collection = client.db(process.env.ATLAS_DB).collection(`${colle_}s`);
     // update DOC
     console.log(
       `CHECKPOINT: updating doc\n >> _id: ${_id}\n >> fields: ${Object.keys(

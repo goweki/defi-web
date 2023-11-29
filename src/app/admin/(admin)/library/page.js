@@ -9,6 +9,7 @@ export default function LibraryPage() {
   const [library, setLibrary] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
   const imgCanvas = useRef(null);
+  const DBcollection = "library";
   const [itemEdit, setItemEdit] = useState({
     type: "",
     title: "",
@@ -100,6 +101,25 @@ export default function LibraryPage() {
         });
     }
   }, [library]);
+  // on selecting library Item
+  useEffect(() => {
+    if (selectedItem) {
+      setItemEdit({
+        ...{
+          type: "",
+          title: "",
+          author: "",
+          content: "",
+          eventDate: "",
+          image: "",
+          description: "",
+        },
+        ...selectedItem,
+      });
+    } else {
+      setSelectedItem("");
+    }
+  }, [selectedItem]);
   // onError
   useEffect(() => {
     if (error) {
@@ -113,43 +133,130 @@ export default function LibraryPage() {
     e.preventDefault();
     // setLoading(true);
     // confirm fields filled
-    if (!itemEdit.title || !itemEdit.author || !itemEdit.content) {
-      toast.error(`Fill empty fields`);
+    if (!itemEdit.type) {
+      toast.error(`Select a valid category`);
       return;
+    }
+    if (itemEdit.type === "blogspot") {
+      if (!itemEdit.title || !itemEdit.author || !itemEdit.content) {
+        toast.error(`Error: empty fields`);
+        return;
+      }
+    } else if (itemEdit.type === "event") {
+      if (
+        !itemEdit.eventDate ||
+        !itemEdit.title ||
+        !itemEdit.author ||
+        !itemEdit.description
+      ) {
+        toast.error(`Error: empty fields`);
+        return;
+      }
+    } else if (itemEdit.type === "photo") {
+      if (!itemEdit.image || !itemEdit.description) {
+        toast.error(`Error: empty fields`);
+        return;
+      }
     }
     // fetch options
     let fetchOptions = "";
     if (!selectedItem) {
-      fetchOptions = {
+      const createHeader = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify({
-          type: itemEdit.type,
-          title: itemEdit.title,
-          author: itemEdit.author,
-          content: itemEdit.content,
-        }),
       };
+      if (itemEdit.type === "blogpost") {
+        // console.log("SAVING: a new blogpost \n....................");
+        fetchOptions = {
+          ...createHeader,
+          body: JSON.stringify({
+            //itemEdit.title,itemEdit.author,itemEdit.content
+            type: itemEdit.type,
+            title: itemEdit.title,
+            author: itemEdit.author,
+            content: itemEdit.content,
+            colle_: DBcollection,
+          }),
+        };
+      } else if (itemEdit.type === "event") {
+        fetchOptions = {
+          ...createHeader,
+          body: JSON.stringify({
+            // itemEdit.eventDate,itemEdit.title,itemEdit.author,itemEdit.description
+            type: itemEdit.type,
+            date: itemEdit.eventDate,
+            name: itemEdit.title,
+            host: itemEdit.author,
+            description: itemEdit.description,
+            colle_: DBcollection,
+          }),
+        };
+      } else if (itemEdit.type === "photo") {
+        fetchOptions = {
+          ...createHeader,
+          body: JSON.stringify({
+            // itemEdit.image,itemEdit.description
+            type: itemEdit.type,
+            image: itemEdit.image,
+            description: itemEdit.description,
+            colle_: DBcollection,
+          }),
+        };
+      }
     } else {
-      fetchOptions = {
+      const updateHeader = {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify({
-          _id: selectedItem._id,
-          type: itemEdit.type,
-          title: itemEdit.title,
-          author: itemEdit.author,
-          content: itemEdit.content,
-        }),
       };
+      if (itemEdit.type === "blogspot") {
+        fetchOptions = {
+          ...updateHeader,
+          body: JSON.stringify({
+            //itemEdit.title,itemEdit.author,itemEdit.content
+            _id: selectedItem._id,
+            type: itemEdit.type,
+            title: itemEdit.title,
+            author: itemEdit.author,
+            content: itemEdit.content,
+            colle_: DBcollection,
+          }),
+        };
+      } else if (itemEdit.type === "event") {
+        fetchOptions = {
+          ...updateHeader,
+          body: JSON.stringify({
+            // itemEdit.eventDate,itemEdit.title,itemEdit.author,itemEdit.description
+            _id: selectedItem._id,
+            type: itemEdit.type,
+            eventDate: itemEdit.eventDate,
+            name: itemEdit.title,
+            host: itemEdit.author,
+            description: itemEdit.description,
+            colle_: DBcollection,
+          }),
+        };
+      } else if (itemEdit.type === "photo") {
+        fetchOptions = {
+          ...updateHeader,
+          body: JSON.stringify({
+            // itemEdit.image,itemEdit.description
+            _id: selectedItem._id,
+            type: itemEdit.type,
+            image: itemEdit.image,
+            description: itemEdit.description,
+            colle_: DBcollection,
+          }),
+        };
+      }
     }
     // make CALL using fetch
+    console.log("SAVING........ : \n >" + JSON.stringify(fetchOptions));
     fetch("/api/admin", fetchOptions)
       .then((res_) => res_.json())
       .then((json_) => {
@@ -159,7 +266,16 @@ export default function LibraryPage() {
               JSON.stringify(json_) +
               "\n.............."
           );
-          toast.success("Blog saved!");
+          toast.success("Succesfully saved");
+          setItemEdit({
+            type: "",
+            title: "",
+            author: "",
+            content: "",
+            eventDate: "",
+            image: "",
+            description: "",
+          });
           setLibrary("");
         } else if (json_.error) {
           console.error(
@@ -179,7 +295,7 @@ export default function LibraryPage() {
       })
       .catch((err) => {
         setError("ERROR: Saving failed");
-        console.error("ERROR: caught error -679\n > " + err.error || err);
+        console.error("ERROR: caught error -7840\n > " + err.error || err);
       });
   }
   // onDelete
@@ -200,11 +316,12 @@ export default function LibraryPage() {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        colle_: "library",
+        colle_: DBcollection,
         _id: selectedItem._id,
       }),
     };
     // DELETE request using fetch
+    console.log("DELETING........ : \n >" + JSON.stringify(fetchOptions));
     fetch("/api/admin", fetchOptions)
       .then((res_) => res_.json())
       .then((json_) => {
@@ -260,10 +377,16 @@ export default function LibraryPage() {
                   >
                     <div className="flex flex-col p-3 sm:flex hover:bg-backg dark:hover:bg-backg-dark hover:text-primary-dark">
                       <div className="text-base font-normal">
-                        <p className="font-bold lg:text-lg">{v.title}</p>
+                        <p className="font-bold lg:text-lg">
+                          {v.title || v.name || "Photo"}
+                        </p>
                       </div>
-                      <div className="text-sm font-normal">
-                        By:{" " + v.author}
+                      <div className="text-sm font-normal truncate">
+                        {v.author
+                          ? `By: ${v.author}`
+                          : v.host
+                          ? `By: ${v.host}`
+                          : v.description}
                       </div>
                       <span className="inline-flex items-center text-xs font-normal my-2">
                         <svg
@@ -280,7 +403,7 @@ export default function LibraryPage() {
                             d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
                           />
                         </svg>
-                        {v.date}
+                        {v.eventDate || v.date}
                       </span>
                     </div>
                   </li>
@@ -396,7 +519,7 @@ export default function LibraryPage() {
                 />
                 <div>
                   <label htmlFor="description" className="sr-only">
-                    Article
+                    Description
                   </label>
                   <textarea
                     id="description"
@@ -404,7 +527,7 @@ export default function LibraryPage() {
                     className="block w-full bg-transparent border rounded-lg border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised px-[7px] text-base outline-none placeholder:italic"
                     placeholder="Event description..."
                     required
-                    value={itemEdit.content}
+                    value={itemEdit.description}
                     onChange={(e) => {
                       e.preventDefault();
                       setItemEdit({ ...itemEdit, content: e.target.value });
@@ -520,7 +643,7 @@ export default function LibraryPage() {
                 </div>
               </div>
             ) : null}
-            {itemEdit.title && (
+            {(itemEdit.title || itemEdit.image) && (
               <div className="flex flex-row space-x-4 pt-4">
                 {selectedItem && (
                   <>
@@ -539,7 +662,7 @@ export default function LibraryPage() {
                   </>
                 )}
                 <ButtonPrimary
-                  label={!selectedItem ? `Create item` : `Save Edits`}
+                  label={!selectedItem ? `Create item` : `Edit item`}
                   onClick={handleSave}
                 />
               </div>
