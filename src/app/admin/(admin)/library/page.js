@@ -249,14 +249,14 @@ export default function LibraryPage() {
           >
             <select
               name="category"
-              className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
+              className="rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none"
               value={itemEdit.type}
               onChange={(e) => {
                 e.preventDefault();
                 setItemEdit({ ...itemEdit, type: e.target.value });
               }}
             >
-              <option value="" defaultValue disabled>
+              <option value="" defaultValue disabled className="italic">
                 Select a category...
               </option>
               <option value="blogpost">Blogpost</option>
@@ -266,7 +266,7 @@ export default function LibraryPage() {
             <input
               type="text"
               placeholder="Title..."
-              className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
+              className="rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
               value={itemEdit.title}
               onChange={(e) => {
                 e.preventDefault();
@@ -276,7 +276,7 @@ export default function LibraryPage() {
             <input
               type="text"
               placeholder="Author..."
-              className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
+              className="rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
               value={itemEdit.author}
               onChange={(e) => {
                 e.preventDefault();

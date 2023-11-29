@@ -11,33 +11,30 @@ export function ModalAddProduct({ handleClose }) {
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [UIstate, setUIstate] = useState("loading");
   const imgCanvas = useRef(null);
   // on Mount
   useEffect(() => {
-    setLoading(false);
+    setUIstate("OK");
   }, []);
   // on ERROR
   useEffect(() => {
     if (error) {
       toast.error(error);
       setError("");
-      setLoading(false);
+      setUIstate("OK");
     }
   }, [error]);
 
   async function handleSubmit() {
-    setLoading(true);
     // confirm fields filled
     if (!category || !name || !description || !price || !image) {
       setError(`Fill empty fields`);
       return;
     }
-    // Process canvas into binary
-    // const imgBuffer = Buffer.from(
-    //   imgCanvas.current.toDataURL("image/jpeg", 0.5),
-    //   "base64"
-    // );
+    // UI state
+    setUIstate("loading");
+    // parse image
     const imgSTR = imgCanvas.current.toDataURL("image/jpeg", 1);
     // fetch options
     let fetchOptions = {
@@ -52,7 +49,7 @@ export function ModalAddProduct({ handleClose }) {
         description,
         price,
         image: imgSTR,
-        docType: "product",
+        colle_: "products",
       }),
     };
     // POST request using fetch
@@ -174,21 +171,18 @@ export function ModalAddProduct({ handleClose }) {
             </button>
           </div>
           {/* <!-- Modal body --> */}
-          {loading ? (
+          {UIstate === "loading" ? (
             <Loader />
           ) : (
             <form className="flex flex-col justify-center p-4 sm:p-8 lg:p-12 sm:flex-row sm:space-x-4 md:space-x-8">
-              <div className="flex flex-col justify-center sm:w-1/2">
+              <div className="flex flex-col justify-center sm:w-1/2 space-y-2">
                 {/* FIELD Category */}
-                <div className="relative flex items-center mb-2 w-full ">
+                <div className="relative flex items-center w-full ">
                   <select
                     name="category"
-                    className={`w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed invalid:italic`}
+                    className={`w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic`}
                     value={category}
                     onChange={(e) => {
-                      console.log(
-                        ` > Product category selected: ${e.target.value} ... \n`
-                      );
                       setCategory(e.target.value);
                     }}
                   >
@@ -206,14 +200,11 @@ export function ModalAddProduct({ handleClose }) {
                   name="name"
                   type="text"
                   placeholder="Name"
-                  className="w-full px-3 py-2 mb-2 transition-all bg-backg-raised dark:bg-backg-dark-raised border border-font-inactive rounded-lg enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowedk placeholder:italic"
+                  className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
                   value={name}
                   autoComplete="name"
                   disabled={!category}
                   onChange={(e) => {
-                    console.log(
-                      ` > typing product name: ${e.target.value} ... \n`
-                    );
                     setName(e.target.value);
                   }}
                 />
@@ -223,13 +214,10 @@ export function ModalAddProduct({ handleClose }) {
                   type="text"
                   placeholder="Description"
                   maxLength="40"
-                  className="w-full px-3 py-2 mb-2 transition-all bg-backg-raised dark:bg-backg-dark-raised border border-font-inactive rounded-lg enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed placeholder:italic"
+                  className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
                   value={description}
                   disabled={!category}
                   onChange={(e) => {
-                    console.log(
-                      ` > typing description:${e.target.value} ... \n`
-                    );
                     setDescription(e.target.value);
                   }}
                 />
@@ -239,7 +227,7 @@ export function ModalAddProduct({ handleClose }) {
                   type="number"
                   inputMode="numeric"
                   placeholder="Price"
-                  className="w-full px-3 py-2 mb-2 transition-all bg-backg-raised dark:bg-backg-dark-raised border border-font-inactive rounded-lg enabled:hover:border-primary-dark disabled:opacity-50 disabled:cursor-not-allowed placeholder:italic"
+                  className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
                   value={price}
                   disabled={!category}
                   onChange={(e) => {
@@ -248,7 +236,6 @@ export function ModalAddProduct({ handleClose }) {
                       e.stopPropagation();
                       setError("Price cannot exceed 1 billion");
                     } else {
-                      console.log(` > typing price: ${e.target.value} ... \n`);
                       setPrice(e.target.value);
                     }
                   }}

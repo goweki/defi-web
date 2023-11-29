@@ -6,13 +6,12 @@ import { ModalAddProduct, ModalEditProduct } from "./compo";
 import Loader from "@/components/loader";
 import toast from "react-hot-toast";
 
-export default function InventoryPage() {
+export default function ProductsPage() {
   const [products, setProducts] = useState(null);
   const [activeModal, setModal] = useState("");
   const [loading, setLoading] = useState(true);
   const [itemClicked, setItemClicked] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
-  // const [searchPhrase, setSearchPhrase] = useState("")
   // onMount, fetch products
   useEffect(() => {
     if (!activeModal) {
@@ -101,20 +100,19 @@ export default function InventoryPage() {
                 <div className="flex items-center w-full space-x-3 md:w-auto">
                   <select
                     name="category"
-                    className="flex w-full min-w-[120px] rounded-lg border pb-2 px-2 bg-backg-raised dark:bg-backg-dark-raised"
+                    className="flex w-full min-w-[160px] rounded-lg border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised pb-2 px-2 dark:bg-backg-dark-raised outline-none placeholder:italic py-3"
                     value={filterCategory}
                     onChange={(e) => {
-                      console.log(
-                        ` > filter category selected: ${e.target.value} ... \n`
-                      );
                       setFilterCategory(e.target.value);
                     }}
                   >
-                    <option value="" defaultValue className="italic py-2">
-                      All
+                    <option value="" defaultValue>
+                      All Categories
                     </option>
                     <option>Car</option>
                     <option>Service</option>
+                    <option>Part</option>
+                    <option>Accessory</option>
                   </select>
                   <ButtonSecondary
                     className="flex w-full min-w-[120px] pb-2 px-2 text-sm"
