@@ -5,7 +5,7 @@ export const revalidate = 0; // false | 'force-cache' | 0 | number
 export async function POST(request) {
   try {
     const doc = await request.json();
-    const { docType, ...doc_ } = doc;
+    const { colle_, ...doc_ } = doc;
     console.log(
       `POST REQUEST: to add a new product. \n >> \n..........................`
     );
@@ -17,9 +17,7 @@ export async function POST(request) {
     console.log(
       `CHECKPOINT: selecting collection\n >> \n.........................`
     );
-    const collection = client
-      .db(process.env.ATLAS_DB)
-      .collection(`${docType}s`);
+    const collection = client.db(process.env.ATLAS_DB).collection(colle_);
     // insert DOC
     console.log(`CHECKPOINT: inserting doc\n >> \n.........................`);
     const res_ = await collection.insertOne(doc_);

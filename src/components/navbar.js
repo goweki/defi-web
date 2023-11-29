@@ -103,12 +103,12 @@ export default function Navbar() {
             <div className="hidden md:flex md:flex-row">
               <div className="space-x-4 md:space-x-8 flex mx-6">
                 <Link
-                  href={"/admin/inventory"}
+                  href={"/admin/products"}
                   className={`${
-                    pathname === "/admin/inventory" ? "text-primary" : ""
+                    pathname === "/admin/products" ? "text-primary" : ""
                   } flex justify-center items-center font-medium transition`}
                 >
-                  Inventory
+                  Products
                 </Link>
                 {/* <Link
                   href={"/"}
@@ -119,12 +119,12 @@ export default function Navbar() {
                   <SVGlogo className="transition h-8 w-auto mx-4 py-2 hover:scale-110 hover:text-primary dark:hover:text-primary" />
                 </Link> */}
                 <Link
-                  href={"/admin/blog"}
+                  href={"/admin/library"}
                   className={`${
-                    pathname === "/admin/blog" ? "text-primary" : ""
+                    pathname === "/admin/library" ? "text-primary" : ""
                   } flex justify-center items-center font-medium transition`}
                 >
-                  Blog
+                  Library
                 </Link>
                 <Link
                   href={"/"}
@@ -133,7 +133,7 @@ export default function Navbar() {
                   Website
                 </Link>
                 <Link
-                  href={"/admin/inventory"}
+                  href={"/admin"}
                   className={`flex justify-center items-center font-medium transition`}
                   onClick={(e) => {
                     e.preventDefault();

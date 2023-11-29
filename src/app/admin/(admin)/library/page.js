@@ -3,28 +3,29 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 
-export default function BlogsPage() {
+export default function LibraryPage() {
   const [UIstate, setUIstate] = useState("");
   const [error, setError] = useState("");
-  const [blogs, setBlogs] = useState("");
-  const [selectedBlog, setSelectedBlog] = useState("");
-  const [blogEdit, setBlogEdit] = useState({
+  const [library, setLibrary] = useState("");
+  const [selectedItem, setSelectedItem] = useState("");
+  const [itemEdit, setItemEdit] = useState({
+    type: "",
     title: "",
     author: "",
-    article: "",
+    content: "",
   });
-  // onMount,blogs - fetch blogposts
+  // onMount,library - fetch item
   useEffect(() => {
-    if (!blogs) {
+    if (!library) {
       const fetchOptions = { method: "GET" };
-      fetch("/api/blog", fetchOptions)
+      fetch("/api/library", fetchOptions)
         .then((res_) => res_.json())
         .then((json_) => {
           if (json_.success) {
             console.log(
               `SUCCESS: Documents fetched:${json_.success.length}\n.............`
             );
-            setBlogs(json_.success);
+            setLibrary(json_.success);
           } else if (json_.error) {
             console.error(
               "ERROR: could not fetch products\n > " +
@@ -47,7 +48,7 @@ export default function BlogsPage() {
           console.error("ERROR: caught error\n > " + err.error || err);
         });
     }
-  }, [blogs]);
+  }, [library]);
   // onError
   useEffect(() => {
     if (error) {
@@ -55,35 +56,19 @@ export default function BlogsPage() {
       setError("");
     }
   }, [error]);
-  // onBlogSelect/Deselect
-  useEffect(() => {
-    if (selectedBlog) {
-      setBlogEdit({
-        title: selectedBlog.title,
-        author: selectedBlog.author,
-        article: selectedBlog.article,
-      });
-    } else {
-      setBlogEdit({
-        title: "",
-        author: "",
-        article: "",
-      });
-    }
-  }, [selectedBlog]);
   // onSubmit
   async function handleSave(e) {
     e.stopPropagation();
     e.preventDefault();
     // setLoading(true);
     // confirm fields filled
-    if (!blogEdit.title || !blogEdit.author || !blogEdit.article) {
+    if (!itemEdit.title || !itemEdit.author || !itemEdit.content) {
       toast.error(`Fill empty fields`);
       return;
     }
     // fetch options
     let fetchOptions = "";
-    if (!selectedBlog) {
+    if (!selectedItem) {
       fetchOptions = {
         method: "POST",
         headers: {
@@ -91,10 +76,10 @@ export default function BlogsPage() {
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify({
-          docType: "blogpost",
-          title: blogEdit.title,
-          author: blogEdit.author,
-          article: blogEdit.article,
+          type: itemEdit.type,
+          title: itemEdit.title,
+          author: itemEdit.author,
+          content: itemEdit.content,
         }),
       };
     } else {
@@ -105,11 +90,11 @@ export default function BlogsPage() {
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify({
-          docType: "blogpost",
-          _id: selectedBlog._id,
-          title: blogEdit.title,
-          author: blogEdit.author,
-          article: blogEdit.article,
+          _id: selectedItem._id,
+          type: itemEdit.type,
+          title: itemEdit.title,
+          author: itemEdit.author,
+          content: itemEdit.content,
         }),
       };
     }
@@ -124,12 +109,7 @@ export default function BlogsPage() {
               "\n.............."
           );
           toast.success("Blog saved!");
-          setBlogEdit({
-            title: "",
-            author: "",
-            article: "",
-          });
-          setBlogs("");
+          setLibrary("");
         } else if (json_.error) {
           console.error(
             "ERROR: Document update failed\n > " +
@@ -157,8 +137,8 @@ export default function BlogsPage() {
     e.preventDefault();
     // setLoading(true);
     // confirm fields filled
-    if (!selectedBlog) {
-      toast.error(`Blog not found`);
+    if (!selectedItem) {
+      toast.error(`Item not found`);
       return;
     }
     // fetch options
@@ -169,8 +149,8 @@ export default function BlogsPage() {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        docType: "blogpost",
-        _id: selectedBlog._id,
+        colle_: "library",
+        _id: selectedItem._id,
       }),
     };
     // DELETE request using fetch
@@ -184,8 +164,8 @@ export default function BlogsPage() {
               "\n.............."
           );
           toast.success("Document deleted!");
-          setBlogs("");
-          setSelectedBlog("");
+          setLibrary("");
+          setSelectedItem("");
         } else if (json_.error) {
           console.error(
             "ERROR: failed to delete document\n > " +
@@ -215,16 +195,16 @@ export default function BlogsPage() {
 
         <aside className="hidden md:w-1/3 md:flex flex-col items-center px-3">
           <div className="w-full p-5 mb-4 border border-font-inactive rounded-lg bg-backg-surface dark:bg-backg-dark-surface max-h-[1500px] overflow-y-auto">
-            <p className="text-lg font-medium uppercase">Blogs</p>
-            {blogs?.length > 0 ? (
+            <p className="text-lg font-medium uppercase">Gallery</p>
+            {library?.length > 0 ? (
               <ol className="mt-3 divide-y divider-font-inactive">
-                {blogs.map((v, i) => (
+                {library.map((v, i) => (
                   <li
                     key={v._id}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      setSelectedBlog(blogs.find(({ _id }) => _id === v._id));
+                      setSelectedItem(library.find(({ _id }) => _id === v._id));
                     }}
                     className="cursor-pointer"
                   >
@@ -257,69 +237,87 @@ export default function BlogsPage() {
                 ))}
               </ol>
             ) : (
-              <p>No blogs</p>
+              <p>Library is empty</p>
             )}
           </div>
         </aside>
         {/* <!-- Posts Section --> */}
         <section className="w-full md:w-2/3 flex flex-col items-center px-3">
           <form
-            id=" blogForm"
-            className="w-full bg-backg-surface dark:bg-backg-dark-surface rounded-lg shadow p-4 md:p-8"
+            id=" libraryForm"
+            className="w-full bg-backg-surface dark:bg-backg-dark-surface rounded-lg shadow p-4 md:p-8 space-y-2"
           >
+            <select
+              name="category"
+              className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
+              value={itemEdit.type}
+              onChange={(e) => {
+                e.preventDefault();
+                setItemEdit({ ...itemEdit, type: e.target.value });
+              }}
+            >
+              <option value="" defaultValue disabled>
+                Select a category...
+              </option>
+              <option value="blogpost">Blogpost</option>
+              <option value="photo">Photo</option>
+              <option value="event">Event</option>
+            </select>
             <input
               type="text"
               placeholder="Title..."
               className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
-              value={blogEdit.title}
+              value={itemEdit.title}
               onChange={(e) => {
                 e.preventDefault();
-                setBlogEdit({ ...blogEdit, title: e.target.value });
+                setItemEdit({ ...itemEdit, title: e.target.value });
               }}
             />
             <input
               type="text"
               placeholder="Author..."
               className="border border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised w-full py-3 px-[14px] text-base outline-none placeholder:italic"
-              value={blogEdit.author}
+              value={itemEdit.author}
               onChange={(e) => {
                 e.preventDefault();
-                setBlogEdit({ ...blogEdit, author: e.target.value });
+                setItemEdit({ ...itemEdit, author: e.target.value });
               }}
             />
             <div>
               <label htmlFor="editor" className="sr-only">
                 Publish post
               </label>
-              <textarea
-                id="editor"
-                rows="16"
-                className="block w-full bg-transparent border border-font-inactive focus:border-transparent focus:ring-primary px-[7px] text-base outline-none placeholder:italic"
-                placeholder="Write an article..."
-                required
-                value={blogEdit.article}
-                onChange={(e) => {
-                  e.preventDefault();
-                  setBlogEdit({ ...blogEdit, article: e.target.value });
-                }}
-              ></textarea>
+              {itemEdit.type === "blogpost" && (
+                <textarea
+                  id="editor"
+                  rows="16"
+                  className="block w-full bg-transparent border border-font-inactive focus:border-transparent focus:ring-primary px-[7px] text-base outline-none placeholder:italic"
+                  placeholder="Write an article..."
+                  required
+                  value={itemEdit.content}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    setItemEdit({ ...itemEdit, content: e.target.value });
+                  }}
+                ></textarea>
+              )}
             </div>
-            <div className="flex flex-row space-x-4 mt-4">
-              {selectedBlog && (
+            <div className="flex flex-row space-x-4 pt-4">
+              {selectedItem && (
                 <>
                   <ButtonSecondary
                     label="Cancel Selection"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      setSelectedBlog("");
+                      setSelectedItem("");
                     }}
                   />
                   <ButtonSecondary label="Delete post" onClick={handleDelete} />
                 </>
               )}
               <ButtonPrimary
-                label={!selectedBlog ? `Publish Post` : `Save Post`}
+                label={!selectedItem ? `Publish Post` : `Save Post`}
                 onClick={handleSave}
               />
             </div>
