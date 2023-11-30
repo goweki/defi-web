@@ -160,7 +160,7 @@ export default function BlogsPage({ params }) {
             {blogs.map((v, i) => (
               <article
                 key={v._id}
-                className="p-6 bg-backg-surface dark:bg-backg-dark-surface rounded-lg border border-font-inactive shadow"
+                className="flex flex-col p-6 bg-backg-surface dark:bg-backg-dark-surface rounded-lg border border-font-inactive shadow"
               >
                 <div className="flex justify-between items-center mb-5">
                   <span className="bg-primary-light dark:text-font text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
@@ -185,7 +185,9 @@ export default function BlogsPage({ params }) {
                 <h2 className="mb-2 text-2xl font-bold tracking-tight">
                   <Link href={`/library/blog/${v._id}`}>{v.title}</Link>
                 </h2>
-                <p className="mb-5 font-light">{trancStr(v.content, 210)}</p>
+                <p className="mb-5 flex flex-col flex-1">
+                  {trancStr(v.content, 210)}
+                </p>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-4">
                     <svg
