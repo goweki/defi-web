@@ -50,7 +50,7 @@ export async function PUT(request) {
     console.log(
       `CHECKPOINT: selecting collection\n >> \n.....................`
     );
-    const collection = client.db(process.env.ATLAS_DB).collection(`${colle_}s`);
+    const collection = client.db(process.env.ATLAS_DB).collection(colle_);
     // update DOC
     console.log(
       `CHECKPOINT: updating doc\n >> _id: ${_id}\n >> fields: ${Object.keys(
@@ -75,7 +75,7 @@ export async function PUT(request) {
 export async function DELETE(request) {
   try {
     const doc = await request.json();
-    const { _id, docType } = doc;
+    const { _id, colle_ } = doc;
     console.log(
       `DELETE REQUEST: to delete a document. \n >> \n..........................`
     );
@@ -87,9 +87,7 @@ export async function DELETE(request) {
     console.log(
       `CHECKPOINT: selecting collection\n >> \n.....................`
     );
-    const collection = client
-      .db(process.env.ATLAS_DB)
-      .collection(`${docType}s`);
+    const collection = client.db(process.env.ATLAS_DB).collection(colle_);
     // delete DOC
     console.log(
       `CHECKPOINT: deleting doc\n >> _id: ${_id}\n..................`

@@ -62,8 +62,7 @@ export default function LibraryPage() {
         reject(error);
       };
       // load image
-      setItemEdit({ ...itemEdit, image: imgUrl });
-      inputImage.src = URL.createObjectURL(imgUrl);
+      inputImage.src = imgUrl;
     });
   }
   // onMount,library - fetch item
@@ -127,6 +126,23 @@ export default function LibraryPage() {
       setError("");
     }
   }, [error]);
+  // on Image Upload/Change - generate image
+  useEffect(() => {
+    if (itemEdit.image) {
+      console.log("Image loading\n...........");
+      imgPreview(itemEdit.image, 1)
+        .then((res_) => {
+          if (res_ === true) {
+            toast.success("Image loaded successfully");
+          } else {
+            toast.error("Failed to load image");
+          }
+        })
+        .catch((error) => {
+          console.error("Error loading image:", error);
+        });
+    }
+  }, [itemEdit.image]);
   // onSubmit
   async function handleSave(e) {
     e.stopPropagation();
@@ -137,7 +153,7 @@ export default function LibraryPage() {
       toast.error(`Select a valid category`);
       return;
     }
-    if (itemEdit.type === "blogspot") {
+    if (itemEdit.type === "blogpost") {
       if (!itemEdit.title || !itemEdit.author || !itemEdit.content) {
         toast.error(`Error: empty fields`);
         return;
@@ -214,7 +230,7 @@ export default function LibraryPage() {
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
       };
-      if (itemEdit.type === "blogspot") {
+      if (itemEdit.type === "blogpost") {
         fetchOptions = {
           ...updateHeader,
           body: JSON.stringify({
@@ -256,7 +272,7 @@ export default function LibraryPage() {
       }
     }
     // make CALL using fetch
-    console.log("SAVING........ : \n >" + JSON.stringify(fetchOptions));
+    // console.log("SAVING-2........ : \n >" + JSON.stringify(fetchOptions));
     fetch("/api/admin", fetchOptions)
       .then((res_) => res_.json())
       .then((json_) => {
@@ -334,6 +350,15 @@ export default function LibraryPage() {
           toast.success("Document deleted!");
           setLibrary("");
           setSelectedItem("");
+          setItemEdit({
+            type: "",
+            title: "",
+            author: "",
+            content: "",
+            eventDate: "",
+            image: "",
+            description: "",
+          });
         } else if (json_.error) {
           console.error(
             "ERROR: failed to delete document\n > " +
@@ -537,6 +562,7 @@ export default function LibraryPage() {
               </>
             ) : itemEdit.type === "photo" ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {/* Image input field  */}
                 <div className="block w-full bg-transparent border rounded-lg border-font-inactive focus:border-transparent focus:ring-primary bg-backg-raised dark:bg-backg-dark-raised px-[7px] text-base outline-none aspect-square">
                   {!itemEdit.image && (
                     <label
@@ -555,9 +581,7 @@ export default function LibraryPage() {
                     className="hidden"
                     // value={image}
                     onChange={async (e) => {
-                      console.log(
-                        ` > uploading image: ${e.target.value} ... \n`
-                      );
+                      console.log(` > image loading: ${e.target.value} ... \n`);
                       if (e.target.files && e.target.files[0]) {
                         const imgUrl = e.target.files[0];
                         if (
@@ -566,17 +590,10 @@ export default function LibraryPage() {
                           setError("Invalid image file: select JPG,JPEG,PNG");
                           return;
                         }
-                        imgPreview(imgUrl, 1)
-                          .then((res_) => {
-                            if (res_ === true) {
-                              toast.success("Image loaded successfully");
-                            } else {
-                              toast.error("Failed to load image");
-                            }
-                          })
-                          .catch((error) => {
-                            console.error("Error loading image:", error);
-                          });
+                        setItemEdit({
+                          ...itemEdit,
+                          image: URL.createObjectURL(imgUrl),
+                        });
                       }
                     }}
                   />
@@ -624,6 +641,7 @@ export default function LibraryPage() {
                     </div>
                   )}
                 </div>
+                {/* Description field */}
                 <div>
                   <label htmlFor="description" className="sr-only">
                     Description
@@ -637,7 +655,7 @@ export default function LibraryPage() {
                     value={itemEdit.description}
                     onChange={(e) => {
                       e.preventDefault();
-                      setItemEdit({ ...itemEdit, content: e.target.value });
+                      setItemEdit({ ...itemEdit, description: e.target.value });
                     }}
                   />
                 </div>
@@ -653,6 +671,15 @@ export default function LibraryPage() {
                         e.preventDefault();
                         e.stopPropagation();
                         setSelectedItem("");
+                        setItemEdit({
+                          type: "",
+                          title: "",
+                          author: "",
+                          content: "",
+                          eventDate: "",
+                          image: "",
+                          description: "",
+                        });
                       }}
                     />
                     <ButtonSecondary
