@@ -211,9 +211,9 @@ export default function LibraryPage() {
           body: JSON.stringify({
             // itemEdit.eventDate,itemEdit.title,itemEdit.author,itemEdit.description
             type: itemEdit.type,
-            date: itemEdit.eventDate,
-            name: itemEdit.title,
-            host: itemEdit.author,
+            eventDate: itemEdit.eventDate,
+            title: itemEdit.title,
+            author: itemEdit.author,
             description: itemEdit.description,
             colle_: DBcollection,
           }),
@@ -259,8 +259,8 @@ export default function LibraryPage() {
             _id: selectedItem._id,
             type: itemEdit.type,
             eventDate: itemEdit.eventDate,
-            name: itemEdit.title,
-            host: itemEdit.author,
+            title: itemEdit.title,
+            author: itemEdit.author,
             description: itemEdit.description,
             colle_: DBcollection,
           }),
@@ -466,7 +466,7 @@ export default function LibraryPage() {
               value={itemEdit.type}
               onChange={(e) => {
                 e.preventDefault();
-                // setItemEdit({ , type: e.target.value });
+                setSelectedItem("");
                 setItemEdit({
                   type: e.target.value,
                   title: "",
