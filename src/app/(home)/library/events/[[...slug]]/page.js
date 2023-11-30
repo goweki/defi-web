@@ -7,12 +7,12 @@ import { trancStr } from "@/helpers/stringHandlers";
 import { LibraryContext } from "../../layout";
 import Loader from "@/components/loader";
 
-export default function EventsPage({ params }) {
+export default function BlogsPage({ params }) {
   const library = useContext(LibraryContext);
   const [UIstate, setUIstate] = useState("loading");
   const [error, setError] = useState("");
   const [events, setEvents] = useState("");
-  // onMount - load events
+  // onMount - load blogposts
   useEffect(() => {
     if (library) {
       setEvents(library.filter((v) => v.type === "event"));
@@ -31,10 +31,10 @@ export default function EventsPage({ params }) {
     const selectedEvent = events.find(({ _id }) => _id === params.slug[0]);
     if (selectedEvent)
       return (
-        <div className="flex justify-between p-4 pt-4 mx-auto max-w-screen-lg transition">
-          <article className="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+        <div className="w-full justify-between p-4 pt-4 mx-auto max-w-screen-lg transition">
+          <article className="mx-auto w-full">
             <div className="my-6 flex flex-row no-wrap">
-              <Link href="/library/events" className="flex flex-row no-wrap">
+              <Link href="/library/blog" className="flex flex-row no-wrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -54,7 +54,7 @@ export default function EventsPage({ params }) {
             </div>
             {/* <header className="mb-4 lg:mb-6 not-format">
               <h1 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
-                {selectedEvent.title}
+                {selectedBlog.title}
               </h1>
             </header> */}
             <figure className="relative my-8 h-[360px] md:h-[400px] lg:h-[440px] w-full overflow-hidden rounded-lg shadow-lg">
@@ -68,14 +68,14 @@ export default function EventsPage({ params }) {
                 // height={500}
                 fill={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                alt="event banner"
+                alt="blog banner"
                 className="object-cover"
                 priority={true}
               />
               {/* <figcaption>Digital art by Anonymous</figcaption> */}
             </figure>
-            <header className="mb-4 lg:mb-6 not-format">
-              <h2 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
+            <header className="mb-4 lg:mb-6">
+              <h2 className="mb-4 text-3xl text-center font-extrabold leading-tight lg:mb-6 lg:text-4xl">
                 {selectedEvent.title}
               </h2>
             </header>
@@ -111,11 +111,11 @@ export default function EventsPage({ params }) {
                     rel="author"
                     className="text-xl font-bold text-gray-900 dark:text-white"
                   >
-                    {selectedEvent.author}
+                    {selectedBlog.author}
                   </Link>
                   <p className="text-sm">
-                    <time dateTime={selectedEvent.date}>
-                      {selectedEvent.date}
+                    <time dateTime={selectedBlog.date}>
+                      {selectedBlog.date}
                     </time>
                   </p>
                 </div>
@@ -160,7 +160,7 @@ export default function EventsPage({ params }) {
             {events.map((v, i) => (
               <article
                 key={v._id}
-                className="p-6 bg-backg-surface dark:bg-backg-dark-surface rounded-lg border border-font-inactive shadow"
+                className="flex flex-col p-6 bg-backg-surface dark:bg-backg-dark-surface rounded-lg border border-font-inactive shadow"
               >
                 <div className="flex justify-between items-center mb-5">
                   <span className="bg-primary-light dark:text-font text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
@@ -178,14 +178,16 @@ export default function EventsPage({ params }) {
                         d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
                       />
                     </svg> */}
-                    event
+                    blog-post
                   </span>
                   <span className="text-sm">{v.date}</span>
                 </div>
                 <h2 className="mb-2 text-2xl font-bold tracking-tight">
-                  <Link href={`/library/events/${v._id}`}>{v.title}</Link>
+                  <Link href={`/library/blog/${v._id}`}>{v.title}</Link>
                 </h2>
-                <p className="mb-5 font-light">{v.content}</p>
+                <p className="mb-5 flex flex-col flex-1">
+                  {trancStr(v.content, 210)}
+                </p>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-4">
                     <svg
@@ -208,7 +210,7 @@ export default function EventsPage({ params }) {
                     </span>
                   </div>
                   <Link
-                    href={`/library/events/${v._id}`}
+                    href={`/library/blog/${v._id}`}
                     className="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
                   >
                     Read more

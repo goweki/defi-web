@@ -393,14 +393,20 @@ export default function LibraryPage() {
                 {library.map((v, i) => (
                   <li
                     key={v._id}
+                    id={v._id}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       setSelectedItem(library.find(({ _id }) => _id === v._id));
                     }}
-                    className="cursor-pointer"
                   >
-                    <div className="flex flex-col p-3 sm:flex hover:bg-backg dark:hover:bg-backg-dark hover:text-primary-dark">
+                    <div
+                      className={`${
+                        selectedItem?._id === v._id
+                          ? "bg-primary-light text-font-focus dark:bg-primary-dark dark:text-font-dark-focus"
+                          : ""
+                      } flex flex-col p-3 sm:flex hover:bg-backg dark:hover:bg-backg-dark hover:text-primary-dark cursor-pointer`}
+                    >
                       <div className="text-base font-normal">
                         <p className="font-bold lg:text-lg">
                           {v.title || v.name || "Photo"}
@@ -434,9 +440,7 @@ export default function LibraryPage() {
                   </li>
                 ))}
               </ol>
-            ) : (
-              <p>Library is empty</p>
-            )}
+            ) : null}
           </div>
         </aside>
         {/* <!-- Posts Section --> */}
