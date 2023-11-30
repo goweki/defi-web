@@ -31,8 +31,8 @@ export default function BlogsPage({ params }) {
     const selectedBlog = blogs.find(({ _id }) => _id === params.slug[0]);
     if (selectedBlog)
       return (
-        <div className="flex justify-between p-4 pt-4 mx-auto max-w-screen-lg transition">
-          <article className="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+        <div className="w-full justify-between p-4 pt-4 mx-auto max-w-screen-lg transition">
+          <article className="mx-auto w-full">
             <div className="my-6 flex flex-row no-wrap">
               <Link href="/library/blog" className="flex flex-row no-wrap">
                 <svg
@@ -74,8 +74,8 @@ export default function BlogsPage({ params }) {
               />
               {/* <figcaption>Digital art by Anonymous</figcaption> */}
             </figure>
-            <header className="mb-4 lg:mb-6 not-format">
-              <h2 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
+            <header className="mb-4 lg:mb-6">
+              <h2 className="mb-4 text-3xl text-center font-extrabold leading-tight lg:mb-6 lg:text-4xl">
                 {selectedBlog.title}
               </h2>
             </header>
