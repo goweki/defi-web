@@ -52,16 +52,7 @@ export default function BlogsPage({ params }) {
                 All blog-posts
               </Link>
             </div>
-            {/* <header className="mb-4 lg:mb-6 not-format">
-              <h1 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
-                {selectedBlog.title}
-              </h1>
-            </header> */}
-            <figure className="relative my-8 h-[360px] md:h-[400px] lg:h-[440px] w-full overflow-hidden rounded-lg shadow-lg">
-              {/* <Image
-                src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
-                alt=""
-              /> */}
+            {/* <figure className="relative my-8 h-[360px] md:h-[400px] lg:h-[440px] w-full overflow-hidden rounded-lg shadow-lg">
               <Image
                 src="/blogBanners/1.jpg"
                 // width={500}
@@ -72,8 +63,8 @@ export default function BlogsPage({ params }) {
                 className="object-cover"
                 priority={true}
               />
-              {/* <figcaption>Digital art by Anonymous</figcaption> */}
-            </figure>
+              // <figcaption>Digital art by Anonymous</figcaption>
+            </figure> */}
             <header className="mb-4 lg:mb-6">
               <h2 className="mb-4 text-3xl text-center font-extrabold leading-tight lg:mb-6 lg:text-4xl">
                 {selectedBlog.title}
