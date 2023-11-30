@@ -670,7 +670,7 @@ export default function LibraryPage() {
                 {selectedItem && (
                   <>
                     <ButtonSecondary
-                      label="Cancel Selection"
+                      label="Clear"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -687,7 +687,7 @@ export default function LibraryPage() {
                       }}
                     />
                     <ButtonSecondary
-                      label="Delete selection"
+                      label="Delete item"
                       onClick={handleDelete}
                     />
                   </>
