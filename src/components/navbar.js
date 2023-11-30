@@ -45,13 +45,31 @@ export default function Navbar() {
                     </Link>
                   </li>
                   <li>
+                    <Link href="/parts" onClick={(e) => setHamIsOpen(false)}>
+                      Parts
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/accessories"
+                      onClick={(e) => setHamIsOpen(false)}
+                    >
+                      Accessories
+                    </Link>
+                  </li>
+                  <li>
                     <Link href="/services" onClick={(e) => setHamIsOpen(false)}>
                       Services
                     </Link>
                   </li>
                   <li>
-                    <Link href="/blog" onClick={(e) => setHamIsOpen(false)}>
-                      Blog
+                    <Link href="/library" onClick={(e) => setHamIsOpen(false)}>
+                      Library
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/contacts" onClick={(e) => setHamIsOpen(false)}>
+                      Contacts
                     </Link>
                   </li>
                 </div>
@@ -61,7 +79,7 @@ export default function Navbar() {
           {/* expanded menu items */}
           {!pathname.includes("/admin") && (
             <div className="hidden md:flex md:flex-row">
-              <div className="space-x-4 md:space-x-8 flex mx-6">
+              <div className="space-x-4 md:space-x-8 flex mx-2">
                 {[
                   { link: "cars" },
                   { link: "parts" },
@@ -87,7 +105,7 @@ export default function Navbar() {
                         : v.logo
                         ? "text-backg-dark dark:text-backg"
                         : ""
-                    } flex justify-center items-center font-medium transition`}
+                    } flex justify-center items-center font-semibold transition`}
                   >
                     {v.link ? capitalizeInit(v.link) : v.logo}
                   </Link>
