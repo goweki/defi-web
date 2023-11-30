@@ -126,20 +126,28 @@ export default function LibraryPage() {
       setError("");
     }
   }, [error]);
-  // on Image Upload/Change - generate image
+  // on Image Upload/Change - draw canvas
   useEffect(() => {
     if (itemEdit.image) {
       console.log("Image loading\n...........");
       imgPreview(itemEdit.image, 1)
         .then((res_) => {
-          if (res_ === true) {
-            toast.success("Image loaded successfully");
-          } else {
+          if (res_ != true) {
             toast.error("Failed to load image");
+            setItemEdit({
+              type: "photo",
+              title: "",
+              author: "",
+              content: "",
+              eventDate: "",
+              image: "",
+              description: "",
+            });
           }
         })
         .catch((error) => {
           console.error("Error loading image:", error);
+          toast.error("Failed to load image");
         });
     }
   }, [itemEdit.image]);
@@ -216,7 +224,7 @@ export default function LibraryPage() {
           body: JSON.stringify({
             // itemEdit.image,itemEdit.description
             type: itemEdit.type,
-            image: itemEdit.image,
+            image: imgCanvas.current.toDataURL("image/jpeg", 1),
             description: itemEdit.description,
             colle_: DBcollection,
           }),
@@ -283,6 +291,7 @@ export default function LibraryPage() {
               "\n.............."
           );
           toast.success("Succesfully saved");
+          setSelectedItem("");
           setItemEdit({
             type: "",
             title: "",
@@ -292,7 +301,9 @@ export default function LibraryPage() {
             image: "",
             description: "",
           });
-          setLibrary("");
+          setTimeout(() => {
+            setLibrary("");
+          }, 100);
         } else if (json_.error) {
           console.error(
             "ERROR: Document update failed\n > " +
@@ -559,7 +570,7 @@ export default function LibraryPage() {
                     value={itemEdit.description}
                     onChange={(e) => {
                       e.preventDefault();
-                      setItemEdit({ ...itemEdit, content: e.target.value });
+                      setItemEdit({ ...itemEdit, description: e.target.value });
                     }}
                   />
                 </div>
@@ -597,6 +608,7 @@ export default function LibraryPage() {
                         setItemEdit({
                           ...itemEdit,
                           image: URL.createObjectURL(imgUrl),
+                          // imgCanvas.current.toDataURL("image/jpeg", 1);
                         });
                       }
                     }}
