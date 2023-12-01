@@ -76,7 +76,7 @@ export default function Navbar() {
           {/* expanded menu items */}
           {!pathname.includes("/admin") && (
             <div className="hidden md:flex md:flex-row">
-              <div className="space-x-4 md:space-x-8 flex mx-2">
+              <div className="space-x-3 md:space-x-6 flex mx-1">
                 {[
                   { link: "cars" },
                   { link: "parts" },
