@@ -50,7 +50,7 @@ export function ModalAddProduct({ handleClose }) {
         description,
         price,
         image: imgSTR,
-        colle_: "products",
+        colle_: DBcollection,
       }),
     };
     // POST request using fetch
@@ -420,6 +420,7 @@ export function ModalEditProduct({ product, handleClose }) {
         price,
         image: imgSTR,
         _id: product._id,
+        colle_: DBcollection,
       }),
     };
     // PUT request using fetch
