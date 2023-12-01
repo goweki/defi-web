@@ -37,11 +37,6 @@ export default function Navbar() {
                     </Link>
                   </div>
                   <li>
-                    <Link href="/" onClick={(e) => setHamIsOpen(false)}>
-                      Home
-                    </Link>
-                  </li>
-                  <li>
                     <Link href="/cars" onClick={(e) => setHamIsOpen(false)}>
                       Cars
                     </Link>
