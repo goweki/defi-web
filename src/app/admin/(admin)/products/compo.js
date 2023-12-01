@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 import Loader from "@/components/loader";
+const DBcollection = "products";
 
 export function ModalAddProduct({ handleClose }) {
   const [category, setCategory] = useState("");
@@ -396,12 +397,13 @@ export function ModalEditProduct({ product, handleClose }) {
   }, [error]);
   // onSave
   async function handleSave() {
-    setLoading(true);
     // confirm fields filled
     if (!category || !name || !description || !price || !image) {
       setError(`Fill empty fields`);
       return;
     }
+    //loading
+    setLoading(true);
     // Process canvas into dataURL string
     const imgSTR = imgCanvas.current.toDataURL("image/jpeg", 1);
     // fetch options
@@ -454,13 +456,16 @@ export function ModalEditProduct({ product, handleClose }) {
       });
   }
   // onDelete
-  async function handleDelete() {
-    setLoading(true);
+  async function handleDelete(e) {
+    e.stopPropagation();
+    e.preventDefault();
     // confirm fields filled
     if (!product._id) {
       setError(`Cannot find product`);
       handleClose();
     }
+    // loading
+    setLoading(true);
     // fetch options
     let fetchOptions = {
       method: "DELETE",
@@ -469,6 +474,7 @@ export function ModalEditProduct({ product, handleClose }) {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
+        colle_: DBcollection,
         _id: product._id,
       }),
     };
@@ -490,7 +496,7 @@ export function ModalEditProduct({ product, handleClose }) {
               JSON.stringify(json_) +
               "\n.............."
           );
-          setError("FAILED: Operation failed");
+          setError("FAILED: Operation failed--");
         } else {
           console.error(
             "ERROR: Document deletion failed with no response\n > " +

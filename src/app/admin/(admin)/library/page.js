@@ -376,7 +376,7 @@ export default function LibraryPage() {
               JSON.stringify(json_) +
               "\n.............."
           );
-          setError("FAILED: Operation failed");
+          setError("FAILED: Operation failed...");
         } else {
           console.error(
             "ERROR: Document deletion failed with no response\n > " +

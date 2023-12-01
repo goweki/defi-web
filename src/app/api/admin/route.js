@@ -92,10 +92,18 @@ export async function DELETE(request) {
     console.log(
       `CHECKPOINT: deleting doc\n >> _id: ${_id}\n..................`
     );
-    collection.deleteOne({ _id: new ObjectId(_id) });
-    console.log(`SUCCESS: A document was deleted.\n.........................`);
+    const result = await collection.deleteOne({ _id: new ObjectId(_id) });
     // HTTP response
-    return Response.json({ success: "Document deleted" });
+    console.log(`CHECKPOINT: result ${JSON.stringify(result)}\n...........`);
+    if (result.deletedCount === 1) {
+      console.log(
+        `SUCCESS: A document was deleted.\n.........................`
+      );
+      return Response.json({ success: "Document deleted" });
+    } else {
+      console.log("No document was deleted.");
+      return Response.json({ error: "Document was not deleted.." });
+    }
   } catch (error) {
     // handle ERROR if caught
     console.log(
@@ -103,6 +111,6 @@ export async function DELETE(request) {
         error.error || error
       }\n.........................`
     );
-    return Response.json({ error: "Document was not deleted" });
+    return Response.json({ error: "Document was not deleted." });
   }
 }

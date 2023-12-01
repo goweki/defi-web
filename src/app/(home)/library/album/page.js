@@ -27,35 +27,29 @@ export default function EventsPage() {
   }, [error]);
   // return
   if (UIstate === "OK" && photos) {
-    if (photos.length === 0) {
-      return (
-        <p className="m-auto text-2xl">
-          Unfortunately, we have no images for now
-        </p>
-      );
-    } else {
-      return (
-        <section className="transition">
-          <div className="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
-            <div className="my-6 flex flex-row no-wrap">
-              <Link href="/library" className="flex flex-row no-wrap">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6 mx-2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
-                  />
-                </svg>
-                Back to Library menu
-              </Link>
-            </div>
+    return (
+      <section className="transition">
+        <div className="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
+          <div className="my-6 flex flex-row no-wrap">
+            <Link href="/library" className="flex flex-row no-wrap">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 mx-2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                />
+              </svg>
+              Back to Library menu
+            </Link>
+          </div>
+          {photos.length > 0 ? (
             <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
               <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold">
                 A visual journey
@@ -64,15 +58,20 @@ export default function EventsPage() {
                 Cars go hand in hand with stunning views and beautiful shots...
               </p>
             </div>
-            <div className="grid gap-8 lg:grid-cols-2">
-              {photos.map((v, i) => (
-                <article
-                  key={v._id}
-                  className="flex flex-col p-6 bg-backg-surface dark:bg-backg-dark-surface rounded-lg border border-font-inactive shadow"
-                >
-                  <div className="flex justify-between items-center mb-5">
-                    <span className="bg-primary-dark text-font-dark-focus text-base font-sm inline-flex items-center px-2 py-1 rounded">
-                      {/* <svg
+          ) : (
+            <p className="m-auto text-2xl">
+              Unfortunately, we have no images for now
+            </p>
+          )}
+          <div className="grid gap-8 lg:grid-cols-2">
+            {photos.map((v, i) => (
+              <article
+                key={v._id}
+                className="flex flex-col p-6 bg-backg-surface dark:bg-backg-dark-surface rounded-lg border border-font-inactive shadow"
+              >
+                <div className="flex justify-between items-center mb-5">
+                  <span className="bg-primary-dark text-font-dark-focus text-base font-sm inline-flex items-center px-2 py-1 rounded">
+                    {/* <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -86,22 +85,22 @@ export default function EventsPage() {
                           d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
                         />
                       </svg> */}
-                      photo
-                    </span>
-                  </div>
-                  <Image
-                    className="rounded"
-                    src={v.image}
-                    width={500}
-                    height={500}
-                    alt="image"
-                  />
+                    photo
+                  </span>
+                </div>
+                <Image
+                  className="rounded"
+                  src={v.image}
+                  width={500}
+                  height={500}
+                  alt="image"
+                />
 
-                  <p className="mt-2 mb-4 flex flex-col flex-1 text-center">
-                    {v.description}
-                  </p>
+                <p className="mt-2 mb-4 flex flex-col flex-1 text-center">
+                  {v.description}
+                </p>
 
-                  {/* <div className="flex m-auto space-x-4">
+                {/* <div className="flex m-auto space-x-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -121,12 +120,11 @@ export default function EventsPage() {
                       Event by {v.author}
                     </span>
                   </div> */}
-                </article>
-              ))}
-            </div>
+              </article>
+            ))}
           </div>
-        </section>
-      );
-    }
+        </div>
+      </section>
+    );
   } else return <Loader />;
 }
