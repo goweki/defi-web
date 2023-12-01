@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import { CardSimple } from "@/components/cards";
-import offroadIllustration1 from "@/assets/images/illustration_vehicle_offfroad_1.svg";
-import offroadIllustration2 from "@/assets/images/illustration_vehicle_offfroad_2.svg";
+import carIllustration from "@/assets/images/illustration_vehicle_offfroad_1.svg";
+import flagIllustration from "@/assets/images/bw_flag.svg";
+import tireIllustration from "@/assets/images/bw_tire.svg";
 
 export default function LibraryPage() {
   // return
@@ -36,17 +37,17 @@ export default function LibraryPage() {
 const libraryCategories = {
   blog: {
     name: "blog",
-    image: offroadIllustration1,
+    image: tireIllustration,
     description: "Let us talk offroads!",
   },
   album: {
     name: "photos",
-    image: offroadIllustration2,
+    image: carIllustration,
     description: "A visual tour of the machines we love",
   },
   events: {
     name: "events",
-    image: offroadIllustration2,
+    image: flagIllustration,
     description: "See what we have coming up",
   },
 };
