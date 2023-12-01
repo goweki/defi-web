@@ -30,7 +30,7 @@ export default function EventsPage() {
     if (photos.length === 0) {
       return (
         <p className="m-auto text-2xl">
-          Unfortunately, we have no events for now
+          Unfortunately, we have no images for now
         </p>
       );
     } else {
