@@ -12,7 +12,7 @@ export default function LibraryPage() {
       <div className="py-8 px-4 mx-auto max-w-screen-lg lg:py-16 lg:px-6">
         <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
           <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold">
-            blog, photos, events involving the machines we love.
+            blog, events, photos of the machines we love.
           </h2>
           <p className="font-light sm:text-xl">
             Select a library item to view more items
