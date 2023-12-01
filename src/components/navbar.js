@@ -15,7 +15,9 @@ export default function Navbar() {
         <div className="flex flex-1 items-center justify-center">
           {/* collapsed menu items */}
           <div className="md:hidden flex flex-row flex-1 justify-between items-center">
-            <SVGlogo className="h-8 w-auto mx-8 py-2 text-backg-dark dark:text-backg hover:scale-110 hover:text-primary dark:hover:text-primary" />
+            <Link href="/">
+              <SVGlogo className="h-8 w-auto mx-8 py-2 hover:scale-110" />
+            </Link>
             <button onClick={() => setHamIsOpen(true)} className="flex p-3">
               <SVGhambuger className="w-6 h-6" />
             </button>
