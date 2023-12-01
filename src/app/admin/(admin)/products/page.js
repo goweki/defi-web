@@ -201,8 +201,8 @@ export default function ProductsPage() {
                           <span className="relative inline-block font-semibold leading-tight">
                             {/* {parseInt(v.price) / 1000 + " K"} */}
                             {v.price.toString().length > 6
-                              ? Math.ceil(v.price / 1000000) + " M"
-                              : Math.ceil(v.price / 1000) + " K"}{" "}
+                              ? (v.price / 1000000).toFixed(2) + "M"
+                              : (v.price / 1000).toFixed(2) + "K"}{" "}
                           </span>
                         </td>
                       </tr>

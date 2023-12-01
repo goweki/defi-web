@@ -38,7 +38,7 @@ export function CardProduct({
       onClick={onClick}
       className="group relative h-84 w-52 m-2 md:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-dark dark:hover:bg-primary-dark hover:text-font-dark-focus shadow hover:scale-105 hover:shadow-lg cursor-pointer transition"
     >
-      <div className="relative flex w-full overflow-hidden">
+      <div className="relative flex w-full overflow-hidden aspect-square">
         <Image
           className={`object-cover h-full w-full group-hover:scale-110 transition ${className}`}
           src={product?.image}

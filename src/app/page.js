@@ -10,11 +10,13 @@ import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 import { ProductsContext } from "./context";
 import Loader from "@/components/loader";
 import AutoPopUp from "./autoPopup";
+import { ProductPopup } from "./productPopup";
 
 export default function LandingPage() {
   const router = useRouter();
   const products = useContext(ProductsContext);
   const [showPopup, setShowPopup] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState("");
   // popup timer-20sec
   useEffect(() => {
     setTimeout(() => {
@@ -96,6 +98,10 @@ export default function LandingPage() {
                       key={v._id}
                       id={v._id}
                       className={`inline-block`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setSelectedProduct(v);
+                      }}
                     />
                   );
                 })}
@@ -114,12 +120,21 @@ export default function LandingPage() {
                       key={v._id}
                       id={v._id}
                       className={`inline-block`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setSelectedProduct(v);
+                      }}
                     />
                   );
                 })}
             </div>
           </div>
-
+          {selectedProduct && (
+            <ProductPopup
+              handleClose={() => setSelectedProduct("")}
+              product={selectedProduct}
+            />
+          )}
           {showPopup && <AutoPopUp handleClose={() => setShowPopup(false)} />}
         </main>
         <Footer />
