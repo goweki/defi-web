@@ -33,7 +33,7 @@ export function ProductPopup({ handleClose, product }) {
     e.preventDefault();
     //setLoading(true);
     // confirm fields filled
-    if (!showInterest.name && !showInterest.tel) {
+    if (!showInterest.email && !showInterest.tel) {
       toast.error(`Please provide email or Phone No.`);
       return;
     }
@@ -45,7 +45,7 @@ export function ProductPopup({ handleClose, product }) {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        subject: `NEW LEAD: ${category}`,
+        subject: `NEW LEAD: ${product.category}`,
         text: `Name: ${showInterest.name} \nEmail: ${showInterest.email} \nTel: ${showInterest.tel} \nInterest: ${product.name}`,
       }),
     };

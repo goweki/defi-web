@@ -33,7 +33,7 @@ export function PartPopup({ handleClose, car }) {
     e.preventDefault();
     //setLoading(true);
     // confirm fields filled
-    if (!showInterest.name && !showInterest.tel) {
+    if (!showInterest.email && !showInterest.tel) {
       toast.error(`Please provide email or Phone No.`);
       return;
     }
@@ -45,7 +45,7 @@ export function PartPopup({ handleClose, car }) {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        subject: `NEW LEAD: CAR`,
+        subject: `NEW LEAD: part`,
         text: `Name: ${showInterest.name} \nEmail: ${showInterest.email} \nTel: ${showInterest.tel} \nInterest: ${car.name}`,
       }),
     };
