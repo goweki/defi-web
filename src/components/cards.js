@@ -61,8 +61,8 @@ export function CardProduct({
             <span className="md:text-xl font-bold">
               <span className="text-sm uppercase">Ksh. </span>
               {product?.price.toString().length > 6
-                ? Math.ceil(product?.price / 1000000) + "M"
-                : Math.ceil(product?.price / 1000) + "K"}{" "}
+                ? (product?.price / 1000000).toFixed(2) + "M"
+                : (product?.price / 1000).toFixed(2) + "K"}{" "}
             </span>
             {/* <span className="text-sm text-slate-900 line-through">$699</span> */}
           </p>

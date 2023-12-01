@@ -559,7 +559,6 @@ export function ModalEditProduct({ product, handleClose }) {
       inputImage.src = URL.createObjectURL(imgUrl);
     });
   }
-
   return (
     <div
       id="modal"
