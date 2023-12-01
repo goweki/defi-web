@@ -21,7 +21,7 @@ export default function LandingPage() {
   useEffect(() => {
     setTimeout(() => {
       setShowPopup(true);
-    }, 20000);
+    }, 10000);
   }, []);
   // render
   if (products)
