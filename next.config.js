@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "pictures-kenya.jijistatic.com",
       },
+      {
+        protocol: "https",
+        hostname: "drive.google.com",
+      },
     ],
   },
 };

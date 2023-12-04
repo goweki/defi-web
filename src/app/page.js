@@ -65,70 +65,88 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-          {/* PICK of the Month */}
-
-          {/* Top deals */}
-          {/* <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
-              <h2 className="pb-2"> Top deals</h2>
-              <div className="flex flex-row w-full px-4 py-2 justify-start space-x-4 overflow-x-auto scrolling-touch">
+          {/* CARS */}
+          {products.filter((obj) => obj.category.toLowerCase() === "car")
+            .length > 0 && (
+            <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
+              <h2 className="pb-2 text-center">CARS</h2>
+              <div
+                className={`flex flex-row w-full px-4 py-2 overflow-x-auto scrolling-touch ${
+                  products.filter((obj) => obj.category.toLowerCase() === "car")
+                    .length < 4
+                    ? "justify-center"
+                    : "justify-start"
+                }`}
+              >
                 {products
-                  .filter((obj) => obj.category === "Car")
+                  .filter((obj) => obj.category.toLowerCase() === "car")
                   .map((v, i) => {
                     return (
-                      <CardLarge
+                      <CardProduct
                         product={v}
                         key={v._id}
                         id={v._id}
                         className={`inline-block`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSelectedProduct(v);
+                        }}
                       />
                     );
                   })}
               </div>
-            </div> */}
-          {/* Cars featured */}
-          <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
-            <h2 className="pb-2 text-center">The Cars</h2>
-            <div className="flex flex-row w-full px-4 py-2 overflow-x-auto scrolling-touch justify-start">
-              {products
-                .filter((obj) => obj.category === "Car")
-                .map((v, i) => {
-                  return (
-                    <CardProduct
-                      product={v}
-                      key={v._id}
-                      id={v._id}
-                      className={`inline-block`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSelectedProduct(v);
-                      }}
-                    />
-                  );
-                })}
             </div>
-          </div>
-          {/* SERVICES featured */}
-          <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
-            <h2 className="pb-2 text-center">The Services</h2>
-            <div className="flex flex-row w-full px-4 py-2 overflow-x-auto scrolling-touch justify-start">
-              {products
-                .filter((obj) => obj.category === "Service")
-                .map((v, i) => {
-                  return (
-                    <CardProduct
-                      product={v}
-                      key={v._id}
-                      id={v._id}
-                      className={`inline-block`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSelectedProduct(v);
-                      }}
-                    />
-                  );
-                })}
+          )}
+          {/* SERVICES */}
+          {products.filter((obj) => obj.category.toLowerCase() === "service")
+            .length > 0 && (
+            <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
+              <h2 className="pb-2 text-center">SERVICES</h2>
+              <div className="flex flex-row w-full px-4 py-2 overflow-x-auto scrolling-touch justify-start">
+                {products
+                  .filter((obj) => obj.category.toLowerCase() === "service")
+                  .map((v, i) => {
+                    return (
+                      <CardProduct
+                        product={v}
+                        key={v._id}
+                        id={v._id}
+                        className={`inline-block`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSelectedProduct(v);
+                        }}
+                      />
+                    );
+                  })}
+              </div>
             </div>
-          </div>
+          )}
+          {/* ACCESSORIES */}
+          {products.filter((obj) => obj.category.toLowerCase() === "accessory")
+            .length > 0 && (
+            <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
+              <h2 className="pb-2 text-center uppercase">Accessories</h2>
+              <div className="flex flex-row w-full px-4 py-2 overflow-x-auto scrolling-touch justify-start">
+                {products
+                  .filter((obj) => obj.category.toLowerCase() === "accessory")
+                  .map((v, i) => {
+                    return (
+                      <CardProduct
+                        product={v}
+                        key={v._id}
+                        id={v._id}
+                        className={`inline-block`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSelectedProduct(v);
+                        }}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+          )}
           {selectedProduct && (
             <ProductPopup
               handleClose={() => setSelectedProduct("")}
