@@ -16,7 +16,7 @@ export default function CarsPage() {
   useEffect(() => {
     setCars(
       products
-        ?.filter(({ category }) => category === "Car")
+        ?.filter(({ category }) => category.toLowerCase() === "car")
         .filter(({ name }) =>
           name.toLowerCase().includes(searchPhrase.toLowerCase())
         )

@@ -5,7 +5,7 @@ import { CardProduct } from "@/components/cards";
 import Loader from "@/components/loader";
 import { AccessoryPopup } from "./accessoryPopup";
 
-export default function PartsPage() {
+export default function AccessoriesPage() {
   const products = useContext(ProductsContext);
   const [accessories, setAccessories] = useState("");
   const [clickedAccessory, setClickedAccessory] = useState("");
@@ -16,7 +16,7 @@ export default function PartsPage() {
   useEffect(() => {
     setAccessories(
       products
-        ?.filter(({ category }) => category === "Accessory")
+        ?.filter(({ category }) => category.toLowerCase() === "accessory")
         .filter(({ name }) =>
           name.toLowerCase().includes(searchPhrase.toLowerCase())
         )
