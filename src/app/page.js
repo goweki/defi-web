@@ -102,7 +102,15 @@ export default function LandingPage() {
             .length > 0 && (
             <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
               <h2 className="pb-2 text-center">SERVICES</h2>
-              <div className="flex flex-row w-full px-4 py-2 overflow-x-auto scrolling-touch justify-start">
+              <div
+                className={`flex flex-row w-full px-4 py-2 overflow-x-auto scrolling-touch ${
+                  products.filter(
+                    (obj) => obj.category.toLowerCase() === "service"
+                  ).length < 4
+                    ? "justify-center"
+                    : "justify-start"
+                }`}
+              >
                 {products
                   .filter((obj) => obj.category.toLowerCase() === "service")
                   .map((v, i) => {
@@ -127,7 +135,15 @@ export default function LandingPage() {
             .length > 0 && (
             <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
               <h2 className="pb-2 text-center uppercase">Accessories</h2>
-              <div className="flex flex-row w-full px-4 py-2 overflow-x-auto scrolling-touch justify-start">
+              <div
+                className={`flex flex-row w-full px-4 py-2 overflow-x-auto scrolling-touch ${
+                  products.filter(
+                    (obj) => obj.category.toLowerCase() === "accessory"
+                  ).length < 4
+                    ? "justify-center"
+                    : "justify-start"
+                }`}
+              >
                 {products
                   .filter((obj) => obj.category.toLowerCase() === "accessory")
                   .map((v, i) => {
