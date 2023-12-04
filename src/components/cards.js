@@ -53,7 +53,7 @@ export function CardProduct({
         </span>
       </div>
       <div className="mt-4 px-2 pb-3 flex flex-col flex-1 justify-between">
-        <h5 className="md:text-lg tracking-tight text-center truncate">
+        <h5 className="text-sm tracking-tight text-center truncate">
           {product?.name}
         </h5>
         <div className="mt-1 mb-4 flex items-center justify-center">
