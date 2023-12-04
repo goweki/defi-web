@@ -16,7 +16,7 @@ export default function PartsPage() {
   useEffect(() => {
     setParts(
       products
-        ?.filter(({ category }) => category === "Part")
+        ?.filter(({ category }) => category.toLowerCase() === "part")
         .filter(({ name }) =>
           name.toLowerCase().includes(searchPhrase.toLowerCase())
         )
