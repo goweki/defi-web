@@ -97,6 +97,39 @@ export default function LandingPage() {
               </div>
             </div>
           )}
+          {/* PARTS */}
+          {products.filter((obj) => obj.category.toLowerCase() === "part")
+            .length > 0 && (
+            <div className="w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
+              <h2 className="pb-2 text-center">PARTS</h2>
+              <div
+                className={`flex flex-row w-full px-4 py-2 overflow-x-auto scrolling-touch ${
+                  products.filter(
+                    (obj) => obj.category.toLowerCase() === "part"
+                  ).length < 4
+                    ? "justify-center"
+                    : "justify-start"
+                }`}
+              >
+                {products
+                  .filter((obj) => obj.category.toLowerCase() === "part")
+                  .map((v, i) => {
+                    return (
+                      <CardProduct
+                        product={v}
+                        key={v._id}
+                        id={v._id}
+                        className={`inline-block`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSelectedProduct(v);
+                        }}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+          )}
           {/* SERVICES */}
           {products.filter((obj) => obj.category.toLowerCase() === "service")
             .length > 0 && (
