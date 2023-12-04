@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { LibraryContext } from "../layout";
 import Loader from "@/components/loader";
 
-export default function EventsPage() {
+export default function AlbumPage() {
   const library = useContext(LibraryContext);
   const [UIstate, setUIstate] = useState("loading");
   const [error, setError] = useState("");
