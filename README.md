@@ -8,21 +8,23 @@ Source code for DEFI Motors and Autoworks website.
 
 - Home: [`/`](https://www.defioffroads.co.ke/)
 - Cars: [`/cars`](https://www.defioffroads.co.ke/cars)
+- Parts: [`/parts`](https://www.defioffroads.co.ke/parts)
+- Accessories: [`/accessories`](https://www.defioffroads.co.ke/accessories)
 - Services: [`/services`](https://www.defioffroads.co.ke/services)
-- Blog: [`/blog`](https://www.defioffroads.co.ke/blog)
+- Library: [`/library`](https://www.defioffroads.co.ke/library)
 - Contacts: [`/contacts`](https://www.defioffroads.co.ke/contacts)
 
 #### Admin Pages
 
 - Admin: [`/admin`](https://www.defioffroads.co.ke/admin)
-- Inventory (Products & Services): [`/admin/inventory`](https://www.defioffroads.co.ke/admin/inventory)
-- Blog: [`/admin/blog`](https://www.defioffroads.co.ke/admin/blog)
+- Products: [`/admin/products`](https://www.defioffroads.co.ke/admin/products)
+- Library: [`/admin/library`](https://www.defioffroads.co.ke/admin/library)
 
 #### Backend routes
 
 - Authentication: [`/api/auth`]
 - Products: [`/api/products`] 
-- Blog: [`/api/blog`]
+- Library: [`/api/library`]
 - Admin: [`/api/admin`]
 - Mailing: [`/api/mailer`]
 
