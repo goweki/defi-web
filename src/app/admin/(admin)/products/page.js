@@ -109,10 +109,10 @@ export default function ProductsPage() {
                     <option value="" defaultValue>
                       All Categories
                     </option>
-                    <option>Car</option>
-                    <option>Service</option>
-                    <option>Part</option>
-                    <option>Accessory</option>
+                    <option value="car">Cars</option>
+                    <option value="service">Services</option>
+                    <option value="part">Part</option>
+                    <option value="accessory">Accessory</option>
                   </select>
                   <ButtonSecondary
                     className="flex w-full min-w-[120px] pb-2 px-2 text-sm"
@@ -153,7 +153,7 @@ export default function ProductsPage() {
                   products
                     .filter((item) => {
                       if (filterCategory) {
-                        return item.category === filterCategory;
+                        return item.category.toLowerCase() === filterCategory;
                       } else {
                         return true;
                       }
