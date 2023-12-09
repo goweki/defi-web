@@ -1,7 +1,7 @@
 const rootURL = process.env.NEXTAUTH_URL || "http://localhost:3000/";
 
 export default async function sitemap() {
-  // blogpost pages
+  // DYNAMIC PAGES - blogposts
   let blog = [];
   const libData_ = await fetch(`${rootURL}api/library`);
   const libData = await libData_.json();
