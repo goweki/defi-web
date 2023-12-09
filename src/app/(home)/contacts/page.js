@@ -144,7 +144,7 @@ export default function ContactsPage() {
                     Phone Number
                   </h4>
                   <p className="text-base text-body-color dark:text-dark-6">
-                    (+254) 700 000 000
+                    (+254) 746 545 161
                   </p>
                 </div>
               </div>
