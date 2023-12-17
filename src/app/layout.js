@@ -11,6 +11,11 @@ export const metadata = {
   },
   description:
     "Lets take it offroad: with our adventurous love for cars, parts and services that go beyond the urban trails",
+  icons: {
+    icon: "/brand/defi-icon.svg",
+    shortcut: "/brand/defi-icon.svg",
+    apple: "/brand/defi-icon.svg",
+  },
   keywords: [
     "Motors",
     "Autoworks",
