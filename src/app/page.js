@@ -12,6 +12,33 @@ import Loader from "@/components/loader";
 import AutoPopUp from "./autoPopup";
 import { ProductPopup } from "./productPopup";
 
+// export const metadata = {
+//   title: "home",
+//   description: "Lets take it offroad",
+//   keywords: [
+//     "Motors",
+//     "Autoworks",
+//     "offroad",
+//     "Nairobi",
+//     "Ford",
+//     "garage",
+//     "Kenya",
+//   ],
+//   robots: {
+//     // index: false,
+//     follow: true,
+//     nocache: true,
+//     googleBot: {
+//       index: true,
+//       follow: false,
+//       noimageindex: true,
+//       // "max-video-preview": -1,
+//       // "max-image-preview": "large",
+//       // "max-snippet": -1,
+//     },
+//   },
+// };
+
 export default function LandingPage() {
   const router = useRouter();
   const products = useContext(ProductsContext);
