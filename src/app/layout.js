@@ -5,7 +5,10 @@ import Context from "./context";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "DEFI",
+  title: {
+    template: "DEFI | %s",
+    default: "DEFI", // a default is required when creating a template
+  },
   description: "DEFI Motors and Auto-works",
 };
 
