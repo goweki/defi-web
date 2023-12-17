@@ -12,9 +12,9 @@ export const metadata = {
   description:
     "Lets take it offroad: with our adventurous love for cars, parts and services that go beyond the urban trails",
   icons: {
-    icon: "/brand/defi-icon.svg",
-    shortcut: "/brand/defi-icon.svg",
-    apple: "/brand/defi-icon.svg",
+    icon: "https://www.defioffroads.co.ke/brand/defi-icon.svg",
+    shortcut: "https://www.defioffroads.co.ke/brand/defi-icon.svg",
+    apple: "https://www.defioffroads.co.ke//brand/defi-icon.svg",
   },
   keywords: [
     "Motors",
@@ -40,13 +40,13 @@ export const metadata = {
   },
   // change with url of your image (recommended dimension = 1.91:1)
   // used in twitter, facebook, etc. card when link copied in tweet/status
-  image: "/brand/defi-card.jpg",
+  image: "https://www.defioffroads.co.ke/brand/defi-card.jpg",
   openGraph: {
     title: "DEFI Motors/Autoworks",
     description: "Let us take it offroad...",
     url: "https://defioffroads.co.ke",
     siteName: "DEFI Motors/Autoworks",
-    image: "/brand/defi-card.jpg",
+    image: "https://www.defioffroads.co.ke/brand/defi-card.jpg",
     // locale: 'en_US',
     type: "website",
   },
