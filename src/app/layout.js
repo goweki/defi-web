@@ -21,7 +21,7 @@ export const metadata = {
     "Kenya",
   ],
   robots: {
-    // index: false,
+    index: true,
     follow: true,
     nocache: true,
     googleBot: {
