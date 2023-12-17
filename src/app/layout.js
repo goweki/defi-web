@@ -9,7 +9,7 @@ export const metadata = {
     template: "DEFI | %s",
     default: "DEFI Motors", // a default is required when creating a template
   },
-  description: "DEFI Motors and Auto-works: lets take it offroad",
+  description: "Lets take it offroad",
   keywords: [
     "Motors",
     "Autoworks",
