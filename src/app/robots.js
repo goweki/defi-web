@@ -2,7 +2,7 @@ export default function robots() {
   return {
     rules: {
       userAgent: "*",
-      allow: "*",
+      allow: "/",
       disallow: "/admin/",
     },
     sitemap: "https://defioffroads.co.ke/sitemap.xml",
