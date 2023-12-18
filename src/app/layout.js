@@ -6,8 +6,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: {
-    template: "DEFI | %s",
-    default: "DEFI Motors", // a default is required when creating a template
+    template: "DEFI Offroads | %s",
+    default: "DEFI Motors & Autoworks", // a default is required when creating a template
   },
   description:
     "Lets take it offroad: with our adventurous love for cars, parts and services that go beyond the urban trails",
