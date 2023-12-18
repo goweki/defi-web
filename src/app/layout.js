@@ -21,16 +21,16 @@ export const metadata = {
     "Kenya",
   ],
   robots: {
-    index: true,
+    index: false,
     follow: true,
     nocache: true,
     googleBot: {
       index: true,
       follow: false,
       noimageindex: true,
-      // "max-video-preview": -1,
-      // "max-image-preview": "large",
-      // "max-snippet": -1,
+      // 'max-video-preview': -1,
+      // 'max-image-preview': 'large',
+      // 'max-snippet': -1,
     },
   },
   // change with url of your image (recommended dimension = 1.91:1)
