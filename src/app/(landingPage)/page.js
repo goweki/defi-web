@@ -9,7 +9,7 @@ import { CardLarge, CardProduct } from "@/components/cards";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 import { ProductsContext } from "./context";
 import Loader from "@/components/loader";
-import AutoPopUp from "./autoPopup";
+import AutoPopUp from "./(landingPage)/autoPopup";
 import { ProductPopup } from "./productPopup";
 
 export default function LandingPage() {
