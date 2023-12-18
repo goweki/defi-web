@@ -25,15 +25,14 @@ export const metadata = {
     index: true,
     follow: true,
     nocache: true,
-    googleBot: {
-      index: true,
-      // follow: true,
-      follow: false,
-      noimageindex: true,
-      // 'max-video-preview': -1,
-      // 'max-image-preview': 'large',
-      // 'max-snippet': -1,
-    },
+    // googleBot: {
+    //   index: true,
+    //   follow: true,
+    //   noimageindex: true,
+    //   'max-video-preview': -1,
+    //   'max-image-preview': 'large',
+    //   'max-snippet': -1,
+    // },
   },
   // change with url of your image (recommended dimension = 1.91:1)
   // used in twitter, facebook, etc. card when link copied in tweet/status
