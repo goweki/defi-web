@@ -11,11 +11,6 @@ export const metadata = {
   },
   description:
     "Lets take it offroad: with our adventurous love for cars, parts and services that go beyond the urban trails",
-  icons: {
-    icon: "https://www.defioffroads.co.ke/brand/defi-icon.svg",
-    shortcut: "https://www.defioffroads.co.ke/brand/defi-icon.svg",
-    apple: "https://www.defioffroads.co.ke//brand/defi-icon.svg",
-  },
   keywords: [
     "Motors",
     "Autoworks",
