@@ -3,7 +3,8 @@ export default function robots() {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/admin/",
+      // disallow: "/admin/",
+      disallow: "",
     },
     sitemap: "https://defioffroads.co.ke/sitemap.xml",
   };
