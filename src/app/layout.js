@@ -21,12 +21,14 @@ export const metadata = {
     "Kenya",
   ],
   robots: {
-    index: false,
+    // index: false,
+    index: true,
     follow: true,
     nocache: true,
     googleBot: {
       index: true,
-      follow: true,
+      // follow: true,
+      follow: false,
       noimageindex: true,
       // 'max-video-preview': -1,
       // 'max-image-preview': 'large',
