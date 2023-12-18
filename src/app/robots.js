@@ -5,6 +5,6 @@ export default function robots() {
       allow: "*",
       disallow: "/admin/",
     },
-    sitemap: "https:defioffroads.co.ke/sitemap.xml",
+    sitemap: "https://defioffroads.co.ke/sitemap.xml",
   };
 }
