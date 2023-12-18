@@ -39,7 +39,7 @@ export const metadata = {
   images: ["https://defioffroads.co.ke/brand/defi-card.jpg"],
   openGraph: {
     title: "DEFI Motors & Autoworks",
-    description: "Cars, parts and services that go beyond the urban trails",
+    description: "Cars, parts and services that go beyond urban trails",
     url: "https://defioffroads.co.ke",
     siteName: "DEFI Motors/Autoworks",
     images: ["https://defioffroads.co.ke/brand/defi-card.jpg"],
