@@ -1,9 +1,12 @@
-const rootURL = process.env.NEXTAUTH_URL || "http://localhost:3000/";
+const URLroot =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://www.defioffroads.co.ke";
 
 export default async function sitemap() {
   // DYNAMIC PAGES - blogposts
   let blog = [];
-  const libData_ = await fetch(`${rootURL}api/library`);
+  const libData_ = await fetch(`${URLroot}/api/library`);
   const libData = await libData_.json();
   if (libData.success) {
     const blogData = await libData.success.filter(
@@ -11,7 +14,7 @@ export default async function sitemap() {
     );
 
     blog = blogData.map((blog) => ({
-      url: `${rootURL}library/blog/${blog._id}`,
+      url: `${URLroot}/library/blog/${blog._id}`,
       lastModified: new Date(blog.date).toISOString(),
     }));
   }
@@ -28,7 +31,7 @@ export default async function sitemap() {
     "parts",
     "services",
   ].map((route) => ({
-    url: `${rootURL}${route}`,
+    url: `${URLroot}/${route}`,
     lastModified: new Date().toISOString(),
   }));
 

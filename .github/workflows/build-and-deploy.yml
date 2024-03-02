@@ -1,10 +1,10 @@
-name: Build and Deploy to host:FTPNodeJS with Webpack
+name: Build and Deploy to host:FTP, Node JS
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [16, 18, 20]
 
     steps:
       - uses: actions/checkout@v3
@@ -24,14 +24,14 @@ jobs:
 
       - name: Build
         run: |
-          npm install
-          npx webpack
+          npm install # Install project dependencies
+          npm run build
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build  # Ensure the "build" job completes before deploying
+    needs: build # Ensure the "build" job completes before deploying
 
     steps:
       - name: Deploy via FTP
         run: |
-          lftp -e "open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_HOST }}; set ssl:verify-certificate no; mirror -R -e -x .git/ -x .github/ -x .next/ -x node_modules/ . /public_html/; bye"
+          lftp -e "open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_HOST }}; set ssl:verify-certificate no; mirror -R -e -x .git/ -x .github/ -x .next/ -x node_modules/ ./public_html/; bye"
