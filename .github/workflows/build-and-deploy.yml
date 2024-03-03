@@ -28,23 +28,15 @@ jobs:
           curl -o .env https://gist.githubusercontent.com/goweki/e689193ed36165999f913a5fc37a090f/raw/d06b2c99ec00a9b2082af69e12fc3aa9a237680f/gistfile1.txt
           npm run build
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build # Ensure the "build" job completes before deploying
-
-    steps:
-      - name: show build
-        run: |
-          ls -a
-
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # local-dir: _next/ # This points to the build output directory of your Next.js app
+          local-dir: _next/ # This points to the build output directory of your Next.js app
           server-dir: /
           protocol: ftps
           port: 21
           timeout: 180000 # timeout value in milliseconds (here, 3 minutes)
+
