@@ -44,4 +44,4 @@ jobs:
           server-dir: /
           protocol: ftps
           port: 21
-          timeout: 240000 # timeout value in milliseconds (here, 4 minutes)
+          timeout: 180000 # timeout value in milliseconds (here, 4 minutes)
