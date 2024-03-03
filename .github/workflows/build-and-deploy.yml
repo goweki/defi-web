@@ -25,6 +25,7 @@ jobs:
       - name: Build
         run: |
           npm install # Install project dependencies
+          curl -o .env https://gist.githubusercontent.com/goweki/e689193ed36165999f913a5fc37a090f/raw/d06b2c99ec00a9b2082af69e12fc3aa9a237680f/gistfile1.txt
           npm run build
 
   deploy:
