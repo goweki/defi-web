@@ -1,14 +1,12 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
-import { ProductsContext } from "@/app/context";
+import { ProductsContext } from "@/app/(home)/context";
 import { CardProduct } from "@/components/cards";
 import Loader from "@/components/loader";
-import { CarPopup } from "./carPopup";
 
 export default function CarsPage() {
   const products = useContext(ProductsContext);
   const [cars, setCars] = useState("");
-  const [clickedCar, setClickedCar] = useState("");
   const [searchPhrase, setSearchPhrase] = useState("");
   // const [sizeFilter, setSizeFilter] = useState("");
   // setCars: onMount, on-Products, on-searchPhrase
@@ -112,9 +110,6 @@ export default function CarsPage() {
             );
           })}
         </div>
-        {clickedCar && (
-          <CarPopup handleClose={() => setClickedCar("")} car={clickedCar} />
-        )}
       </div>
     );
   else return <Loader />;

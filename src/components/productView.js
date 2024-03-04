@@ -2,34 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 
-export function AccessoryPopup({ handleClose, car }) {
-  const imgCanvas = useRef(null);
-  const [showInterest, setShowInterest] = useState({
-    name: "",
-    email: "",
-    tel: "",
-  });
-  // on Mount and change in car.image
-  useEffect(() => {
-    // canvas that will present the output image
-    let canvas_ = imgCanvas.current;
-    if (!canvas_) return;
-    let ctx = canvas_.getContext("2d");
-    // image constructor
-    let img = new Image();
-    // will run after image is loaded
-    img.onload = function () {
-      // new width and height
-      let newWidth = (img.width * canvas_.width) / img.width;
-      let newHeight = (img.height * canvas_.height) / img.height;
-      // draw on canvas
-      ctx.drawImage(img, 0, 0, newWidth, newHeight);
-    };
-    // load image
-    img.src = car.image;
-  }, [car.image]);
+export function ProductView({ product }) {
   // onSubmit
-  function handleSubmit(e) {
+  function handleOrderViaWhatsapp(e) {
     e.preventDefault();
     //setLoading(true);
     // confirm fields filled
@@ -45,8 +20,8 @@ export function AccessoryPopup({ handleClose, car }) {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify({
-        subject: `NEW LEAD: accessory`,
-        text: `Name: ${showInterest.name} \nEmail: ${showInterest.email} \nTel: ${showInterest.tel} \nInterest: ${car.name}`,
+        subject: `NEW LEAD: ${product.category}`,
+        text: `Name: ${showInterest.name} \nEmail: ${showInterest.email} \nTel: ${showInterest.tel} \nInterest: ${product.name}`,
       }),
     };
     // POST request using fetch
@@ -89,10 +64,8 @@ export function AccessoryPopup({ handleClose, car }) {
   // render
   return (
     <div
-      id="modal"
-      tabIndex="-1"
-      aria-hidden="true"
-      className={`transition fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full bg-backg dark:bg-backg-dark bg-opacity-90 dark:bg-opacity-90 flex items-center justify-center`}
+      id="productView"
+      className={`transition bg-backg dark:bg-backg-dark bg-opacity-90 dark:bg-opacity-90 flex items-center justify-center`}
     >
       <div className="relative w-full max-w-screen-lg max-h-full my-auto">
         {/* <!-- Modal content --> */}
@@ -100,7 +73,7 @@ export function AccessoryPopup({ handleClose, car }) {
           {/* <!-- Modal header --> */}
           <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-font-inactive">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Interested in this {car.category} ?
+              Interested in this {product.category} ?
             </h3>
             <button
               type="button"
@@ -131,7 +104,7 @@ export function AccessoryPopup({ handleClose, car }) {
               <p className="mx-auto mb-4 font-light sm:text-lg text-center">
                 <span className="block font-bold text-2xl mb-4">
                   {" "}
-                  {car.name}
+                  {product.name}
                 </span>
                 Leave us your contacts and we will get back to you
               </p>
@@ -187,7 +160,10 @@ export function AccessoryPopup({ handleClose, car }) {
                     onClick={handleClose}
                     className="mr-8"
                   />
-                  <ButtonPrimary label="Show Interest" onClick={handleSubmit} />
+                  <ButtonPrimary
+                    label="Show Interest"
+                    onClick={handleOrderViaWhatsapp}
+                  />
                 </div>
               </form>
             </div>

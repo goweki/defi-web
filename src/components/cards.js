@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ButtonSecondary } from "./atoms/buttons";
+import { numberWithCommas } from "@/helpers/formatters";
 
 export function CardSimple({
   className,
@@ -53,16 +54,17 @@ export function CardProduct({
         </span>
       </div>
       <div className="mt-4 px-2 pb-3 flex flex-col flex-1 justify-between">
-        <h5 className="text-sm tracking-tight text-center truncate">
+        <h5 className="text-sm tracking-tight text-center line-clamp-2">
           {product?.name}
         </h5>
         <div className="mt-1 mb-4 flex items-center justify-center">
           <p>
             <span className="md:text-xl font-bold">
               <span className="text-sm uppercase">Ksh. </span>
-              {product?.price.toString().length > 6
+              {numberWithCommas(product.price)}
+              {/* {product?.price.toString().length > 6
                 ? parseFloat((product?.price / 1000000).toFixed(2)) + "M"
-                : parseFloat((product?.price / 1000).toFixed(2)) + "K"}{" "}
+                : parseFloat((product?.price / 1000).toFixed(2)) + "K"}{" "} */}
             </span>
             {/* <span className="text-sm text-slate-900 line-through">$699</span> */}
           </p>

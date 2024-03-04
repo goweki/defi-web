@@ -74,7 +74,7 @@ module.exports = {
       animation: {
         "spinner-1": "spin 3s linear infinite",
         "spinner-2": "spin 6s linear infinite",
-        "meter-needle": "pegIt 3s ease-in-out infinite",
+        "meter-needle": "pegIt 6s ease-in-out infinite",
       },
       backgroundImage: {
         gradientCard: `linear-gradient(to right bottom, ${customColours.primary.light},${customColours.gray.w3})`,

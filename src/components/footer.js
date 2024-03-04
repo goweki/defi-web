@@ -44,7 +44,7 @@ export default function Footer() {
             </a>
             . All Rights Reserved.
           </span>
-          <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
+          <div className="flex mt-4 space-x-5 sm:mt-0 sm:mr-2">
             <Link
               href="https://m.facebook.com/people/Defimotors-Ke/100087672914932/"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
@@ -59,13 +59,13 @@ export default function Footer() {
               <SVGiglogo className="w-4 h-4" />
               <span className="sr-only">instagram</span>
             </Link>
-            <Link
+            {/* <Link
               href="https://twitter.com/defi_motors"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <SVGxlogo className="w-4 h-4" />
               <span className="sr-only">X</span>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

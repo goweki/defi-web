@@ -1,14 +1,12 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
-import { ProductsContext } from "@/app/context";
+import { ProductsContext } from "@/app/(home)/context";
 import { CardProduct } from "@/components/cards";
 import Loader from "@/components/loader";
-import { ServicePopup } from "./servicePopup";
 
 export default function ServicesPage() {
   const products = useContext(ProductsContext);
   const [services, setServices] = useState("");
-  const [clickedService, setClickedService] = useState("");
   const [searchPhrase, setSearchPhrase] = useState("");
   // const [sizeFilter, setSizeFilter] = useState("");
   // setCars: onMount, on-Products, on-searchPhrase
@@ -112,12 +110,6 @@ export default function ServicesPage() {
             );
           })}
         </div>
-        {clickedService && (
-          <ServicePopup
-            handleClose={() => setClickedService("")}
-            car={clickedService}
-          />
-        )}
       </div>
     );
   else return <Loader />;
