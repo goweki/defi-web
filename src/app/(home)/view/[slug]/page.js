@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useContext } from "react";
 import { ProductsContext } from "@/app/(home)/context";
-import Loader from "@/components/loader";
 import Link from "next/link";
 import Image from "next/image";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
@@ -12,7 +11,7 @@ export default function PoductItem({ params }) {
 
   useEffect(() => {
     setProductItem(products.find(({ _id }) => _id === params.slug));
-  }, [products]);
+  }, [products, params.slug]);
 
   return productItem ? (
     <div id="productView">

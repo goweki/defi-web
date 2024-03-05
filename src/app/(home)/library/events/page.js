@@ -2,7 +2,6 @@
 import { useEffect, useState, useContext } from "react";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import { trancStr } from "@/helpers/stringHandlers";
 import { LibraryContext } from "../layout";
 import Loader from "@/components/loader";
 
