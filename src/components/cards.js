@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ButtonSecondary } from "./atoms/buttons";
 import { numberWithCommas } from "@/helpers/formatters";
+import { useRouter } from "next/navigation";
 
 export function CardSimple({
   className,
@@ -29,20 +30,17 @@ export function CardSimple({
   );
 }
 
-export function CardProduct({
-  className,
-  product,
-  onClick = () => console.log("Card clicked"),
-}) {
+export function CardProduct({ product }) {
+  const router = useRouter();
   return (
     <div
-      onClick={onClick}
+      onClick={() => router.push(`/view/${product._id}`)}
       className="group relative h-84 w-52 m-2 md:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-dark dark:hover:bg-primary-dark hover:text-font-dark-focus shadow hover:scale-105 hover:shadow-lg cursor-pointer transition"
     >
       <div className="relative flex w-full overflow-hidden aspect-square">
         <Image
-          className={`object-cover h-full w-full group-hover:scale-110 transition ${className}`}
-          src={product?.image}
+          className={`object-cover h-full w-full group-hover:scale-110 transition`}
+          src={product.image}
           width={300}
           height={300}
           alt="car_image"
@@ -55,7 +53,7 @@ export function CardProduct({
       </div>
       <div className="mt-4 px-2 pb-3 flex flex-col flex-1 justify-between">
         <h5 className="text-sm tracking-tight text-center line-clamp-2">
-          {product?.name}
+          {product.name}
         </h5>
         <div className="mt-1 mb-4 flex items-center justify-center">
           <p>
