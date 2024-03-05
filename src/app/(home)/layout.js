@@ -35,13 +35,6 @@ export default function HomeLayout({ children }) {
                 <SVGiglogo className="w-4 h-4" />
                 <span className="sr-only">instagram</span>
               </Link>
-              <Link
-                href="https://twitter.com/defi_motors"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              >
-                <SVGxlogo className="w-4 h-4" />
-                <span className="sr-only">X</span>
-              </Link>
             </div>
           </div>
         </div>
