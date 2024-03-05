@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import { SVGfblogo, SVGiglogo, SVGlogo, SVGxlogo } from "./atoms/svgs";
 import Link from "next/link";
