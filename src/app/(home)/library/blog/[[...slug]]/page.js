@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import { LibraryContext } from "../../layout";
 import Loader from "@/components/loader";
+import { trancString } from "@/helpers/formatters";
 
 export default function BlogsPage({ params }) {
   const library = useContext(LibraryContext);
@@ -177,7 +178,7 @@ export default function BlogsPage({ params }) {
                       <Link href={`/library/blog/${v._id}`}>{v.title}</Link>
                     </h2>
                     <p className="mb-5 flex flex-col flex-1">
-                      {trancStr(v.content, 210)}
+                      {trancString(v.content, 210)}
                     </p>
                     <div className="flex justify-between items-center">
                       <div className="flex items-center space-x-4">

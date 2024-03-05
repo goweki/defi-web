@@ -5,6 +5,7 @@ const rootURL =
 
 export default async function sitemap() {
   // DYNAMIC PAGES - blogposts
+
   // let blog = [];
   // const libData_ = await fetch(`${rootURL}api/library`);
   // const libData = await libData_.json();
@@ -18,6 +19,7 @@ export default async function sitemap() {
   //     lastModified: new Date(blog.date).toISOString(),
   //   }));
   // }
+
   // pages;
   const routes = [
     "",
