@@ -5,6 +5,11 @@ import Context from "./(home)/context";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
+  metadataBase: new URL(
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : process.env.NEXTAUTH_URL
+  ),
   title: {
     template: "DEFI | %s",
     default: "DEFI Motors & Autoworks", // a default is required when creating a template

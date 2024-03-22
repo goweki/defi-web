@@ -71,18 +71,16 @@ module.exports = {
           "100%": { transform: "rotate(360deg)" },
         },
       },
-      extend: {
-        animation: {
-          "spinner-1": "spin 3s linear infinite",
-          "spinner-2": "spin 6s linear infinite",
-          "meter-needle": "pegIt 6s ease-in-out infinite",
-        },
-        backgroundImage: {
-          gradientCard: `linear-gradient(to right bottom, ${customColours.primary.light},${customColours.gray.w3})`,
-          gradientCardDark: `linear-gradient(to right bottom, ${customColours.gray.b3},${customColours.gray.b2})`,
-          gradientBtn: `linear-gradient(to right bottom, ${customColours.primary.light},${customColours.primary.DEFAULT})`,
-          gradientBtnHover: `linear-gradient(to left top, ${customColours.primary.light},${customColours.primary.DEFAULT})`,
-        },
+      animation: {
+        "spinner-1": "spin 3s linear infinite",
+        "spinner-2": "spin 6s linear infinite",
+        "meter-needle": "pegIt 6s ease-in-out infinite",
+      },
+      backgroundImage: {
+        gradientCard: `linear-gradient(to right bottom, ${customColours.primary.light},${customColours.gray.w3})`,
+        gradientCardDark: `linear-gradient(to right bottom, ${customColours.gray.b3},${customColours.gray.b2})`,
+        gradientBtn: `linear-gradient(to right bottom, ${customColours.primary.light},${customColours.primary.DEFAULT})`,
+        gradientBtnHover: `linear-gradient(to left top, ${customColours.primary.light},${customColours.primary.DEFAULT})`,
       },
     },
   },

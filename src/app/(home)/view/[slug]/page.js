@@ -2,9 +2,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { ProductsContext } from "@/app/(home)/context";
-import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 import { numberWithCommas } from "@/helpers/formatters";
 
 export default function ProductItemPage({ params }) {
@@ -41,79 +39,19 @@ export default function ProductItemPage({ params }) {
         </svg>
         Go Back
       </button>
-      {/* back */}
-      {/* <div className="max-w-screen-lg max-h-full my-4 bg-backg-surface dark:bg-backg-dark-surface">
-        <div className="relative rounded-lg shadow ">
-       
-          <div className="flex items-start justify-center p-4 border-b rounded-t dark:border-font-inactive">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Product Details{" "}
-            </h3>
-          </div>
-         
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 content-center">
-            <div className="p-8 md:pl-16 lg:pl-24 m-auto">
-              <div className="mx-auto mb-4 font-light sm:text-lg text-center">
-                <p className="block font-bold text-2xl mb-4">
-                  {productItem.name}
-                </p>
-                <p className="text-start">description</p>
-                {[
-                  { "Sample field": " Lorem Ipsum the" },
-                  { "Sample field": " Lorem Ipsum the Ipsum is for 2" },
-                  { "Sample field": " Lor for 3" },
-                ].map((v, i) => (
-                  <span key={i} className="block text-sm text-start">
-                    {Object.keys(v)} : {Object.values(v)}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex flex-row justify-center my-6">
-                <ButtonSecondary
-                  label="Call Defi"
-                  onClick={() => "Call Defi"}
-                  className="mr-8"
-                />
-                <ButtonPrimary
-                  label="Order via Whatsapp"
-                  onClick={() => "Order via Whatsapp"}
-                />
-              </div>
-            </div>
-            <div className="hidden md:flex md:h-[360px] aspect-square p-8 md:pr-8 lg:pr-12">
-              <Image
-                className="my-auto"
-                src={productItem.image}
-                width={500}
-                height={500}
-                alt="product image"
-              />
-            </div>
-          </div>
-        </div>
-      </div> */}
 
       <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-6 lg:gap-16">
         <div className="lg:col-span-3 lg:row-end-1">
           <div className="lg:flex lg:items-start lg:justify-center">
-            <div className="lg:order-2 lg:ml-5">
-              <div className="max-w-xl overflow-hidden rounded-lg">
-                <img
-                  className="h-full w-full max-w-full object-cover"
-                  src={selImage}
-                  alt="product-image"
-                />
-              </div>
-            </div>
-
-            <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
-              <div className="flex flex-row items-start lg:flex-col">
+            <div className="mt-2 w-full lg:w-32 lg:flex-shrink-0">
+              <div className="flex flex-row lg:flex-col justify-center items-center">
                 {productItem.images.map((v, i) => (
                   <button
                     key={i}
                     type="button"
-                    className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center"
+                    className={`flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-4 text-center ${
+                      selImage === v ? "border-primary" : "border-transparent"
+                    }`}
                     onClick={() => setSelImage(v)}
                   >
                     <img
@@ -123,26 +61,16 @@ export default function ProductItemPage({ params }) {
                     />
                   </button>
                 ))}
-                {/* <button
-                  type="button"
-                  className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-transparent text-center"
-                >
-                  <img
-                    className="h-full w-full object-cover"
-                    src="/images/JHxMnVrtPMdcNU1s_7g7f.png"
-                    alt=""
-                  />
-                </button>
-                <button
-                  type="button"
-                  className="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-transparent text-center"
-                >
-                  <img
-                    className="h-full w-full object-cover"
-                    src="/images/JHxMnVrtPMdcNU1s_7g7f.png"
-                    alt=""
-                  />
-                </button> */}
+              </div>
+            </div>
+
+            <div className="lg:ml-5 ">
+              <div className="max-w-xl overflow-hidden rounded-lg mx-auto">
+                <img
+                  className="h-full w-full max-w-full object-cover"
+                  src={selImage}
+                  alt="product-image"
+                />
               </div>
             </div>
           </div>
@@ -157,7 +85,6 @@ export default function ProductItemPage({ params }) {
             <div className="flex items-center">
               <svg
                 className="block h-4 w-4 align-middle text-yellow-500"
-                xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -195,7 +122,7 @@ export default function ProductItemPage({ params }) {
             ))}
           </ul>
 
-          <div className="mt-10 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
+          <div className="mt-10 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0 border-gray-400 dark:border-gray-700">
             <div className="flex items-end">
               <h1 className="text-3xl font-bold">
                 <span className=" text-xl text-gray-600 dark:text-gray-400 uppercase">

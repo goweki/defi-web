@@ -6,7 +6,7 @@ import { CardInFooter } from "./cards";
 export default function Footer() {
   const router = useRouter();
   return (
-    <footer className="bg-backg-surface dark:bg-backg-dark-surface w-full">
+    <footer className="bg-slate-200 dark:bg-slate-800 shadow-md w-full">
       <div className="mx-auto max-w-screen-lg p-4 py-6 lg:py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2">
           {/* Card 1 */}

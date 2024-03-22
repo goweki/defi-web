@@ -1,6 +1,4 @@
-import Link from "next/link";
 import Navbar from "@/components/navbar";
-import { SVGxlogo, SVGfblogo, SVGiglogo } from "@/components/atoms/svgs";
 import Footer from "@/components/footer";
 
 export default function HomeLayout({ children }) {

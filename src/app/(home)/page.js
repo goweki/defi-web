@@ -24,7 +24,7 @@ export default function LandingPage() {
         {products.filter((obj) => obj.category.toLowerCase() === "car").length >
           0 && (
           <ProductSection
-            category="car"
+            title="Cars"
             products={products.filter(
               (obj) => obj.category.toLowerCase() === "car"
             )}
@@ -34,7 +34,7 @@ export default function LandingPage() {
         {products.filter((obj) => obj.category.toLowerCase() === "part")
           .length > 0 && (
           <ProductSection
-            category="part"
+            title="Parts"
             products={products.filter(
               (obj) => obj.category.toLowerCase() === "part"
             )}
@@ -44,7 +44,7 @@ export default function LandingPage() {
         {products.filter((obj) => obj.category.toLowerCase() === "service")
           .length > 0 && (
           <ProductSection
-            category="service"
+            title="Services"
             products={products.filter(
               (obj) => obj.category.toLowerCase() === "service"
             )}
@@ -54,7 +54,7 @@ export default function LandingPage() {
         {products.filter((obj) => obj.category.toLowerCase() === "accessory")
           .length > 0 && (
           <ProductSection
-            category="accessory"
+            title="Accessories"
             products={products.filter(
               (obj) => obj.category.toLowerCase() === "accessory"
             )}
