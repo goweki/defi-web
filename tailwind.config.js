@@ -70,11 +70,21 @@ module.exports = {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
         },
+        fadeIn: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        moveUpDown: {
+          "0%": { transform: "translateY(100px)" },
+          "100%": { transform: "translateY(0px)" },
+        },
       },
       animation: {
         "spinner-1": "spin 3s linear infinite",
         "spinner-2": "spin 6s linear infinite",
         "meter-needle": "pegIt 6s ease-in-out infinite",
+        fade: "fadeIn 1s cubic-bezier(0.4, 0, 1, 1)",
+        "up-in": "moveUpDown .5s ease-out",
       },
       backgroundImage: {
         gradientCard: `linear-gradient(to right bottom, ${customColours.primary.light},${customColours.gray.w3})`,

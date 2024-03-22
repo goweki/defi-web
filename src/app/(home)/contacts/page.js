@@ -168,7 +168,7 @@ export default function ContactsPage() {
                     Email Address
                   </h4>
                   <p className="text-base text-body-color dark:text-dark-6">
-                    defioffroads@gmail.com
+                    info@defioffroads.co.ke
                   </p>
                 </div>
               </div>

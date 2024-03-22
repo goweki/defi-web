@@ -99,7 +99,7 @@ export function CardProduct({ product }) {
   const router = useRouter();
   return (
     <div
-      className="relative m-10 w-full h-full max-w-xs overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-primary-light dark:hover:bg-primary-dark dark:hover:text-white shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer"
+      className="animate-fade relative m-8 w-full h-full max-w-xs overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-primary-light dark:hover:bg-primary-dark dark:hover:text-white shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer"
       onClick={() => router.push(`/view/${product._id}`)}
     >
       <img
@@ -110,13 +110,13 @@ export function CardProduct({ product }) {
       <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-yellow-900 text-center text-sm text-white">
         {availabilit[product.availability]}
       </span>
-      <div className="mt-4 px-5 pb-5">
-        <h5 className="text-xl font-semibold tracking-tight text-center">
+      <div className="mt-2 px-5 pb-5">
+        <h5 className="font-semibold tracking-tight text-center">
           {product.name}
         </h5>
 
-        <p className="mt-2 text-center text-3xl font-bold">
-          <span className="text-lg uppercase text-yellow-800 dark:text-yellow-200">
+        <p className="mt-2 text-center text-xl font-bold">
+          <span className="text-sm uppercase text-yellow-800 dark:text-yellow-200">
             Ksh.{" "}
           </span>
           {numberWithCommas(product.price)}
