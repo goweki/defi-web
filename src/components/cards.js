@@ -40,7 +40,7 @@ export function CardProduct({ product }) {
       <div className="relative flex w-full overflow-hidden aspect-square">
         <Image
           className={`object-cover h-full w-full group-hover:scale-110 transition`}
-          src={product.image}
+          src={product.images[0]}
           width={300}
           height={300}
           alt="car_image"

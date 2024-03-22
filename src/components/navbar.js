@@ -11,7 +11,7 @@ export default function Navbar() {
   const [hamIsOpen, setHamIsOpen] = useState(false);
   return (
     <nav className="bg-backg-surface dark:bg-backg-dark-surface">
-      <div className="mx-auto items-center justify-between flex h-16 px-2 sm:px-6 lg:px-8 lg:max-w-screen-lg">
+      <div className="mx-auto items-center justify-between flex h-16 px-2 sm:px-6 lg:px-8 lg:max-w-screen-xl">
         {/* LOGO */}
         <Link href="/">
           <SVGlogo className="transition h-8 w-auto mx-4 py-2 hover:scale-110 hover:text-primary dark:hover:text-primary" />
