@@ -5,7 +5,7 @@ export default function HomeLayout({ children }) {
   return (
     <>
       <Navbar />
-      <main className="flex flex-col flex-1 w-full mb-12 items-center">
+      <main className="flex flex-col flex-1 w-full mb-12 items-center min-h-96">
         {children}
       </main>
       <Footer />

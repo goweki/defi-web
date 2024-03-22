@@ -15,7 +15,7 @@ export function CardSimple({
     >
       <div className="w-52 aspect-square overflow-hidden">
         <Image
-          className={`object-cover transition group-hover:scale-110`}
+          className={`object-cover transition-all group-hover:scale-110`}
           src={item?.image}
           width={300}
           height={300}
@@ -99,19 +99,19 @@ export function CardProduct({ product }) {
   const router = useRouter();
   return (
     <div
-      className="animate-fade relative m-8 w-full h-full max-w-xs overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-primary-light dark:hover:bg-primary-dark dark:hover:text-white shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer"
+      className="animate-fade flex flex-col relative m-4 w-full h-full max-w-xs overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-primary-light dark:hover:bg-primary-dark dark:hover:text-white shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer"
       onClick={() => router.push(`/view/${product._id}`)}
     >
       <img
-        className="h-60 rounded-t-lg object-cover w-full"
+        className="h-60 rounded-t-lg object-cover w-full flex flex-col- flex-1 transition-all"
         src={product.images[0]}
         alt="product-img"
       />
       <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-yellow-900 text-center text-sm text-white">
         {availabilit[product.availability]}
       </span>
-      <div className="mt-2 px-5 pb-5">
-        <h5 className="font-semibold tracking-tight text-center">
+      <div className="mt-4 px-5 pb-5">
+        <h5 className="text-lg font-semibold tracking-tight text-center">
           {product.name}
         </h5>
 

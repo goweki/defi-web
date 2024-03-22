@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ButtonSecondary } from "@/components/atoms/buttons";
-import { ModalAddProduct, ModalEditProduct } from "./compo";
+import { ModalAddProduct } from "./compo";
 import Loader from "@/components/loader";
 import toast from "react-hot-toast";
+import { numberWithCommas } from "@/helpers/formatters";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState(null);
@@ -17,7 +18,10 @@ export default function ProductsPage() {
     if (!activeModal) {
       const fetchOptions = { method: "GET" };
       fetch("/api/products", fetchOptions)
-        .then((res_) => res_.json())
+        .then((res_) => {
+          if (res_.status === 200) res_.json();
+          else throw new Error(res_.status);
+        })
         .then((json_) => {
           if (json_.success) {
             console.log(
@@ -42,7 +46,7 @@ export default function ProductsPage() {
         })
         .catch((err) => {
           toast.error("ERROR: operations failed");
-          console.error("ERROR: caught error\n > " + err.error || err);
+          console.error("ERROR: caught error\n > " + JSON.stringify(err));
         });
     }
     setLoading(false);
@@ -58,43 +62,7 @@ export default function ProductsPage() {
           <div className="relative sm:rounded-lg">
             <div className="flex flex-col items-center justify-between p-4 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
               {/* search FIELD */}
-              <div className="relative w-full sm:max-w-[50%] min-w-[120px]">
-                {/* <label
-                  htmlFor="searchPhrase"
-                  className="hidden mb-2 text-sm font-medium "
-                >
-                  Search
-                </label>
-                <div className="flex absolute inset-y-0 left-0 items-center pl-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-5 h-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  className="block p-2 pl-10 w-full border bg-backg-raised rounded-lg dark:bg-backg-dark-raised"
-                  // className="rounded-lg w-full min-w-[240px] bg-backg-raised dark:bg-backg-dark-raised"
-                  placeholder="Search products by name..."
-                  type="searchPhrase"
-                  id="searchPhrase"
-                  required=""
-                  value={searchPhrase}
-                  onChange={(e) => {
-                    e.preventDefault();
-                    setSearchPhrase(e.target.value);
-                  }}
-                /> */}
-              </div>
+              <div className="relative w-full sm:max-w-[50%] min-w-[120px]"></div>
               {/* filter FIELDS */}
               <div className="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 sm:w-auto sm:flex-row sm:space-y-0 sm:items-center sm:space-x-3">
                 <div className="flex items-center w-full space-x-3 md:w-auto">
@@ -172,14 +140,9 @@ export default function ProductsPage() {
                         <td className="px-5 py-5 text-sm">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 w-10 h-10">
-                              {/* <img
-                          className="w-full h-full rounded-full"
-                          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                          alt=""
-                        /> */}
                               <Image
                                 className="w-full h-full rounded-full"
-                                src={v.image}
+                                src={v.images[0]}
                                 width={512}
                                 height={512}
                                 alt="img"
@@ -195,36 +158,22 @@ export default function ProductsPage() {
                           <p className="whitespace-no-wrap">{v.category}</p>
                         </td>
                         <td className="px-5 py-5 text-sm">
-                          <p className="whitespace-no-wrap">{v.description}</p>
+                          {v.description?.map((v, i) => (
+                            <p key={i} className="whitespace-no-wrap">
+                              {Object.keys(v)} : {Object.values(v)}
+                            </p>
+                          ))}
                         </td>
                         <td className="px-5 py-5 text-sm">
                           <span className="relative inline-block font-semibold leading-tight">
                             {/* {parseInt(v.price) / 1000 + " K"} */}
-                            {v.price.toString().length > 6
-                              ? (v.price / 1000000).toFixed(2) + "M"
-                              : (v.price / 1000).toFixed(2) + "K"}{" "}
+                            {numberWithCommas(v.price)}
                           </span>
                         </td>
                       </tr>
                     ))}
               </tbody>
             </table>
-            {/* {products?.length > 50 && (
-              <div className="px-5 py-5 border-none flex flex-col xs:flex-row items-center xs:justify-between          ">
-                <span className="text-xs xs:text-sm">
-                  Showing {1} to {products.length < 20 ? products.length : ""}{" "}
-                  of {products.length} Entries
-                </span>
-                <div className="inline-flex mt-2 xs:mt-0">
-                  <button className="m-1 hover:bg-gradientBtnHover hover:text-font-focus text-sm border border-primary-dark font-semibold py-2 px-4 rounded-l">
-                    Prev
-                  </button>
-                  <button className="m-1 hover:bg-gradientBtnHover hover:text-font-focus text-sm border border-primary-dark font-semibold py-2 px-4 rounded-r">
-                    Next
-                  </button>
-                </div>
-              </div>
-            )} */}
           </div>
           {activeModal === "add" && (
             <ModalAddProduct

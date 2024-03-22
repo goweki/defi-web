@@ -10,7 +10,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [hamIsOpen, setHamIsOpen] = useState(false);
   return (
-    <nav className="bg-slate-200 dark:bg-slate-800 shadow-md">
+    <nav className="animate-fade bg-slate-200 dark:bg-slate-800 shadow-md">
       <div className="mx-auto items-center justify-between flex h-16 px-2 sm:px-6 lg:px-8 lg:max-w-screen-xl">
         {/* LOGO */}
         <Link href="/">
