@@ -104,7 +104,9 @@ export default function Navbar() {
                   key={i}
                   href={`/${v.link}`}
                   className={`${
-                    pathname.includes("/" + v.link) ? "text-primary" : ""
+                    pathname.includes("/" + v.link)
+                      ? "text-primary-dark dark:text-primary"
+                      : ""
                   } flex justify-center items-center font-semibold transition`}
                 >
                   {v.link ? capitalizeInit(v.link) : v.logo}
@@ -120,7 +122,9 @@ export default function Navbar() {
               <Link
                 href={"/admin/products"}
                 className={`${
-                  pathname === "/admin/products" ? "text-primary" : ""
+                  pathname === "/admin/products"
+                    ? "text-primary-dark dark:text-primary"
+                    : ""
                 } flex justify-center items-center font-medium transition`}
               >
                 Products

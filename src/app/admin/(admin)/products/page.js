@@ -1,54 +1,22 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import { ButtonSecondary } from "@/components/atoms/buttons";
 import { ModalAddProduct } from "./compo";
 import Loader from "@/components/loader";
 import toast from "react-hot-toast";
 import { numberWithCommas } from "@/helpers/formatters";
+import { ProductsContext } from "@/app/(home)/context";
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState(null);
+  const products = useContext(ProductsContext);
+  // const [products, setProducts] = useState(null);
   const [activeModal, setModal] = useState("");
   const [loading, setLoading] = useState(true);
   const [itemClicked, setItemClicked] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
   // onMount, fetch products
   useEffect(() => {
-    if (!activeModal) {
-      const fetchOptions = { method: "GET" };
-      fetch("/api/products", fetchOptions)
-        .then((res_) => {
-          if (res_.status === 200) res_.json();
-          else throw new Error(res_.status);
-        })
-        .then((json_) => {
-          if (json_.success) {
-            console.log(
-              `SUCCESS: Documents fetched:${json_.success.length}\n.............`
-            );
-            setProducts(json_.success);
-          } else if (json_.error) {
-            console.error(
-              "ERROR: could not fetch products\n > " +
-                JSON.stringify(json_.error) +
-                "\n.............."
-            );
-            toast.error(json_.error);
-          } else {
-            console.error(
-              "ERROR: Loading products failed\n > " +
-                JSON.stringify(json_) +
-                "\n.............."
-            );
-            toast.error("ERROR: Check network and reload");
-          }
-        })
-        .catch((err) => {
-          toast.error("ERROR: operations failed");
-          console.error("ERROR: caught error\n > " + JSON.stringify(err));
-        });
-    }
     setLoading(false);
   }, [activeModal]);
   // render
@@ -141,7 +109,7 @@ export default function ProductsPage() {
                           <div className="flex items-center">
                             <div className="flex-shrink-0 w-10 h-10">
                               <Image
-                                className="w-full h-full rounded-full"
+                                className="object-cover w-full h-full rounded-full"
                                 src={v.images[0]}
                                 width={512}
                                 height={512}
@@ -182,7 +150,7 @@ export default function ProductsPage() {
               }}
             />
           )}
-          {activeModal === "edit" && itemClicked && (
+          {/* {activeModal === "edit" && itemClicked && (
             <ModalEditProduct
               product={products.find((obj) => obj._id === itemClicked)}
               handleClose={() => {
@@ -190,7 +158,7 @@ export default function ProductsPage() {
                 setModal("");
               }}
             />
-          )}
+          )} */}
         </>
       )}
     </div>

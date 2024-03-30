@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { ButtonPrimary, ButtonSecondary } from "@/components/atoms/buttons";
 import Loader from "@/components/loader";
@@ -9,12 +9,14 @@ const DBcollection = "products";
 export function ModalAddProduct({ handleClose }) {
   const [category, setCategory] = useState("");
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [images, setImages] = useState("");
+  const [availability, setavailability] = useState("local");
+  const [property1, setProperty1] = useState({ name: "", value: "" });
+  const [property2, setProperty2] = useState({ name: "", value: "" });
+  const [property3, setProperty3] = useState({ name: "", value: "" });
+  const [images, setImages] = useState(new Array(2).fill(""));
   const [error, setError] = useState("");
   const [UIstate, setUIstate] = useState("loading");
-  const imgCanvas = useRef(null);
   // on Mount
   useEffect(() => {
     setUIstate("OK");
@@ -30,12 +32,28 @@ export function ModalAddProduct({ handleClose }) {
 
   async function handleSubmit() {
     // confirm fields filled
-    if (!category || !name || !description || !price || !image) {
-      setError(`Fill empty fields`);
+    if (!name || !category || !price || !property1.name || !property1.value) {
+      console.log();
+      toast.error("An error occured!");
+      setUIstate("OK");
+      return;
+    }
+    if (!images[0]) {
+      setError(`Upload at least one image`);
       return;
     }
     // UI state
-    setUIstate("loading");
+    // setUIstate("loading");
+    // decription onj
+    let description_ = [property1, property2, property3];
+    const _description = description_.map((v, i) => {
+      if (v.value) {
+        let obj = {};
+        obj[v.name] = v.value;
+        return obj;
+      }
+    });
+    const description = _description.filter((n) => n);
     // fetch options
     let fetchOptions = {
       method: "POST",
@@ -46,10 +64,11 @@ export function ModalAddProduct({ handleClose }) {
       body: JSON.stringify({
         category,
         name,
-        description,
         price,
-        images: [],
+        description,
+        images: images[1] ? [images[0], images[1]] : [images[0]],
         colle_: DBcollection,
+        availability: availability || "local",
       }),
     };
     // POST request using fetch
@@ -87,6 +106,15 @@ export function ModalAddProduct({ handleClose }) {
         setError("ERROR occured");
         console.error("ERROR: caught error\n > " + err.message);
       });
+  }
+
+  async function handleNext() {
+    if (!category || !name || !price || !property1.name || !property1.value) {
+      console.log(!property1.name);
+      setError(`Please fill empty fields`);
+      return;
+    }
+    setUIstate("next");
   }
 
   return (
@@ -128,7 +156,7 @@ export function ModalAddProduct({ handleClose }) {
           {/* <!-- Modal body --> */}
           {UIstate === "loading" ? (
             <Loader />
-          ) : (
+          ) : UIstate === "OK" ? (
             <form className="flex flex-col justify-center p-4 sm:p-8 lg:p-12 sm:flex-row sm:space-x-4 md:space-x-8">
               <div className="flex flex-col justify-center sm:w-1/2 space-y-2">
                 {/* FIELD Category */}
@@ -163,73 +191,235 @@ export function ModalAddProduct({ handleClose }) {
                     setName(e.target.value);
                   }}
                 />
-                {/* FIELD Description */}
-                <input
-                  name="description"
-                  type="text"
-                  placeholder="Description"
-                  maxLength="40"
-                  className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
-                  value={description}
-                  disabled={!category}
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                  }}
-                />
+                {/* FIELD Property-1 */}
+                {name && (
+                  <div className="grid grid-cols-2 gap-x-2">
+                    <input
+                      name="property1-name"
+                      type="text"
+                      placeholder="property-1 name"
+                      maxLength="40"
+                      className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
+                      value={property1.name}
+                      disabled={!category}
+                      onChange={(e) => {
+                        setProperty1((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }));
+                      }}
+                    />
+                    <input
+                      name="property1-value"
+                      type="text"
+                      placeholder="property-1 value"
+                      maxLength="40"
+                      className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
+                      value={property1.value}
+                      disabled={!property1.name}
+                      onChange={(e) => {
+                        setProperty1((prev) => ({
+                          ...prev,
+                          value: e.target.value,
+                        }));
+                      }}
+                    />
+                  </div>
+                )}
+                {/* FIELD Property-2 */}
+                {property1.value && (
+                  <div className="grid grid-cols-2 gap-x-2">
+                    <input
+                      name="property2-name"
+                      type="text"
+                      placeholder="property-2 name"
+                      maxLength="40"
+                      className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
+                      value={property2.name}
+                      disabled={!property1.value}
+                      onChange={(e) => {
+                        setProperty2((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }));
+                      }}
+                    />
+                    <input
+                      name="property2-value"
+                      type="text"
+                      placeholder="property-2 value"
+                      maxLength="40"
+                      className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
+                      value={property2.value}
+                      disabled={!property2.name}
+                      onChange={(e) => {
+                        setProperty2((prev) => ({
+                          ...prev,
+                          value: e.target.value,
+                        }));
+                      }}
+                    />
+                  </div>
+                )}
+                {/* FIELD Property-3 */}
+                {property2.value && (
+                  <div className="grid grid-cols-2 gap-x-2">
+                    <input
+                      name="property3-name"
+                      type="text"
+                      placeholder="property-3 name"
+                      maxLength="40"
+                      className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
+                      value={property3.name}
+                      disabled={!property2.value}
+                      onChange={(e) => {
+                        setProperty3((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }));
+                      }}
+                    />
+                    <input
+                      name="property3-value"
+                      type="text"
+                      placeholder="property-3 value"
+                      maxLength="40"
+                      className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
+                      value={property3.value}
+                      disabled={!property3.name}
+                      onChange={(e) => {
+                        setProperty3((prev) => ({
+                          ...prev,
+                          value: e.target.value,
+                        }));
+                      }}
+                    />
+                  </div>
+                )}
                 {/* FIELD Price */}
+                {name && (
+                  <input
+                    name="price"
+                    type="number"
+                    inputMode="numeric"
+                    placeholder="Price"
+                    className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
+                    value={price}
+                    disabled={!category}
+                    onChange={(e) => {
+                      if (e.target.value > 1000000000) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setError("Price cannot exceed 1 billion");
+                      } else {
+                        setPrice(e.target.value);
+                      }
+                    }}
+                  />
+                )}
+              </div>
+            </form>
+          ) : UIstate === "next" ? (
+            <form className="flex flex-col justify-center p-4 sm:p-8 lg:p-12 sm:flex-row sm:space-x-4 md:space-x-8">
+              <div className="flex flex-col justify-center sm:w-1/2 space-y-2">
+                {/* FIELD image-1 */}
                 <input
-                  name="price"
-                  type="number"
-                  inputMode="numeric"
-                  placeholder="Price"
+                  name="image-1"
+                  type="text"
+                  placeholder="image 1"
                   className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
-                  value={price}
-                  disabled={!category}
+                  value={images[0]}
                   onChange={(e) => {
-                    if (e.target.value > 1000000000) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setError("Price cannot exceed 1 billion");
-                    } else {
-                      setPrice(e.target.value);
-                    }
+                    setImages((prev) => [
+                      e.target.value,
+                      prev[1],
+                      e.target.value,
+                    ]);
                   }}
                 />
-                {/* <textarea
-                name="message"
-                id=""
-                cols="30"
-                rows="4"
-                placeholder="Message"
-                className="w-full px-3 py-2 mb-2 resize-none transition-all border rounded-md"
-              ></textarea> */}
+                {images[0] && (
+                  <input
+                    name="image-2"
+                    type="text"
+                    placeholder="image 2"
+                    className="w-full px-3 py-2 transition-all border border-font-inactive rounded-lg appearance-none bg-backg-raised dark:bg-backg-dark-raised cursor-pointer enabled:hover:border-primary-dark focus:border-transparent focus:ring-primary outline-none placeholder:italic disabled:opacity-50 disabled:cursor-not-allowed invalid:italic"
+                    value={images[1]}
+                    onChange={(e) => {
+                      setImages((prev) => [
+                        prev[0],
+                        e.target.value,
+                        e.target.value,
+                      ]);
+                    }}
+                  />
+                )}
               </div>
               {/* FIELD Image */}
               {images[0] && (
-                <div className="upload-container max-w-[148px] relative flex items-center justify-between sm:min-h-1/2">
-                  <Image
-                    src={images[0]}
-                    className="object-contain"
-                    width={300}
-                    height={300}
-                    // fill={true}
-                    alt="product image"
-                  />
+                <div className="lg:flex lg:items-start lg:justify-center">
+                  <div className="mt-2 w-full lg:w-32 lg:flex-shrink-0">
+                    <div className="flex flex-row lg:flex-col justify-center items-center">
+                      {images
+                        .filter((v, i) => i < 2)
+                        .map((v, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            className={
+                              v
+                                ? "flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-4 text-center border-transparent"
+                                : "hidden h-0"
+                            }
+                            onClick={() =>
+                              setImages((prev) => [prev[0], prev[1], v])
+                            }
+                          >
+                            <img
+                              className="h-full w-full object-cover"
+                              src={v}
+                              alt=""
+                            />
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+
+                  <div className="lg:ml-5 ">
+                    <div className="max-w-xl overflow-hidden rounded-lg mx-auto">
+                      <img
+                        className={
+                          images[2]
+                            ? "h-64 w-auto max-w-full object-cover"
+                            : "h-0 hidden"
+                        }
+                        src={images[2]}
+                        alt="product-image"
+                      />
+                    </div>
+                  </div>
                 </div>
               )}
             </form>
-          )}
+          ) : null}
           {/* <!-- Modal footer --> */}
           <div className="flex items-center justify-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
             <ButtonSecondary label="Cancel" onClick={handleClose} />
-            <ButtonPrimary
-              type="submit"
-              label="Save Product"
-              onClick={(e) => {
-                e.preventDefault();
-                handleSubmit();
-              }}
-            />
+            {UIstate === "next" ? (
+              <ButtonPrimary
+                type="submit"
+                label="Save Product"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSubmit();
+                }}
+              />
+            ) : (
+              <ButtonPrimary
+                type="button"
+                label="attach product images"
+                onClick={handleNext}
+              />
+            )}
           </div>
         </div>
       </div>

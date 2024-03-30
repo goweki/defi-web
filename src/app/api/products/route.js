@@ -15,7 +15,7 @@ export async function GET(request) {
   } catch (error) {
     // handle ERROR if caught
     console.log(
-      `ERROR: error caught in route\n >> ${JSON.stringify(
+      `ERROR: error caught in route -AP\n >> ${JSON.stringify(
         error.error || error
       )}\n......................`
     );

@@ -77,11 +77,11 @@ export function CardSimple({
 //             fill="none"
 //             viewBox="0 0 24 24"
 //             stroke="currentColor"
-//             stroke-width="2"
+//             strokeWidth="2"
 //           >
 //             <path
-//               stroke-linecap="round"
-//               stroke-linejoin="round"
+//               strokeLinecap="round"
+//               strokeLinejoin="round"
 //               d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
 //             />
 //           </svg>
@@ -91,10 +91,7 @@ export function CardSimple({
 //     </div>
 //   );
 // }
-const availabilit = {
-  local: "local",
-  ship: "import",
-};
+
 export function CardProduct({ product }) {
   const router = useRouter();
   return (
@@ -107,8 +104,12 @@ export function CardProduct({ product }) {
         src={product.images[0]}
         alt="product-img"
       />
-      <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-yellow-900 text-center text-sm text-white">
-        {availabilit[product.availability]}
+      <span
+        className={`absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 ${
+          product.availability === "local" ? "bg-sky-800" : "bg-yellow-800"
+        } text-center text-sm text-white`}
+      >
+        {product.availability}
       </span>
       <div className="mt-4 px-5 pb-5">
         <h5 className="text-lg font-semibold tracking-tight text-center">
