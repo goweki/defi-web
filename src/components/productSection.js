@@ -6,9 +6,7 @@ export default function ProductSection({ title, products }) {
     <div className="animate-up-in w-full lg:max-w-screen-lg p-3 sm:p-4 mx-auto">
       <h2 className="pt-2 text-center uppercase">{title}</h2>
       <div
-        className={`flex flex-row w-full px-4 overflow-x-auto scrolling-touch ${
-          products.length < 4 ? "justify-center" : "justify-start"
-        }`}
+        className={`flex flex-row w-full px-4 overflow-x-auto scrolling-touch`}
       >
         {products.map((v, i) => {
           return (

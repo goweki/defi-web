@@ -96,7 +96,7 @@ export function CardProduct({ product }) {
   const router = useRouter();
   return (
     <div
-      className="animate-fade flex flex-col relative m-4 w-full h-full max-w-xs overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-primary-light dark:hover:bg-primary-dark dark:hover:text-white shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer"
+      className="shrink-0 animate-fade flex flex-col relative m-4 w-full min-w-60 h-full max-w-xs overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-primary-light dark:hover:bg-primary-dark dark:hover:text-white shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer"
       onClick={() => router.push(`/view/${product._id}`)}
     >
       <img
