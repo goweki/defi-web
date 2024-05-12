@@ -33,3 +33,34 @@ export default function ThemeToggle({ className }) {
     </>
   );
 }
+
+export function ThemeToggleText({ className }) {
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  // When mounted on client, now we can show the UI
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
+  return (
+    <>
+      {theme === "dark" ? (
+        <button
+          onClick={() => setTheme("light")}
+          className={`rounded-full outline-none focus:outline-none focus-visible:ring focus-visible:ring-gray-100 focus:ring-opacity-20 ${className}`}
+        >
+          <span className="sr-only">Light Mode</span>
+          <span className="hover:text-primary">Light Theme</span>
+        </button>
+      ) : (
+        <button
+          onClick={() => setTheme("dark")}
+          className={`rounded-full outline-none focus:outline-none focus-visible:ring focus-visible:ring-gray-100 focus:ring-opacity-20 ${className}`}
+        >
+          <span className="sr-only">Dark Mode</span>
+          <span className="hover:text-primary">Dark Theme</span>
+        </button>
+      )}
+    </>
+  );
+}

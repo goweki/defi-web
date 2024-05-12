@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import { SVGfblogo, SVGiglogo, SVGlogo, SVGxlogo } from "./atoms/svgs";
 import Link from "next/link";
@@ -5,7 +6,7 @@ import { CardInFooter } from "./cards";
 export default function Footer() {
   const router = useRouter();
   return (
-    <footer className="bg-backg-surface dark:bg-backg-dark-surface w-full">
+    <footer className="animate-fade bg-slate-200 dark:bg-slate-800 shadow-md w-full">
       <div className="mx-auto max-w-screen-lg p-4 py-6 lg:py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2">
           {/* Card 1 */}
@@ -44,7 +45,7 @@ export default function Footer() {
             </a>
             . All Rights Reserved.
           </span>
-          <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
+          <div className="flex mt-4 space-x-5 sm:mt-0 sm:mr-2">
             <Link
               href="https://m.facebook.com/people/Defimotors-Ke/100087672914932/"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
@@ -59,13 +60,13 @@ export default function Footer() {
               <SVGiglogo className="w-4 h-4" />
               <span className="sr-only">instagram</span>
             </Link>
-            <Link
+            {/* <Link
               href="https://twitter.com/defi_motors"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
             >
               <SVGxlogo className="w-4 h-4" />
               <span className="sr-only">X</span>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

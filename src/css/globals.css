@@ -7,7 +7,7 @@
     @apply w-screen min-h-screen h-fit overflow-y-auto overflow-x-hidden;
   }
   body {
-    @apply flex flex-col flex-1 min-h-screen bg-backg dark:bg-backg-dark text-font dark:text-font-dark;
+    @apply flex flex-col flex-1 min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200;
   }
 
   h1 {
@@ -21,7 +21,7 @@
     @apply text-font-focus dark:text-font-dark-focus font-bold;
   }
   a {
-    @apply hover:text-primary;
+    @apply hover:text-primary-dark dark:hover:text-primary-light;
   }
 }
 

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { ButtonSecondary } from "./atoms/buttons";
+import { numberWithCommas } from "@/helpers/formatters";
+import { useRouter } from "next/navigation";
 
 export function CardSimple({
   className,
@@ -13,7 +15,7 @@ export function CardSimple({
     >
       <div className="w-52 aspect-square overflow-hidden">
         <Image
-          className={`object-cover transition group-hover:scale-110`}
+          className={`object-cover transition-all group-hover:scale-110`}
           src={item?.image}
           width={300}
           height={300}
@@ -28,65 +30,98 @@ export function CardSimple({
   );
 }
 
-export function CardProduct({
-  className,
-  product,
-  onClick = () => console.log("Card clicked"),
-}) {
+// export function CardProduct({ product }) {
+//   const router = useRouter();
+//   return (
+//     <div
+//       onClick={() => router.push(`/view/${product._id}`)}
+//       className="group relative h-84 w-52 m-2 md:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-dark dark:hover:bg-primary-dark hover:text-font-dark-focus shadow hover:scale-105 hover:shadow-lg cursor-pointer transition"
+//     >
+//       <div className="relative flex w-full overflow-hidden aspect-square">
+//         <Image
+//           className={`object-cover h-full w-full group-hover:scale-110 transition`}
+//           src={product.images[0]}
+//           width={300}
+//           height={300}
+//           alt="car_image"
+//         />
+//         <span
+//           className={`bg-state-success text-font-dark-focus absolute top-0 left-0 m-2 rounded-full px-2 text-center text-sm font-medium`}
+//         >
+//           available
+//         </span>
+//       </div>
+//       <div className="mt-4 px-2 pb-3 flex flex-col flex-1 justify-between">
+//         <h5 className="text-sm tracking-tight text-center line-clamp-2">
+//           {product.name}
+//         </h5>
+//         <div className="mt-1 mb-4 flex items-center justify-center">
+//           <p>
+//             <span className="md:text-xl font-bold">
+//               <span className="text-sm uppercase">Ksh. </span>
+//               {numberWithCommas(product.price)}
+//               {/* {product?.price.toString().length > 6
+//                 ? parseFloat((product?.price / 1000000).toFixed(2)) + "M"
+//                 : parseFloat((product?.price / 1000).toFixed(2)) + "K"}{" "} */}
+//             </span>
+//             {/* <span className="text-sm text-slate-900 line-through">$699</span> */}
+//           </p>
+//         </div>
+//         {/* <a
+//           href="#"
+//           className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+//         >
+//           <svg
+//             xmlns="http://www.w3.org/2000/svg"
+//             className="mr-2 h-6 w-6"
+//             fill="none"
+//             viewBox="0 0 24 24"
+//             stroke="currentColor"
+//             strokeWidth="2"
+//           >
+//             <path
+//               strokeLinecap="round"
+//               strokeLinejoin="round"
+//               d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+//             />
+//           </svg>
+//           Add to cart
+//         </a> */}
+//       </div>
+//     </div>
+//   );
+// }
+
+export function CardProduct({ product }) {
+  const router = useRouter();
   return (
     <div
-      onClick={onClick}
-      className="group relative h-84 w-52 m-2 md:m-4 flex flex-col shrink-0 overflow-hidden rounded-lg bg-backg-surface dark:bg-backg-dark-surface hover:bg-primary-dark dark:hover:bg-primary-dark hover:text-font-dark-focus shadow hover:scale-105 hover:shadow-lg cursor-pointer transition"
+      className="shrink-0 animate-fade flex flex-col relative m-4 w-full min-w-60 h-full max-w-xs overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-primary-light dark:hover:bg-primary-dark dark:hover:text-white shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer"
+      onClick={() => router.push(`/view/${product._id}`)}
     >
-      <div className="relative flex w-full overflow-hidden aspect-square">
-        <Image
-          className={`object-cover h-full w-full group-hover:scale-110 transition ${className}`}
-          src={product?.image}
-          width={300}
-          height={300}
-          alt="car_image"
-        />
-        <span
-          className={`bg-state-success text-font-dark-focus absolute top-0 left-0 m-2 rounded-full px-2 text-center text-sm font-medium`}
-        >
-          available
-        </span>
-      </div>
-      <div className="mt-4 px-2 pb-3 flex flex-col flex-1 justify-between">
-        <h5 className="text-sm tracking-tight text-center truncate">
-          {product?.name}
+      <img
+        className="h-60 rounded-t-lg object-cover w-full flex flex-col- flex-1 transition-all"
+        src={product.images[0]}
+        alt="product-img"
+      />
+      <span
+        className={`absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 ${
+          product.availability === "local" ? "bg-sky-800" : "bg-yellow-800"
+        } text-center text-sm text-white`}
+      >
+        {product.availability}
+      </span>
+      <div className="mt-4 px-5 pb-5">
+        <h5 className="text-lg font-semibold tracking-tight text-center">
+          {product.name}
         </h5>
-        <div className="mt-1 mb-4 flex items-center justify-center">
-          <p>
-            <span className="md:text-xl font-bold">
-              <span className="text-sm uppercase">Ksh. </span>
-              {product?.price.toString().length > 6
-                ? parseFloat((product?.price / 1000000).toFixed(2)) + "M"
-                : parseFloat((product?.price / 1000).toFixed(2)) + "K"}{" "}
-            </span>
-            {/* <span className="text-sm text-slate-900 line-through">$699</span> */}
-          </p>
-        </div>
-        {/* <a
-          href="#"
-          className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="mr-2 h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-            />
-          </svg>
-          Add to cart
-        </a> */}
+
+        <p className="mt-2 text-center text-xl font-bold">
+          <span className="text-sm uppercase text-yellow-800 dark:text-yellow-200">
+            Ksh.{" "}
+          </span>
+          {numberWithCommas(product.price)}
+        </p>
       </div>
     </div>
   );
