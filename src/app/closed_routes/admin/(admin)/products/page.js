@@ -6,7 +6,7 @@ import { ModalAddProduct } from "./compo";
 import Loader from "@/components/loader";
 import toast from "react-hot-toast";
 import { numberWithCommas } from "@/helpers/formatters";
-import { ProductsContext } from "@/app/(home)/context";
+import { ProductsContext } from "@/app/closed_routes/(home)/context";
 
 export default function ProductsPage() {
   const products = useContext(ProductsContext);

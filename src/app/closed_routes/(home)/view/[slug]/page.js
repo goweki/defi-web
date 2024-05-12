@@ -2,7 +2,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ProductsContext } from "@/app/(home)/context";
+import { ProductsContext } from "@/app/closed_routes/(home)/context";
 import { numberWithCommas } from "@/helpers/formatters";
 
 export default function ProductItemPage({ params }) {

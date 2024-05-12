@@ -1,28 +1,28 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
-import { ProductsContext } from "@/app/(home)/context";
+import { ProductsContext } from "@/app/closed_routes/(home)/context";
 import { CardProduct } from "@/components/cards";
 import Loader from "@/components/loader";
 
-export default function ServicesPage() {
+export default function CarsPage() {
   const products = useContext(ProductsContext);
-  const [services, setServices] = useState("");
+  const [cars, setCars] = useState("");
   const [searchPhrase, setSearchPhrase] = useState("");
   // const [sizeFilter, setSizeFilter] = useState("");
   // setCars: onMount, on-Products, on-searchPhrase
 
   useEffect(() => {
-    setServices(
+    setCars(
       products
-        ?.filter(({ category }) => category === "Service")
+        ?.filter(({ category }) => category.toLowerCase() === "car")
         .filter(({ name }) =>
           name.toLowerCase().includes(searchPhrase.toLowerCase())
         )
     );
   }, [products, searchPhrase]);
-  if (services)
+  if (cars)
     return (
-      <div className="py-8 max-w-screen-lg w-full px-3 md:px-6">
+      <div className="transition-all py-8 max-w-screen-lg w-full px-3 md:px-6">
         {/* HEADER */}
         <div className="relative sm:rounded-lg">
           <div className="flex flex-col items-center justify-center p-4 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
@@ -53,7 +53,7 @@ export default function ServicesPage() {
               <input
                 className="block p-2 pl-10 w-full border bg-backg-raised rounded-lg dark:bg-backg-dark-raised"
                 // className="rounded-lg w-full min-w-[240px] bg-backg-raised dark:bg-backg-dark-raised"
-                placeholder="Search services..."
+                placeholder="Search cars..."
                 type="searchPhrase"
                 id="searchPhrase"
                 value={searchPhrase}
@@ -94,14 +94,14 @@ export default function ServicesPage() {
         </div>
         {/* product Cards */}
         <div className="flex flex-wrap justify-center">
-          {services.map((v, i) => {
+          {cars.map((v, i) => {
             return (
               <div key={v._id}>
                 <CardProduct
                   onClick={(e) => {
                     e.preventDefault();
                     console.log("Item clicked: " + v._id);
-                    setClickedService(v);
+                    setClickedCar(v);
                   }}
                   product={v}
                   className={`inline-block`}

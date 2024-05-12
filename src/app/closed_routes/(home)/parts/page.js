@@ -1,28 +1,28 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
-import { ProductsContext } from "@/app/(home)/context";
+import { ProductsContext } from "@/app/closed_routes/(home)/context";
 import { CardProduct } from "@/components/cards";
 import Loader from "@/components/loader";
 
-export default function CarsPage() {
+export default function PartsPage() {
   const products = useContext(ProductsContext);
-  const [cars, setCars] = useState("");
+  const [parts, setParts] = useState("");
   const [searchPhrase, setSearchPhrase] = useState("");
   // const [sizeFilter, setSizeFilter] = useState("");
   // setCars: onMount, on-Products, on-searchPhrase
 
   useEffect(() => {
-    setCars(
+    setParts(
       products
-        ?.filter(({ category }) => category.toLowerCase() === "car")
+        ?.filter(({ category }) => category.toLowerCase() === "part")
         .filter(({ name }) =>
           name.toLowerCase().includes(searchPhrase.toLowerCase())
         )
     );
   }, [products, searchPhrase]);
-  if (cars)
+  if (parts)
     return (
-      <div className="transition-all py-8 max-w-screen-lg w-full px-3 md:px-6">
+      <div className="py-8 max-w-screen-lg w-full px-3 md:px-6">
         {/* HEADER */}
         <div className="relative sm:rounded-lg">
           <div className="flex flex-col items-center justify-center p-4 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
@@ -53,7 +53,7 @@ export default function CarsPage() {
               <input
                 className="block p-2 pl-10 w-full border bg-backg-raised rounded-lg dark:bg-backg-dark-raised"
                 // className="rounded-lg w-full min-w-[240px] bg-backg-raised dark:bg-backg-dark-raised"
-                placeholder="Search cars..."
+                placeholder="Search parts..."
                 type="searchPhrase"
                 id="searchPhrase"
                 value={searchPhrase}
@@ -94,14 +94,14 @@ export default function CarsPage() {
         </div>
         {/* product Cards */}
         <div className="flex flex-wrap justify-center">
-          {cars.map((v, i) => {
+          {parts.map((v, i) => {
             return (
               <div key={v._id}>
                 <CardProduct
                   onClick={(e) => {
                     e.preventDefault();
                     console.log("Item clicked: " + v._id);
-                    setClickedCar(v);
+                    setClickedPart(v);
                   }}
                   product={v}
                   className={`inline-block`}

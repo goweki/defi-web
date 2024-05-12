@@ -1,26 +1,26 @@
 "use client";
 import { useContext, useState, useEffect } from "react";
-import { ProductsContext } from "@/app/(home)/context";
+import { ProductsContext } from "@/app/closed_routes/(home)/context";
 import { CardProduct } from "@/components/cards";
 import Loader from "@/components/loader";
 
-export default function AccessoriesPage() {
+export default function ServicesPage() {
   const products = useContext(ProductsContext);
-  const [accessories, setAccessories] = useState("");
+  const [services, setServices] = useState("");
   const [searchPhrase, setSearchPhrase] = useState("");
   // const [sizeFilter, setSizeFilter] = useState("");
   // setCars: onMount, on-Products, on-searchPhrase
 
   useEffect(() => {
-    setAccessories(
+    setServices(
       products
-        ?.filter(({ category }) => category.toLowerCase() === "accessory")
+        ?.filter(({ category }) => category === "Service")
         .filter(({ name }) =>
           name.toLowerCase().includes(searchPhrase.toLowerCase())
         )
     );
   }, [products, searchPhrase]);
-  if (accessories)
+  if (services)
     return (
       <div className="py-8 max-w-screen-lg w-full px-3 md:px-6">
         {/* HEADER */}
@@ -53,7 +53,7 @@ export default function AccessoriesPage() {
               <input
                 className="block p-2 pl-10 w-full border bg-backg-raised rounded-lg dark:bg-backg-dark-raised"
                 // className="rounded-lg w-full min-w-[240px] bg-backg-raised dark:bg-backg-dark-raised"
-                placeholder="Search accessories..."
+                placeholder="Search services..."
                 type="searchPhrase"
                 id="searchPhrase"
                 value={searchPhrase}
@@ -94,14 +94,14 @@ export default function AccessoriesPage() {
         </div>
         {/* product Cards */}
         <div className="flex flex-wrap justify-center">
-          {accessories.map((v, i) => {
+          {services.map((v, i) => {
             return (
               <div key={v._id}>
                 <CardProduct
                   onClick={(e) => {
                     e.preventDefault();
                     console.log("Item clicked: " + v._id);
-                    setClickedAccessory(v);
+                    setClickedService(v);
                   }}
                   product={v}
                   className={`inline-block`}
